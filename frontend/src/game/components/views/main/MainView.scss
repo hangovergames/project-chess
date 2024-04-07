@@ -11,4 +11,9 @@
   align-items: center;
   align-content: center;
   justify-content: center;
+
+  & > .main-view-buttons {
+    margin-top: 4em;
+  }
+
 }
