@@ -1,4 +1,4 @@
-# HangoverGame's Memory Game
+# Hangover Game's Memory Matching Game
 
 Welcome to the GitHub repository for our memory matching game. This repository 
 contains the frontend and is the central hub for tracking issues and 

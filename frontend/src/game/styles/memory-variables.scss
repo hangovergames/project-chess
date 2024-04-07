@@ -1,0 +1,31 @@
+
+$button-font: "redhat-medium";
+$button-font-size: 16px;
+$button-font-line-height: 21px;
+
+
+@font-face {
+  font-family: "redhat";
+  src: url("../../assets/fonts/redhat/RedHatDisplay-Regular.ttf");
+}
+
+@font-face {
+  font-family: "redhat-bold";
+  src: url("../../assets/fonts/redhat/RedHatDisplay-Bold.ttf");
+}
+
+@font-face {
+  font-family: "redhat-semi-bold";
+  src: url("../../assets/fonts/redhat/RedHatDisplay-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "redhat-extra-bold";
+  src: url("../../assets/fonts/redhat/RedHatDisplay-ExtraBold.ttf");
+}
+
+@font-face {
+  font-family: "redhat-medium";
+  src: url("../../assets/fonts/redhat/RedHatDisplay-Medium.ttf");
+}
+

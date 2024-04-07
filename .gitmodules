@@ -1,0 +1,8 @@
+[submodule "frontend/src/io/hyperify/core"]
+	path = frontend/src/io/hyperify/core
+	url = https://github.com/hyperifyio/io.hyperify.core.git
+	branch = main
+[submodule "frontend/src/io/hyperify/frontend"]
+	path = frontend/src/io/hyperify/frontend
+	url = https://github.com/hyperifyio/io.hyperify.frontend.git
+	branch = main
