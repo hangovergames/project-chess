@@ -20,6 +20,8 @@ export function AppFooter (props: AppFooterProps) {
             }
         >
 
+            Copyright 2024 <a href={"https://github.com/hangovergames/project-memory"}>Hangover Games</a>
+
         </footer>
     );
 }
