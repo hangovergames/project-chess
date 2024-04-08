@@ -6,6 +6,7 @@ import {
 } from "../../io/hyperify/core/Json";
 import { RequestClient } from "../../io/hyperify/core/RequestClient";
 import { RequestClientImpl } from "../../io/hyperify/core/RequestClientImpl";
+import { API_PATH } from "../constants/frontend";
 import {
     createGameRequestDTO,
     GameRequestDTO,
@@ -17,7 +18,7 @@ import {
 } from "../types/GameStateDTO";
 import { GameClient } from "./GameClient";
 
-const DEFAULT_GAME_URL = IS_DEVELOPMENT ? 'http://localhost:3000/api/' : 'https://memory.hangover.games';
+const DEFAULT_GAME_URL = IS_DEVELOPMENT ? 'http://localhost:3000' : 'https://memory.hangover.games';
 
 /**
  * @inheritDoc
@@ -59,7 +60,7 @@ export class GameClientImpl implements GameClient {
      */
     public async postRequest (body: GameRequestDTO): Promise<GameStateDTO> {
         const response = await this._client.postJson(
-            this._url,
+            `${this._url}${API_PATH}`,
             body as unknown as JsonAny,
         );
         if (!isGameStateDTO(response)) {

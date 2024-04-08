@@ -9,10 +9,10 @@ module.exports = function(app) {
             target: REACT_APP_BACKEND_TARGET_URL,
             changeOrigin: true,
             autoRewrite: true,
-            //protocolRewrite: 'http',
-            pathRewrite: {
-                ['^/api'] : ''
-            }
+            protocolRewrite: 'http',
+            // pathRewrite: {
+            //     ['^/api'] : ''
+            // }
         })
     );
 };
