@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.243489f9.css",
-    "main.js": "/static/js/main.a33da7a1.js",
+    "main.js": "/static/js/main.a7de01aa.js",
     "static/js/496.59a24e4c.chunk.js": "/static/js/496.59a24e4c.chunk.js",
     "static/media/RedHatDisplay-SemiBold.ttf": "/static/media/RedHatDisplay-SemiBold.a09738a446c68f81a5a1.ttf",
     "static/media/RedHatDisplay-ExtraBold.ttf": "/static/media/RedHatDisplay-ExtraBold.3c908e72acb4638501f1.ttf",
@@ -10,11 +10,11 @@
     "static/media/RedHatDisplay-Bold.ttf": "/static/media/RedHatDisplay-Bold.2ec0c3dadf633ed6898f.ttf",
     "index.html": "/index.html",
     "main.243489f9.css.map": "/static/css/main.243489f9.css.map",
-    "main.a33da7a1.js.map": "/static/js/main.a33da7a1.js.map",
+    "main.a7de01aa.js.map": "/static/js/main.a7de01aa.js.map",
     "496.59a24e4c.chunk.js.map": "/static/js/496.59a24e4c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.243489f9.css",
-    "static/js/main.a33da7a1.js"
+    "static/js/main.a7de01aa.js"
   ]
 }
