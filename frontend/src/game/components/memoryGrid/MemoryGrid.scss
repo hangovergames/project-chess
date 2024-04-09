@@ -6,7 +6,19 @@
   margin: 0;
   padding: 0;
 
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE10+/Edge */
+  user-select: none;         /* Standard syntax */
+
+
   & > .memory-grid-row {
+
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE10+/Edge */
+    user-select: none;         /* Standard syntax */
+
     display: flex;
     flex-direction: row;
     margin: 0;
@@ -16,7 +28,18 @@
       margin: 6px;
       padding: 0;
 
+      -webkit-user-select: none; /* Safari */
+      -moz-user-select: none;    /* Firefox */
+      -ms-user-select: none;     /* IE10+/Edge */
+      user-select: none;         /* Standard syntax */
+
       & > .memory-grid-cell-content {
+
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none;    /* Firefox */
+        -ms-user-select: none;     /* IE10+/Edge */
+        user-select: none;         /* Standard syntax */
+
         cursor: pointer;
         margin: auto;
         padding: 0;
@@ -35,6 +58,12 @@
         & > .memory-grid-cell-content-text {
           margin: auto;
           padding: 0;
+
+          -webkit-user-select: none; /* Safari */
+          -moz-user-select: none;    /* Firefox */
+          -ms-user-select: none;     /* IE10+/Edge */
+          user-select: none;         /* Standard syntax */
+
         }
 
         &.memory-grid-cell-content-0 {

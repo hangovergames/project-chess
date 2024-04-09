@@ -35,23 +35,30 @@ export function MemoryGrid ( props: MemoryGridProps) {
         <div className={
             MEMORY_GRID_CLASS_NAME
             + (className? ` ${className}` : '')
-        }>{map(indexes, (row: number[], rowIndex: number) => {
+        }
+             onContextMenu={ () => false }
+        >{map(indexes, (row: number[], rowIndex: number) => {
             return (
                 <div className={MEMORY_GRID_CLASS_NAME+'-row'}
                      key={MEMORY_GRID_CLASS_NAME+'-row-'+rowIndex}
+                     onContextMenu={ () => false }
                 >{
                     map(row, (index, cellIndex) => {
                         return (
                             <div className={MEMORY_GRID_CLASS_NAME+'-cell'}
                                  key={MEMORY_GRID_CLASS_NAME+'-row-'+rowIndex+'-cell-'+cellIndex}
+                                 onContextMenu={ () => false }
                             >
                                 <div className={
                                     MEMORY_GRID_CLASS_NAME+'-cell-content'
                                     + ' ' + MEMORY_GRID_CLASS_NAME+'-cell-content-' + cards[index]
                                 }
                                      onClick={clickCallback.bind(undefined, index)}
+                                     onContextMenu={ () => false }
                                 >
-                                    <div className={MEMORY_GRID_CLASS_NAME+'-cell-content-text'}>{ cards[index] }</div>
+                                    <div className={MEMORY_GRID_CLASS_NAME+'-cell-content-text'}
+                                         onContextMenu={ () => false }
+                                    >{ cards[index] }</div>
                                 </div>
                             </div>
                         );
