@@ -1,5 +1,13 @@
 @import "src/game/styles/memory-variables";
 
 .app-header {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+
+  & > h1 {
+    margin: 12px 0;
+    padding: 0;
+  }
 
 }

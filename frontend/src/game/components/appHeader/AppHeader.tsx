@@ -18,7 +18,6 @@ export function AppHeader (props: AppHeaderProps) {
 
     return (
         <header className={ APP_HEADER_CLASS_NAME }>
-
         </header>
     );
 }

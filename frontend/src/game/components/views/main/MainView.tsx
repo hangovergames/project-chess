@@ -7,7 +7,6 @@ import {
 } from "react";
 import { useLocation } from "react-router-dom";
 import { map } from "../../../../io/hyperify/core/functions/map";
-import { some } from "../../../../io/hyperify/core/functions/some";
 import { LogService } from "../../../../io/hyperify/core/LogService";
 import { TranslationFunction } from "../../../../io/hyperify/core/types/TranslationFunction";
 import { Button } from "../../../../io/hyperify/frontend/components/button/Button";
@@ -106,24 +105,49 @@ export function MainView (props: MainViewProps) {
     );
 
     return (
-        <div className={MAIN_VIEW_CLASS_NAME + (className? ` ${className}`: '')}>
-            {location.pathname === INDEX_ROUTE ? (
-                <>
-                    <ScrollToHere path={INDEX_ROUTE} />
-                </>
-            ) : null}
+        <div className={ MAIN_VIEW_CLASS_NAME + (className ? ` ${ className }` : '') }>
 
-            <p>Score: {gameState.score}</p>
+            { location.pathname === INDEX_ROUTE ? (
+                <ScrollToHere path={ INDEX_ROUTE } />
+            ) : null }
 
-            <MemoryGrid
-                cards={visibleCards}
-                onClick={selectCardCallback}
-            />
+            <section className={ MAIN_VIEW_CLASS_NAME + '-game' }>
 
-            <section className={MAIN_VIEW_CLASS_NAME+'-buttons'}>
-                <Button click={resetGameCallback}>Reset</Button>
+                <section className={ MAIN_VIEW_CLASS_NAME + '-game-content' }>
+
+                    <header className={ MAIN_VIEW_CLASS_NAME + '-game-header' }>
+                        <h1>Memory Game from Hangover Games</h1>
+                    </header>
+
+                    <MemoryGrid
+                        cards={ visibleCards }
+                        onClick={ selectCardCallback }
+                    />
+
+                    <section className={ MAIN_VIEW_CLASS_NAME + '-game-footer' }>
+                        <section className={ MAIN_VIEW_CLASS_NAME + '-buttons' }>
+                            <Button
+                                className={ MAIN_VIEW_CLASS_NAME + '-reset-button' }
+                                click={ resetGameCallback }
+                            >Reset</Button>
+                        </section>
+                        <section className={ MAIN_VIEW_CLASS_NAME + '-score' }>Score: { gameState.score }</section>
+                    </section>
+
+                </section>
+
             </section>
 
+            <section className={ MAIN_VIEW_CLASS_NAME + '-6b' }>
+                <iframe
+                    title="r2"
+                    src="https://www.6b.fi/"
+                    width="100%"
+                    height="100%"
+                    scrolling="no"
+                    frameBorder="0"
+                ></iframe>
+            </section>
 
         </div>
     );
