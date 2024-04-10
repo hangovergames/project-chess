@@ -25,6 +25,9 @@ const INITIAL_GAME_STATE = createGameStateDTO(
     "",
     0,
     -1,
+    "",
+    "",
+    false,
 );
 
 export type AdvanceCallback = (index: number) => void;
