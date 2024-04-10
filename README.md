@@ -1,10 +1,12 @@
 # Hangover Games' Memory Matching Game
 
-Welcome to the GitHub repository for our memory matching game. 
+Welcome to the GitHub repository for our memory matching game!
 
-***Want to play it?*** Available at [https://memory.hangover.games/](https://memory.hangover.games/)
+***Want to play it?*** The game is at [https://memory.hangover.games/](https://memory.hangover.games/)
 
-This repository contains the frontend and is the central hub for tracking issues and 
+***Want to follow the development?*** Follow up at [the index issue](https://github.com/hangovergames/project-memory/issues/1)
+
+This repository contains the frontend source code and is the central hub for tracking issues and 
 developments related to the game.
 
 ## Contribution and Issue Tracking
