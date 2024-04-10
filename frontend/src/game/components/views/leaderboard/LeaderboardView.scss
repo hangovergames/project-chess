@@ -1,0 +1,64 @@
+@import "src/game/styles/memory-variables";
+
+.leaderboard-view {
+
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  align-content: center;
+  justify-content: center;
+  flex-direction: row;
+
+  margin: 100px 0 0 0;
+  padding: 100px 100px;
+
+  color: #ffffff;
+  background-color: #444444;
+
+
+  & > .leaderboard-view-list {
+
+    h3 {
+      text-align: center;
+    }
+
+    & > .leaderboard-view-list-item {
+
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+      justify-items: center;
+      flex-direction: row;
+
+      & > .leaderboard-view-list-item-index {
+        min-width: 80px;
+        padding: 12px;
+        flex-shrink: 0;
+        text-align: right;
+      }
+
+      & > .leaderboard-view-list-item-name {
+        padding: 12px;
+        min-width: 700px;
+        flex-grow: 1;
+      }
+
+      & > .leaderboard-view-list-item-score {
+        padding: 12px;
+        flex-grow: 1;
+        flex-shrink: 0;
+        text-align: right;
+      }
+
+    }
+
+  }
+
+
+}

@@ -3,6 +3,7 @@
 import { LogService } from "../../../io/hyperify/core/LogService";
 import {
     INDEX_ROUTE,
+    LEADERBOARD_ROUTE,
     NOT_FOUND_ROUTE,
 } from "../../constants/route";
 import React, { useEffect } from 'react';
@@ -23,6 +24,7 @@ import { useRouteServiceWithNavigate } from "../../../io/hyperify/frontend/hooks
 // overwrite SCSS from views and make your life harder.
 
 import { MainLayout } from "../layouts/main/MainLayout";
+import { LeaderboardView } from "../views/leaderboard/LeaderboardView";
 import { MainView } from "../views/main/MainView";
 
 const LOG = LogService.createLogger('MemoryApp');
@@ -82,7 +84,17 @@ export function MemoryApp () {
         ),
         children: [
 
-            {path: INDEX_ROUTE, element: <MainView t={t as TranslationFunction} />},
+            {path: INDEX_ROUTE, element: <>
+                    <MainView t={t as TranslationFunction} />
+                    <LeaderboardView t={t as TranslationFunction} />
+                </>
+            },
+
+            {path: LEADERBOARD_ROUTE, element: <>
+                    <MainView t={t as TranslationFunction} />
+                    <LeaderboardView t={t as TranslationFunction} />
+                </>
+            },
 
             {path: '*', element: <Navigate to={NOT_FOUND_ROUTE} />},
             {path: INDEX_ROUTE, element: <Navigate to={INDEX_ROUTE} />},

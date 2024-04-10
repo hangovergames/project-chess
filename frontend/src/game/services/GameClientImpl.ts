@@ -5,7 +5,15 @@ import {
 } from "../../io/hyperify/core/Json";
 import { RequestClient } from "../../io/hyperify/core/RequestClient";
 import { RequestClientImpl } from "../../io/hyperify/core/RequestClientImpl";
-import { API_PATH } from "../constants/frontend";
+import {
+    API_PATH,
+    LEADERBOARD_API_PATH,
+} from "../constants/frontend";
+import {
+    explainGameLeaderboardDTO,
+    GameLeaderboardDTO,
+    isGameLeaderboardDTO,
+} from "../types/GameLeaderboardDTO";
 import {
     createGameRequestDTO,
     GameRequestDTO,
@@ -92,6 +100,16 @@ export class GameClientImpl implements GameClient {
                 name,
             )
         );
+    }
+
+    public async getLeaderboard (limit ?: number): Promise<GameLeaderboardDTO> {
+        const response = await this._client.getJson(
+            `${this._url}${LEADERBOARD_API_PATH}?limit=${limit ?? 10}`,
+        );
+        if (!isGameLeaderboardDTO(response)) {
+            throw new TypeError(`Response was not GameLeaderboardDTO: ${explainGameLeaderboardDTO(response)}`)
+        }
+        return response;
     }
 
 }
