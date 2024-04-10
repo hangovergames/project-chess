@@ -4,7 +4,7 @@ Welcome to the GitHub repository for our memory matching game!
 
 1. ***Want to play it?*** The game is at [https://memory.hangover.games/](https://memory.hangover.games/)
 
-2. ***Want to follow the development?*** Follow up at [the index issue](https://github.com/hangovergames/project-memory/issues/1)
+2. ***Want to follow the development?*** See [the index issue](https://github.com/hangovergames/project-memory/issues/1)
 
 3. ***Want to join the community?*** Join our [Discord](https://discord.com/invite/tKKMczp)!
 
