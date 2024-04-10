@@ -1,6 +1,9 @@
 // Copyright (c) 2024. Heusala Group Oy <info@heusalagroup.fi>. All rights reserved.
 
-import { isBoolean } from "../../io/hyperify/core/types/Boolean";
+import {
+    explainBoolean,
+    isBoolean,
+} from "../../io/hyperify/core/types/Boolean";
 import {
     explain,
     explainNot,
@@ -36,6 +39,9 @@ export interface GameStateDTO {
     readonly private       : string;
     readonly lastCard      : number;
     readonly lastIndex     : number;
+    readonly started       : number;
+    readonly finished      : number;
+    readonly isStarted     : boolean;
     readonly isFinished    : boolean;
     readonly name          : string;
     readonly leaderboardId : string;
@@ -49,6 +55,9 @@ export function createGameStateDTO (
     lastIndex : number,
     name : string,
     leaderboardId : string,
+    started: number,
+    finished: number,
+    isStarted : boolean,
     isFinished : boolean,
 ) : GameStateDTO {
     return {
@@ -58,6 +67,9 @@ export function createGameStateDTO (
         lastCard,
         lastIndex,
         name,
+        started,
+        finished,
+        isStarted,
         isFinished,
         leaderboardId,
     };
@@ -73,6 +85,9 @@ export function isGameStateDTO (value: unknown) : value is GameStateDTO {
             'lastCard',
             'lastIndex',
             'name',
+            'started',
+            'finished',
+            'isStarted',
             'isFinished',
             'leaderboardId',
         ])
@@ -82,6 +97,9 @@ export function isGameStateDTO (value: unknown) : value is GameStateDTO {
         && isNumber(value?.lastCard)
         && isNumber(value?.lastIndex)
         && isString(value?.name)
+        && isNumber(value?.started)
+        && isNumber(value?.finished)
+        && isBoolean(value?.isStarted)
         && isBoolean(value?.isFinished)
         && isString(value?.leaderboardId)
     );
@@ -98,6 +116,9 @@ export function explainGameStateDTO (value: any) : string {
                 'lastCard',
                 'lastIndex',
                 'name',
+                'started',
+                'finished',
+                'isStarted',
                 'isFinished',
                 'leaderboardId',
             ])
@@ -107,7 +128,10 @@ export function explainGameStateDTO (value: any) : string {
             , explainProperty("lastCard", explainNumber(value?.lastCard))
             , explainProperty("lastIndex", explainNumber(value?.lastIndex))
             , explainProperty("name", explainNumber(value?.name))
-            , explainProperty("isFinished", explainNumber(value?.isFinished))
+            , explainProperty("started", explainNumber(value?.started))
+            , explainProperty("finished", explainNumber(value?.finished))
+            , explainProperty("isStarted", explainBoolean(value?.isStarted))
+            , explainProperty("isFinished", explainBoolean(value?.isFinished))
             , explainProperty("leaderboardId", explainNumber(value?.leaderboardId))
         ]
     );

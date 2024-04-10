@@ -51,6 +51,15 @@
         justify-content: stretch;
         flex-direction: row;
 
+        & > .main-view-name {
+          margin: 0 16px 0 8px;
+
+          & > .main-view-name-field {
+            margin: 0;
+            padding: 12px;
+          }
+        }
+
         & > .main-view-buttons {
           margin: 0 16px 0 8px;
         }

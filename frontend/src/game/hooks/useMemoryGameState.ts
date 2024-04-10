@@ -27,13 +27,17 @@ const INITIAL_GAME_STATE = createGameStateDTO(
     -1,
     "",
     "",
+    0,
+    0,
+    false,
     false,
 );
 
 export type AdvanceCallback = (index: number) => void;
 export type ResetCallback = () => void;
+export type SetNameCallback = (name : string) => void;
 
-export function useMemoryGameState (client : GameClient) : [GameStateDTO, AdvanceCallback, ResetCallback] {
+export function useMemoryGameState (client : GameClient) : [GameStateDTO, AdvanceCallback, ResetCallback, SetNameCallback] {
 
     const [gameState, setGameState] = useState<GameStateDTO|undefined>();
 
@@ -51,10 +55,10 @@ export function useMemoryGameState (client : GameClient) : [GameStateDTO, Advanc
             promiseLock.current = true;
 
             let promise : Promise<GameStateDTO>
-            if (gameState) {
-                promise = client.advanceGame(index, gameState)
+            if (gameState?.isStarted) {
+                promise = client.advanceGame(index, gameState, gameState.name)
             } else {
-                promise = client.newGame(index)
+                promise = client.newGame(index, gameState?.name)
             }
             promise.then(state => {
                 LOG.debug(`State updated: `, state);
@@ -74,11 +78,35 @@ export function useMemoryGameState (client : GameClient) : [GameStateDTO, Advanc
 
     const resetCallback = useCallback(
         () => {
-            setGameState(undefined);
+            setGameState({
+                ...INITIAL_GAME_STATE,
+                name: gameState?.name ?? '',
+            });
         }, [
             setGameState,
+            gameState,
+        ],
+    );
+
+    const setNameCallback = useCallback(
+        (name : string) : void => {
+            setGameState((state : GameStateDTO | undefined) : GameStateDTO => {
+                if (state === undefined) {
+                    return {
+                        ...INITIAL_GAME_STATE,
+                        name,
+                    };
+                } else {
+                    return {
+                        ...state,
+                        name,
+                    };
+                }
+            })
+        }, [
+
         ],
     )
 
-    return [visibleGameState, advanceCallback, resetCallback];
+    return [visibleGameState, advanceCallback, resetCallback, setNameCallback];
 }
