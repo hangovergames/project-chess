@@ -1,6 +1,6 @@
 {
   "name": "@hangovergames/memory",
-  "version": "0.0.4",
+  "version": "0.0.8",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
