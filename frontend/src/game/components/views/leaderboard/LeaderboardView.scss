@@ -14,9 +14,8 @@
   margin: 100px 0 0 0;
   padding: 100px 100px;
 
-  color: #ffffff;
+  color: #F5F5F5;
   background-color: #444444;
-
 
   & > .leaderboard-view-list {
 
@@ -37,7 +36,7 @@
       flex-direction: row;
 
       & > .leaderboard-view-list-item-index {
-        min-width: 80px;
+        min-width: 50px;
         padding: 12px;
         flex-shrink: 0;
         text-align: right;
@@ -54,6 +53,12 @@
         flex-grow: 1;
         flex-shrink: 0;
         text-align: right;
+      }
+
+      &.leaderboard-view-list-item-mine {
+        font-weight: bold;
+        color: #222222;
+        background-color: #F5F5F5;
       }
 
     }

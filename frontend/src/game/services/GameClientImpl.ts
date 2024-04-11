@@ -102,9 +102,13 @@ export class GameClientImpl implements GameClient {
         );
     }
 
-    public async getLeaderboard (limit ?: number): Promise<GameLeaderboardDTO> {
+    public async getLeaderboard (limit ?: number, name?: string): Promise<GameLeaderboardDTO> {
         const response = await this._client.getJson(
-            `${this._url}${LEADERBOARD_API_PATH}?limit=${limit ?? 10}`,
+            `${this._url}${
+                LEADERBOARD_API_PATH
+                }?limit=${limit ?? 10
+                }${name?`&name=${decodeURIComponent(name)}`:''
+            }`,
         );
         if (!isGameLeaderboardDTO(response)) {
             throw new TypeError(`Response was not GameLeaderboardDTO: ${explainGameLeaderboardDTO(response)}`)

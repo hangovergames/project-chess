@@ -20,14 +20,16 @@ const GAME_CLIENT = GameClientImpl.create();
 export interface LeaderboardViewProps {
     readonly t: TranslationFunction;
     readonly className?: string;
+    readonly name?: string;
 }
 
 export function LeaderboardView (props: LeaderboardViewProps) {
 
+    const name: string | undefined = props.name;
     const className: string | undefined = props.className;
     const location = useLocation();
 
-    const [leaderboard] = useLeaderboard(GAME_CLIENT, 30)
+    const [leaderboard] = useLeaderboard(GAME_CLIENT, 100, name)
 
     LOG.debug(`leaderboard = `, leaderboard);
 
@@ -45,9 +47,13 @@ export function LeaderboardView (props: LeaderboardViewProps) {
                 {map(leaderboard.payload, (item, index): any => {
                     return (
                         <div
-                            className={ LEADERBOARD_VIEW_CLASS_NAME + '-list-item'}
+                            className={ LEADERBOARD_VIEW_CLASS_NAME + '-list-item'
+                            + (
+                                    name === item.name ? ' ' + LEADERBOARD_VIEW_CLASS_NAME + '-list-item-mine' : ''
+                                )
+                        }
                             key={`leader-board-item-${item.id}`}>
-                            <div className={ LEADERBOARD_VIEW_CLASS_NAME + '-list-item-index'}>{index + 1}</div>
+                            <div className={ LEADERBOARD_VIEW_CLASS_NAME + '-list-item-index'}>{item.rank}</div>
                             <div className={ LEADERBOARD_VIEW_CLASS_NAME + '-list-item-name'}>{item.name}</div>
                             <div className={ LEADERBOARD_VIEW_CLASS_NAME + '-list-item-score'}>{item.score}</div>
                         </div>

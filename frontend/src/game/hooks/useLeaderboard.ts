@@ -18,7 +18,11 @@ const LOG = LogService.createLogger( 'useLeaderboard' );
 
 export type UpdateLeaderboardCallback = () => void;
 
-export function useLeaderboard (client : GameClient, limit ?: number) : [GameLeaderboardDTO, UpdateLeaderboardCallback] {
+export function useLeaderboard (
+    client : GameClient,
+    limit ?: number,
+    name ?: string,
+) : [GameLeaderboardDTO, UpdateLeaderboardCallback] {
 
     const [leaderboard, setLeaderboard] = useState<GameLeaderboardDTO>( () => createGameLeaderboardDTO( [] ));
 
@@ -29,7 +33,7 @@ export function useLeaderboard (client : GameClient, limit ?: number) : [GameLea
     const updateCallback = useCallback(
         () => {
             updateLock.current = true;
-            client.getLeaderboard(limit).then((dto) => {
+            client.getLeaderboard(limit, name).then((dto) => {
                 setLeaderboard(dto);
                 updateLock.current = false;
             }).catch((err) => {
@@ -37,6 +41,7 @@ export function useLeaderboard (client : GameClient, limit ?: number) : [GameLea
                 updateLock.current = false;
             });
         }, [
+            name,
             setLeaderboard,
             client,
             limit,

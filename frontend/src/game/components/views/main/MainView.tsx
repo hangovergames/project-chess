@@ -1,6 +1,6 @@
 // Copyright (c) 2022-2024. Heusala Group Oy <info@hg.fi>. All rights reserved.
 
-import {
+import React, {
     useCallback,
     useEffect,
     useRef,
@@ -17,6 +17,7 @@ import { useMemoryGameState } from "../../../hooks/useMemoryGameState";
 import { GameClientImpl } from "../../../services/GameClientImpl";
 import { MemoryGrid } from "../../memoryGrid/MemoryGrid";
 import "./MainView.scss";
+import { LeaderboardView } from "../leaderboard/LeaderboardView";
 
 const HIDE_TIMEOUT = 1500;
 
@@ -31,6 +32,7 @@ export interface MainViewProps {
 
 export function MainView (props: MainViewProps) {
 
+    const t = props.t;
     const className: string | undefined = props.className;
     const location = useLocation();
 
@@ -105,63 +107,69 @@ export function MainView (props: MainViewProps) {
     );
 
     return (
-        <div className={ MAIN_VIEW_CLASS_NAME + (className ? ` ${ className }` : '') }>
+        <>
 
-            { location.pathname === INDEX_ROUTE ? (
-                <ScrollToHere path={ INDEX_ROUTE } />
-            ) : null }
+            <div className={ MAIN_VIEW_CLASS_NAME + (className ? ` ${ className }` : '') }>
 
-            <section className={ MAIN_VIEW_CLASS_NAME + '-game' }>
+                { location.pathname === INDEX_ROUTE ? (
+                    <ScrollToHere path={ INDEX_ROUTE } />
+                ) : null }
 
-                <section className={ MAIN_VIEW_CLASS_NAME + '-game-content' }>
+                <section className={ MAIN_VIEW_CLASS_NAME + '-game' }>
 
-                    <header className={ MAIN_VIEW_CLASS_NAME + '-game-header' }>
-                        <h1>Memory Game from Hangover Games</h1>
-                    </header>
+                    <section className={ MAIN_VIEW_CLASS_NAME + '-game-content' }>
 
-                    <MemoryGrid
-                        cards={ visibleCards }
-                        onClick={ selectCardCallback }
-                    />
+                        <header className={ MAIN_VIEW_CLASS_NAME + '-game-header' }>
+                            <h1>Memory Game from Hangover Games</h1>
+                        </header>
 
-                    <section className={ MAIN_VIEW_CLASS_NAME + '-game-footer' }>
+                        <MemoryGrid
+                            cards={ visibleCards }
+                            onClick={ selectCardCallback }
+                        />
 
-                        <section className={ MAIN_VIEW_CLASS_NAME + '-name' }><input
-                            className={ MAIN_VIEW_CLASS_NAME + '-name-field' }
-                            type="text"
-                            placeholder={ "Your name" }
-                            required={ gameState.isStarted }
-                            maxLength={ 32 }
-                            value={ gameState.name }
-                            onChange={ ( elem ) => setName( elem.target.value ) }
-                        /></section>
+                        <section className={ MAIN_VIEW_CLASS_NAME + '-game-footer' }>
 
-                        <section className={ MAIN_VIEW_CLASS_NAME + '-buttons' }>
-                            <Button
-                                className={ MAIN_VIEW_CLASS_NAME + '-reset-button' }
-                                click={ resetGameCallback }
-                            >Reset</Button>
+                            <section className={ MAIN_VIEW_CLASS_NAME + '-name' }><input
+                                className={ MAIN_VIEW_CLASS_NAME + '-name-field' }
+                                type="text"
+                                placeholder={ "Your name" }
+                                required={ gameState.isStarted }
+                                maxLength={ 32 }
+                                value={ gameState.name }
+                                onChange={ ( elem ) => setName( elem.target.value ) }
+                            /></section>
+
+                            <section className={ MAIN_VIEW_CLASS_NAME + '-buttons' }>
+                                <Button
+                                    className={ MAIN_VIEW_CLASS_NAME + '-reset-button' }
+                                    click={ resetGameCallback }
+                                >Reset</Button>
+                            </section>
+
+                            <section className={ MAIN_VIEW_CLASS_NAME + '-score' }>Score: { gameState.score }</section>
+
                         </section>
-
-                        <section className={ MAIN_VIEW_CLASS_NAME + '-score' }>Score: { gameState.score }</section>
 
                     </section>
 
                 </section>
 
-            </section>
+                <section className={ MAIN_VIEW_CLASS_NAME + '-6b' }>
+                    <iframe
+                        title="r2"
+                        src="https://www.6b.fi/"
+                        width="100%"
+                        height="100%"
+                        scrolling="no"
+                        frameBorder="0"
+                    ></iframe>
+                </section>
 
-            <section className={ MAIN_VIEW_CLASS_NAME + '-6b' }>
-                <iframe
-                    title="r2"
-                    src="https://www.6b.fi/"
-                    width="100%"
-                    height="100%"
-                    scrolling="no"
-                    frameBorder="0"
-                ></iframe>
-            </section>
+            </div>
 
-        </div>
+            <LeaderboardView t={t} name={ gameState.name } />
+
+        </>
     );
 }

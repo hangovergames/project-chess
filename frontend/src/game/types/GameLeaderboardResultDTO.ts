@@ -30,6 +30,7 @@ export interface GameLeaderboardResultDTO {
     readonly time    ?: string;
     readonly name    ?: string;
     readonly score   ?: number;
+    readonly rank    ?: number;
 }
 
 export function createGameLeaderboardResultDTO (
@@ -37,12 +38,14 @@ export function createGameLeaderboardResultDTO (
     time ?: string | undefined,
     name ?: string | undefined,
     score ?: number | undefined,
+    rank ?: number | undefined,
 ) : GameLeaderboardResultDTO {
     return {
         id,
         time,
         name,
         score,
+        rank,
     };
 }
 
@@ -54,11 +57,13 @@ export function isGameLeaderboardResultDTO (value: unknown) : value is GameLeade
             'time',
             'name',
             'score',
+            'rank',
         ])
         && isStringOrUndefined(value?.id)
         && isStringOrUndefined(value?.time)
         && isStringOrUndefined(value?.name)
         && isNumberOrUndefined(value?.score)
+        && isNumberOrUndefined(value?.rank)
     );
 }
 
@@ -71,11 +76,13 @@ export function explainGameLeaderboardResultDTO (value: any) : string {
                 'time',
                 'name',
                 'score',
+                'rank',
             ])
             , explainProperty("id", explainStringOrUndefined(value?.id))
             , explainProperty("time", explainStringOrUndefined(value?.time))
             , explainProperty("name", explainStringOrUndefined(value?.name))
             , explainProperty("score", explainNumberOrUndefined(value?.score))
+            , explainProperty("rank", explainNumberOrUndefined(value?.rank))
         ]
     );
 }

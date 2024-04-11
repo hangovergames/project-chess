@@ -84,17 +84,8 @@ export function MemoryApp () {
         ),
         children: [
 
-            {path: INDEX_ROUTE, element: <>
-                    <MainView t={t as TranslationFunction} />
-                    <LeaderboardView t={t as TranslationFunction} />
-                </>
-            },
-
-            {path: LEADERBOARD_ROUTE, element: <>
-                    <MainView t={t as TranslationFunction} />
-                    <LeaderboardView t={t as TranslationFunction} />
-                </>
-            },
+            {path: INDEX_ROUTE, element: <MainView t={t as TranslationFunction} /> },
+            {path: LEADERBOARD_ROUTE, element: <MainView t={t as TranslationFunction} /> },
 
             {path: '*', element: <Navigate to={NOT_FOUND_ROUTE} />},
             {path: INDEX_ROUTE, element: <Navigate to={INDEX_ROUTE} />},
