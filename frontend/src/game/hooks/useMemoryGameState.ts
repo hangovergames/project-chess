@@ -59,11 +59,13 @@ export function useMemoryGameState (client : GameClient) : [GameStateDTO, Advanc
             }
             promiseLock.current = true;
 
+            const name = gameState?.name ?? INITIAL_NAME();
+
             let promise : Promise<GameStateDTO>
             if (gameState?.isStarted) {
-                promise = client.advanceGame(index, gameState, gameState.name)
+                promise = client.advanceGame(index, gameState, name)
             } else {
-                promise = client.newGame(index, gameState?.name)
+                promise = client.newGame(index, name)
             }
             promise.then(state => {
                 LOG.debug(`State updated: `, state);
