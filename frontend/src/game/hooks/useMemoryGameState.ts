@@ -6,11 +6,14 @@ import {
     useState,
 } from "react";
 import { LogService } from "../../io/hyperify/core/LogService";
+import { LocalStorageService } from "../../io/hyperify/frontend/services/LocalStorageService";
 import { GameClient } from "../services/GameClient";
 import {
     createGameStateDTO,
     GameStateDTO,
 } from "../types/GameStateDTO";
+
+const LOCAL_STORAGE_KEY_NAME = 'fi.hg.name';
 
 const LOG = LogService.createLogger( 'useMemoryGameState' );
 
@@ -25,7 +28,7 @@ const INITIAL_GAME_STATE = createGameStateDTO(
     "",
     0,
     -1,
-    "",
+    LocalStorageService.getItem(LOCAL_STORAGE_KEY_NAME) ?? '',
     "",
     0,
     0,
@@ -90,6 +93,7 @@ export function useMemoryGameState (client : GameClient) : [GameStateDTO, Advanc
 
     const setNameCallback = useCallback(
         (name : string) : void => {
+            LocalStorageService.setItem(LOCAL_STORAGE_KEY_NAME, name);
             setGameState((state : GameStateDTO | undefined) : GameStateDTO => {
                 if (state === undefined) {
                     return {

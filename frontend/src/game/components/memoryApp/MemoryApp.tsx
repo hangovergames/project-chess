@@ -24,7 +24,6 @@ import { useRouteServiceWithNavigate } from "../../../io/hyperify/frontend/hooks
 // overwrite SCSS from views and make your life harder.
 
 import { MainLayout } from "../layouts/main/MainLayout";
-import { LeaderboardView } from "../views/leaderboard/LeaderboardView";
 import { MainView } from "../views/main/MainView";
 
 const LOG = LogService.createLogger('MemoryApp');

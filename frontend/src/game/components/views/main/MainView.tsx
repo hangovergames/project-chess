@@ -16,8 +16,8 @@ import { INDEX_ROUTE } from "../../../constants/route";
 import { useMemoryGameState } from "../../../hooks/useMemoryGameState";
 import { GameClientImpl } from "../../../services/GameClientImpl";
 import { MemoryGrid } from "../../memoryGrid/MemoryGrid";
-import "./MainView.scss";
 import { LeaderboardView } from "../leaderboard/LeaderboardView";
+import "./MainView.scss";
 
 const HIDE_TIMEOUT = 1500;
 
