@@ -10,6 +10,7 @@
   align-content: center;
   justify-content: center;
   flex-direction: row;
+  font-size: 18px;
 
   margin: 100px 0 0 0;
   padding: 100px 100px;
@@ -26,12 +27,13 @@
     & > .leaderboard-view-list-item {
 
       width: 100%;
+      max-width: 100vw;
       box-sizing: border-box;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       align-content: center;
-      justify-content: center;
+      justify-content: stretch;
       justify-items: center;
       flex-direction: row;
 
@@ -44,7 +46,7 @@
 
       & > .leaderboard-view-list-item-name {
         padding: 12px;
-        min-width: 700px;
+        //min-width: 700px;
         flex-grow: 1;
       }
 
@@ -53,6 +55,7 @@
         flex-grow: 1;
         flex-shrink: 0;
         text-align: right;
+        //max-width: 100px;
       }
 
       &.leaderboard-view-list-item-mine {
