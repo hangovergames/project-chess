@@ -2,8 +2,6 @@
 
 import React, {
     useCallback,
-    useEffect,
-    useRef,
 } from "react";
 import { useLocation } from "react-router-dom";
 import { map } from "../../../../io/hyperify/core/functions/map";
@@ -18,8 +16,6 @@ import { GameClientImpl } from "../../../services/GameClientImpl";
 import { MemoryGrid } from "../../memoryGrid/MemoryGrid";
 import { LeaderboardView } from "../leaderboard/LeaderboardView";
 import "./MainView.scss";
-
-const HIDE_TIMEOUT = 1500;
 
 const LOG = LogService.createLogger( 'MainView' );
 
@@ -36,7 +32,6 @@ export function MainView (props: MainViewProps) {
     const className: string | undefined = props.className;
     const location = useLocation();
 
-    const timeoutRef = useRef<any | undefined>(undefined);
     const [gameState, advance, resetGame, setName] = useMemoryGameState(GAME_CLIENT)
 
     const visibleCards = map(
@@ -46,45 +41,6 @@ export function MainView (props: MainViewProps) {
             return card;
         }
     );
-
-    // Handle unflipping any cards without a match
-    const hideCardsCallback = useCallback(
-        () => {
-            LOG.debug('Hiding cards');
-
-        },
-        [
-        ]
-    );
-
-    // Delayed call to hide cards
-    const delayedHideCardsCallback = useCallback(
-        () => {
-            if (timeoutRef.current !== undefined) {
-                clearTimeout(timeoutRef.current);
-            }
-            LOG.debug(`Delayed call to hideCardsCallback()`);
-            timeoutRef.current = setTimeout(
-                () => hideCardsCallback(),
-                HIDE_TIMEOUT,
-            );
-        }, [
-            timeoutRef,
-            hideCardsCallback,
-        ],
-    );
-
-    // Update initial state and clear timeout when component unmounts
-    useEffect(() => {
-
-        delayedHideCardsCallback();
-
-        return () => {
-            if (timeoutRef.current !== undefined) {
-                clearTimeout(timeoutRef.current);
-            }
-        }
-    });
 
     // User selects a card
     const selectCardCallback = useCallback(
@@ -144,7 +100,7 @@ export function MainView (props: MainViewProps) {
                                 <Button
                                     className={ MAIN_VIEW_CLASS_NAME + '-reset-button' }
                                     click={ resetGameCallback }
-                                >Reset</Button>
+                                >{ gameState.isFinished ? "Restart" : "Reset" }</Button>
                             </section>
 
                             <section className={ MAIN_VIEW_CLASS_NAME + '-score' }>Score: { gameState.score }</section>
