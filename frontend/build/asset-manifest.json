@@ -1,20 +1,37 @@
 {
   "files": {
-    "main.css": "/static/css/main.3c59449c.css",
-    "main.js": "/static/js/main.1fd8464f.js",
+    "main.css": "/static/css/main.966d4129.css",
+    "main.js": "/static/js/main.cf1aa862.js",
     "static/js/496.59a24e4c.chunk.js": "/static/js/496.59a24e4c.chunk.js",
     "static/media/RedHatDisplay-SemiBold.ttf": "/static/media/RedHatDisplay-SemiBold.a09738a446c68f81a5a1.ttf",
     "static/media/RedHatDisplay-ExtraBold.ttf": "/static/media/RedHatDisplay-ExtraBold.3c908e72acb4638501f1.ttf",
     "static/media/RedHatDisplay-Medium.ttf": "/static/media/RedHatDisplay-Medium.7ee466f5ad16cf06e5de.ttf",
     "static/media/RedHatDisplay-Regular.ttf": "/static/media/RedHatDisplay-Regular.3f17d35ffc01dfc0e72a.ttf",
     "static/media/RedHatDisplay-Bold.ttf": "/static/media/RedHatDisplay-Bold.2ec0c3dadf633ed6898f.ttf",
+    "static/media/IconGold.webp": "/static/media/IconGold.5a57b6409506f8db4888.webp",
+    "static/media/IconTechnology.webp": "/static/media/IconTechnology.7416f3c3e95f6d50e515.webp",
+    "static/media/IconWater.webp": "/static/media/IconWater.97be992f95c07c9d5198.webp",
+    "static/media/IconTree.webp": "/static/media/IconTree.341f8c2ad080c99565cc.webp",
+    "static/media/FramesHexagon08.webp": "/static/media/FramesHexagon08.a4382136a115d69430aa.webp",
+    "static/media/FramesHexagon06.webp": "/static/media/FramesHexagon06.ae29ad876be8fa058c21.webp",
+    "static/media/FramesHexagon03.webp": "/static/media/FramesHexagon03.6f383d95e0a82dec9277.webp",
+    "static/media/FramesHexagon05.webp": "/static/media/FramesHexagon05.0a3a3a8d1236893becaa.webp",
+    "static/media/FramesHexagon01.webp": "/static/media/FramesHexagon01.1c39f22034eaa83ad317.webp",
+    "static/media/FramesHexagon02.webp": "/static/media/FramesHexagon02.0791bdc0ad3a1050bd2f.webp",
+    "static/media/IconMagic.webp": "/static/media/IconMagic.07b5ae215206d6c6ae1a.webp",
+    "static/media/FramesHexagon07.webp": "/static/media/FramesHexagon07.9689731ed10cc9b0d1e0.webp",
+    "static/media/IconStone.webp": "/static/media/IconStone.f56349ef937b8015a132.webp",
+    "static/media/IconKnowledge.webp": "/static/media/IconKnowledge.bdccd4044bad9f0bf737.webp",
+    "static/media/IconFood.webp": "/static/media/IconFood.7fc98d782f94920e4753.webp",
+    "static/media/FramesHexagon04.webp": "/static/media/FramesHexagon04.8b87ae01cd20913fea31.webp",
+    "static/media/00_BackCover.webp": "/static/media/00_BackCover.27410fd3f151a763baca.webp",
     "index.html": "/index.html",
-    "main.3c59449c.css.map": "/static/css/main.3c59449c.css.map",
-    "main.1fd8464f.js.map": "/static/js/main.1fd8464f.js.map",
+    "main.966d4129.css.map": "/static/css/main.966d4129.css.map",
+    "main.cf1aa862.js.map": "/static/js/main.cf1aa862.js.map",
     "496.59a24e4c.chunk.js.map": "/static/js/496.59a24e4c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3c59449c.css",
-    "static/js/main.1fd8464f.js"
+    "static/css/main.966d4129.css",
+    "static/js/main.cf1aa862.js"
   ]
 }
