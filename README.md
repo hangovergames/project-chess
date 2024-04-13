@@ -11,6 +11,12 @@ Welcome to the GitHub repository for our memory matching game!
 This repository contains the frontend source code and is the central hub for tracking issues and 
 developments related to the game.
 
+## Releases
+
+Notice: Our releases in this repository contain the game server as encrypted 
+self-installing release. You need to have the private key to use them. Contact 
+us, if you want to host your own server.
+
 ## Contribution and Issue Tracking
 
 We encourage you to participate in our development process. You can find and 
