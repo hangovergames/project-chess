@@ -4,6 +4,9 @@ import "./MemoryGrid.scss";
 import { useCallback } from "react";
 import { map } from "../../../io/hyperify/core/functions/map";
 import { MEMORY_GRID_CLASS_NAME } from "../../constants/classNames";
+import { getPlayingCardFrameByNumber } from "../../types/PlayingCardFrame";
+import { getPlayingCardTypeByNumber } from "../../types/PlayingCardType";
+import { PlayingCard } from "../playingCard/PlayingCard";
 
 export interface MemoryGridProps {
     readonly className ?: string;
@@ -56,9 +59,11 @@ export function MemoryGrid ( props: MemoryGridProps) {
                                      onClick={clickCallback.bind(undefined, index)}
                                      onContextMenu={ () => false }
                                 >
-                                    <div className={MEMORY_GRID_CLASS_NAME+'-cell-content-text'}
-                                         onContextMenu={ () => false }
-                                    >{ cards[index] }</div>
+                                    <PlayingCard
+                                        className={MEMORY_GRID_CLASS_NAME+'-cell-content-text'}
+                                        type={ getPlayingCardTypeByNumber(cards[index]) }
+                                        frame={ getPlayingCardFrameByNumber(cards[index]) }
+                                    />
                                 </div>
                             </div>
                         );

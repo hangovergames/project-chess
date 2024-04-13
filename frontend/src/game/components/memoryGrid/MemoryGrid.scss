@@ -24,8 +24,14 @@
     margin: 0;
     padding: 0;
 
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+
     & > .memory-grid-cell {
-      margin: 6px;
+
+      margin: 4px;
       padding: 0;
 
       -webkit-user-select: none; /* Safari */
@@ -35,6 +41,8 @@
 
       & > .memory-grid-cell-content {
 
+        overflow: hidden;
+
         -webkit-user-select: none; /* Safari */
         -moz-user-select: none;    /* Firefox */
         -ms-user-select: none;     /* IE10+/Edge */
@@ -42,9 +50,9 @@
 
         cursor: pointer;
         margin: auto;
-        padding: 0;
-        width: 12vw;
-        height: 12vh;
+        padding: 6px;
+        width: auto;
+        //height: 12vh;
         min-width: 20px;
         min-height: 20px;
         max-width: 200px;
@@ -68,7 +76,7 @@
 
         &.memory-grid-cell-content-0 {
           color: #ffffff;
-          background: #444444;
+          background: #424242;
         }
 
         &.memory-grid-cell-content-1 {

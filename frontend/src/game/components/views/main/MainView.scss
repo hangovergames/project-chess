@@ -44,7 +44,7 @@
       }
 
       & > .main-view-game-footer {
-        margin: 16px 0 16px 0;
+        margin: 16px 0 6px 0;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -58,6 +58,7 @@
           & > .main-view-name-field {
             margin: 0;
             padding: 12px;
+            background-color: #f0f0f0;
           }
         }
 
@@ -66,7 +67,7 @@
         }
 
         & > .main-view-score {
-          margin: 0 32px;
+          margin: 6px 12px;
           font-size: 22px;
         }
 
@@ -76,23 +77,23 @@
 
   }
 
-  & > .main-view-6b {
-    flex-shrink: 0;
-    margin: 16px;
+}
 
-    & > iframe {
-      border: 2px solid #333;
-      min-width: 70px;
-      max-width: 80px;
-      min-height: 234px;
-      max-height: 468px;
-      margin: 0;
-      width: auto;
-      height: 60vh;
-      background: #000;
-      pointer-events: painted;
-    }
+.main-view-6b {
+  flex-shrink: 0;
+  margin: 96px auto;
 
+  & > iframe {
+    display: block;
+    border: 2px solid #333;
+    min-width: 90vw;
+    max-width: 100vw;
+    min-height: 48px;
+    margin: 0 auto;
+    width: 100vh;
+    height: 150px;
+    background: #000;
+    pointer-events: painted;
   }
 
 }

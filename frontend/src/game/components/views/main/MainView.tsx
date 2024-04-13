@@ -155,20 +155,34 @@ export function MainView (props: MainViewProps) {
 
                 </section>
 
-                <section className={ MAIN_VIEW_CLASS_NAME + '-6b' }>
-                    <iframe
-                        title="r2"
-                        src="https://www.6b.fi/"
-                        width="100%"
-                        height="100%"
-                        scrolling="no"
-                        frameBorder="0"
-                    ></iframe>
-                </section>
-
             </div>
 
-            <LeaderboardView t={t} name={ gameState.name } />
+            <section className={ MAIN_VIEW_CLASS_NAME + '-6b' }>
+                <iframe
+                    title="r2"
+                    src="https://www.6b.fi/"
+                    width="100%"
+                    height="100%"
+                    scrolling="no"
+                    frameBorder="0"
+                ></iframe>
+            </section>
+
+            <LeaderboardView
+                t={ t }
+                name={ gameState.name }
+            />
+
+            <section className={ MAIN_VIEW_CLASS_NAME + '-6b' }>
+                <iframe
+                    title="r2"
+                    src="https://www.6b.fi/"
+                    width="100%"
+                    height="100%"
+                    scrolling="no"
+                    frameBorder="0"
+                ></iframe>
+            </section>
 
         </>
     );
