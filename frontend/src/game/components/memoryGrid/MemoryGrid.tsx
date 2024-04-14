@@ -19,12 +19,7 @@ export function MemoryGrid ( props: MemoryGridProps) {
     const onClick = props?.onClick;
     const cards = props?.cards ?? [];
 
-    const indexes = [
-        [0, 1, 2, 3],
-        [4, 5, 6, 7],
-        [8, 9, 10, 11],
-        [12, 13, 14, 15],
-    ];
+    const indexes = getIndexesPerCardAmount(cards.length);
 
     const clickCallback = useCallback(
         (index: number) => {
@@ -72,4 +67,47 @@ export function MemoryGrid ( props: MemoryGridProps) {
             );
         })}</div>
     );
+}
+
+function getIndexesPerCardAmount (amount : number) : number[][] {
+    let indexes : number[][] = []
+    if (amount === 2) {
+        indexes = [
+            [0, 1],
+        ];
+    }
+    if (amount === 4) {
+        indexes = [
+            [0, 1],
+            [2, 3],
+        ];
+    }
+    if (amount === 6) {
+        indexes = [
+            [0, 1, 2],
+            [3, 4, 5],
+        ];
+    }
+    if (amount === 8) {
+        indexes = [
+            [0, 1, 2, 3],
+            [4, 5, 6, 7],
+        ];
+    }
+    if (amount === 12) {
+        indexes = [
+            [0, 1,  2,  3],
+            [4, 5,  6,  7],
+            [8, 9, 10, 11],
+        ];
+    }
+    if (amount === 16) {
+        indexes = [
+            [0,   1,  2,  3],
+            [4,   5,  6,  7],
+            [8,   9, 10, 11],
+            [12, 13, 14, 15],
+        ];
+    }
+    return indexes;
 }

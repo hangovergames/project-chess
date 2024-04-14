@@ -34,17 +34,20 @@ export interface GameRequestDTO {
     readonly name      ?: string;
     readonly gameState ?: GameStateDTO;
     readonly nextIndex ?: number;
+    readonly cards     ?: number;
 }
 
 export function createGameRequestDTO (
     nextIndex : number | undefined,
     gameState ?: GameStateDTO | undefined,
-    name ?: string | undefined,
+    name      ?: string | undefined,
+    cards     ?: number | undefined,
 ) : GameRequestDTO {
     return {
         name,
         nextIndex,
         gameState,
+        cards,
     };
 }
 
@@ -55,10 +58,12 @@ export function isGameRequestDTO (value: unknown) : value is GameRequestDTO {
             'name',
             'gameState',
             'nextIndex',
+            'cards',
         ])
         && isStringOrUndefined(value?.name)
         && isGameStateDTOOrUndefined(value?.gameState)
         && isNumberOrUndefined(value?.nextIndex)
+        && isNumberOrUndefined(value?.cards)
     );
 }
 
@@ -70,10 +75,12 @@ export function explainGameRequestDTO (value: any) : string {
                 'name',
                 'gameState',
                 'nextIndex',
+                'cards',
             ])
             , explainProperty("name", explainStringOrUndefined(value?.name))
             , explainProperty("gameState", explainGameStateDTOOrUndefined(value?.gameState))
             , explainProperty("nextIndex", explainNumberOrUndefined(value?.nextIndex))
+            , explainProperty("cards", explainNumberOrUndefined(value?.cards))
         ]
     );
 }

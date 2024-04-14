@@ -73,6 +73,25 @@
 
       }
 
+      & > .main-view-change-cards {
+        margin: 16px 0 6px 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        align-content: stretch;
+        justify-content: stretch;
+        flex-direction: row;
+
+        & > .main-view-change-cards-button {
+          margin: 12px;
+        }
+
+        & > .main-view-change-cards-button-selected {
+          background-color: #444444;
+        }
+
+      }
+
     }
 
   }

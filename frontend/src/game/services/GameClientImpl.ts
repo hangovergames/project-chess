@@ -82,7 +82,7 @@ export class GameClientImpl implements GameClient {
         return response;
     }
 
-    public async advanceGame ( nextIndex : number, prevState : GameStateDTO, name ?: string ) : Promise<GameStateDTO> {
+    public async advanceGame (nextIndex : number, prevState : GameStateDTO, name ?: string ) : Promise<GameStateDTO> {
         return this.postRequest(
             createGameRequestDTO(
                 nextIndex,
@@ -92,12 +92,13 @@ export class GameClientImpl implements GameClient {
         );
     }
 
-    public async newGame (nextIndex : number, name ?: string) : Promise<GameStateDTO> {
+    public async newGame (cards: number, nextIndex : number, name ?: string) : Promise<GameStateDTO> {
         return this.postRequest(
             createGameRequestDTO(
                 nextIndex,
                 undefined,
                 name,
+                cards,
             )
         );
     }

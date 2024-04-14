@@ -32,7 +32,9 @@ export function MainView (props: MainViewProps) {
     const className: string | undefined = props.className;
     const location = useLocation();
 
-    const [gameState, advance, resetGame, setName] = useMemoryGameState(GAME_CLIENT)
+    const [
+        gameState, advance, resetGame, setName
+    ] = useMemoryGameState(GAME_CLIENT)
 
     const visibleCards = map(
         gameState.cards,
@@ -54,11 +56,13 @@ export function MainView (props: MainViewProps) {
 
     // Reset game and randomize cards
     const resetGameCallback = useCallback(
-        () => {
-            LOG.info(`Resetting game`);
-            resetGame();
+        (amount?: number) => {
+            const cards = amount ?? gameState?.cards?.length
+            LOG.info(`Resetting game with ${cards} cards`);
+            resetGame( cards );
         }, [
             resetGame,
+            gameState,
         ],
     );
 
@@ -99,13 +103,53 @@ export function MainView (props: MainViewProps) {
                             <section className={ MAIN_VIEW_CLASS_NAME + '-buttons' }>
                                 <Button
                                     className={ MAIN_VIEW_CLASS_NAME + '-reset-button' }
-                                    click={ resetGameCallback }
+                                    click={ () => resetGameCallback() }
                                 >{ gameState.isFinished ? "Restart" : "Reset" }</Button>
                             </section>
 
                             <section className={ MAIN_VIEW_CLASS_NAME + '-score' }>Score: { gameState.score }</section>
 
                         </section>
+
+
+                        { gameState?.isStarted ? (
+                            <>
+                            </>
+                        ) : (
+                            <>
+                                <section className={ MAIN_VIEW_CLASS_NAME + '-change-cards' }>
+                                    <Button
+                                        className={
+                                            MAIN_VIEW_CLASS_NAME + '-change-cards-button'
+                                            + (gameState?.cards?.length === 6 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
+                                        }
+                                        click={ () => resetGameCallback( 6 ) }
+                                        enabled={ !gameState.isStarted }
+                                    >Novice</Button>
+                                    <Button
+                                        className={ MAIN_VIEW_CLASS_NAME + '-change-cards-button'
+                                            + (gameState?.cards?.length === 8 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
+                                        }
+                                        click={ () => resetGameCallback( 8 ) }
+                                        enabled={ !gameState.isStarted }
+                                    >Apprentice</Button>
+                                    <Button
+                                        className={ MAIN_VIEW_CLASS_NAME + '-change-cards-button'
+                                            + (gameState?.cards?.length === 12 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
+                                        }
+                                        click={ () => resetGameCallback( 12 ) }
+                                        enabled={ !gameState.isStarted }
+                                    >Master</Button>
+                                    <Button
+                                        className={ MAIN_VIEW_CLASS_NAME + '-change-cards-button'
+                                            + (gameState?.cards?.length === 16 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
+                                        }
+                                        click={ () => resetGameCallback( 16 ) }
+                                        enabled={ !gameState.isStarted }
+                                    >Elder</Button>
+                                </section>
+                            </>
+                        ) }
 
                     </section>
 

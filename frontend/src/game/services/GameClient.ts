@@ -16,7 +16,7 @@ export interface GameClient {
     /**
      * Start a new game
      */
-    newGame (nextIndex : number, name ?: string): Promise<GameStateDTO>;
+    newGame (cards: number, nextIndex : number, name ?: string): Promise<GameStateDTO>;
 
     /**
      * Start a new game
