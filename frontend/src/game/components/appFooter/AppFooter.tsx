@@ -10,6 +10,8 @@ export interface AppFooterProps {
 }
 
 export function AppFooter (props: AppFooterProps) {
+    const name : string = process.env.REACT_APP_NAME ?? '';
+    const version : string = process.env.REACT_APP_VERSION ?? '';
     const className = props?.className;
     // const t: TranslationFunction = props?.t ?? ((key: string): string => key);
     return (
@@ -20,7 +22,9 @@ export function AppFooter (props: AppFooterProps) {
             }
         >
 
-            Copyright 2024 <a href={"https://github.com/hangovergames/project-memory"}>Hangover Games</a>
+             <a href={"https://github.com/hangovergames/project-memory"}>{ name ? name : 'Memory Game' }</a>
+            &nbsp;<a href={"https://github.com/hangovergames/project-memory/issues/1"}>{ version ? `v${ version }` : 'dev-version' }</a>
+            &nbsp;&copy; 2024 <a href={"https://hangover.games"}>Hangover Games</a>
 
         </footer>
     );
