@@ -12,6 +12,11 @@ import {
     explainProperty,
 } from "../../io/hyperify/core/types/explain";
 import {
+    explainNumber,
+    explainNumberOrUndefined,
+    isNumberOrUndefined,
+} from "../../io/hyperify/core/types/Number";
+import {
     explainNoOtherKeysInDevelopment,
     hasNoOtherKeysInDevelopment,
 } from "../../io/hyperify/core/types/OtherKeys";
@@ -27,13 +32,16 @@ import {
 } from "./GameLeaderboardResultDTO";
 
 export interface GameLeaderboardDTO {
-    readonly payload : readonly GameLeaderboardResultDTO[];
+    readonly cards   ?: number;
+    readonly payload  : readonly GameLeaderboardResultDTO[];
 }
 
 export function createGameLeaderboardDTO (
     payload : readonly GameLeaderboardResultDTO[],
+    cards  ?: number,
 ) : GameLeaderboardDTO {
     return {
+        cards,
         payload,
     };
 }
@@ -42,8 +50,10 @@ export function isGameLeaderboardDTO (value: unknown) : value is GameLeaderboard
     return (
         isRegularObject(value)
         && hasNoOtherKeysInDevelopment(value, [
+            'cards',
             'payload',
         ])
+        && isNumberOrUndefined(value?.cards)
         && isArrayOf<GameLeaderboardResultDTO>(value?.payload, isGameLeaderboardResultDTO)
     );
 }
@@ -53,8 +63,10 @@ export function explainGameLeaderboardDTO (value: any) : string {
         [
             explainRegularObject(value),
             explainNoOtherKeysInDevelopment(value, [
+                'cards',
                 'payload',
             ])
+            , explainProperty("cards", explainNumberOrUndefined(value?.cards))
             , explainProperty("payload", explainArrayOf<GameLeaderboardResultDTO>(
                 "GameLeaderboardResultDTO",
                 explainGameLeaderboardResultDTO,

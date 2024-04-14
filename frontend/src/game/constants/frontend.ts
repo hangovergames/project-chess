@@ -9,7 +9,7 @@ export const PUBLIC_URL = parseNonEmptyString(process.env.PUBLIC_URL) ?? parseNo
 export const API_PATH = '/api/v1';
 export const LEADERBOARD_API_PATH = '/api/v1/leaderboard';
 
-export const DEFAULT_CARD_AMOUNT = 12
+export const DEFAULT_CARD_AMOUNT = 6
 
 export const AVAILABLE_CARD_AMOUNTS = [
     2,

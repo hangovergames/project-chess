@@ -10,6 +10,7 @@ import { TranslationFunction } from "../../../../io/hyperify/core/types/Translat
 import { Button } from "../../../../io/hyperify/frontend/components/button/Button";
 import { ScrollToHere } from "../../../../io/hyperify/frontend/components/common/scrollToHere/ScrollToHere";
 import { MAIN_VIEW_CLASS_NAME } from "../../../constants/classNames";
+import { DEFAULT_CARD_AMOUNT } from "../../../constants/frontend";
 import { INDEX_ROUTE } from "../../../constants/route";
 import { useMemoryGameState } from "../../../hooks/useMemoryGameState";
 import { GameClientImpl } from "../../../services/GameClientImpl";
@@ -66,6 +67,40 @@ export function MainView (props: MainViewProps) {
         ],
     );
 
+    const changeCardButtons = (
+        <section className={ MAIN_VIEW_CLASS_NAME + '-change-cards' }>
+            <Button
+                className={
+                    MAIN_VIEW_CLASS_NAME + '-change-cards-button'
+                    + (gameState?.cards?.length === 6 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
+                }
+                click={ () => resetGameCallback( 6 ) }
+                enabled={ !gameState.isStarted || gameState.isFinished  }
+            >Novice</Button>
+            <Button
+                className={ MAIN_VIEW_CLASS_NAME + '-change-cards-button'
+                    + (gameState?.cards?.length === 8 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
+                }
+                click={ () => resetGameCallback( 8 ) }
+                enabled={ !gameState.isStarted || gameState.isFinished }
+            >Apprentice</Button>
+            <Button
+                className={ MAIN_VIEW_CLASS_NAME + '-change-cards-button'
+                    + (gameState?.cards?.length === 12 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
+                }
+                click={ () => resetGameCallback( 12 ) }
+                enabled={ !gameState.isStarted || gameState.isFinished }
+            >Master</Button>
+            <Button
+                className={ MAIN_VIEW_CLASS_NAME + '-change-cards-button'
+                    + (gameState?.cards?.length === 16 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
+                }
+                click={ () => resetGameCallback( 16 ) }
+                enabled={ !gameState.isStarted || gameState.isFinished }
+            >Elder</Button>
+        </section>
+    );
+
     return (
         <>
 
@@ -116,39 +151,7 @@ export function MainView (props: MainViewProps) {
                             <>
                             </>
                         ) : (
-                            <>
-                                <section className={ MAIN_VIEW_CLASS_NAME + '-change-cards' }>
-                                    <Button
-                                        className={
-                                            MAIN_VIEW_CLASS_NAME + '-change-cards-button'
-                                            + (gameState?.cards?.length === 6 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
-                                        }
-                                        click={ () => resetGameCallback( 6 ) }
-                                        enabled={ !gameState.isStarted }
-                                    >Novice</Button>
-                                    <Button
-                                        className={ MAIN_VIEW_CLASS_NAME + '-change-cards-button'
-                                            + (gameState?.cards?.length === 8 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
-                                        }
-                                        click={ () => resetGameCallback( 8 ) }
-                                        enabled={ !gameState.isStarted }
-                                    >Apprentice</Button>
-                                    <Button
-                                        className={ MAIN_VIEW_CLASS_NAME + '-change-cards-button'
-                                            + (gameState?.cards?.length === 12 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
-                                        }
-                                        click={ () => resetGameCallback( 12 ) }
-                                        enabled={ !gameState.isStarted }
-                                    >Master</Button>
-                                    <Button
-                                        className={ MAIN_VIEW_CLASS_NAME + '-change-cards-button'
-                                            + (gameState?.cards?.length === 16 ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-cards-button-selected' }` : '')
-                                        }
-                                        click={ () => resetGameCallback( 16 ) }
-                                        enabled={ !gameState.isStarted }
-                                    >Elder</Button>
-                                </section>
-                            </>
+                            <>{changeCardButtons}</>
                         ) }
 
                     </section>
@@ -171,7 +174,12 @@ export function MainView (props: MainViewProps) {
             <LeaderboardView
                 t={ t }
                 name={ gameState.name }
-            />
+                cards={ gameState?.cards?.length ?? DEFAULT_CARD_AMOUNT }
+            >
+
+                <>{changeCardButtons}</>
+
+            </LeaderboardView>
 
             <section className={ MAIN_VIEW_CLASS_NAME + '-6b' }>
                 <iframe

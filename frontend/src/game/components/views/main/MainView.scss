@@ -74,7 +74,7 @@
       }
 
       & > .main-view-change-cards {
-        margin: 16px 0 6px 0;
+        margin: 16px auto 6px auto;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -94,9 +94,11 @@
 
     }
 
+
   }
 
 }
+
 
 .main-view-6b {
   flex-shrink: 0;

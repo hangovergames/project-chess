@@ -24,6 +24,25 @@
       text-align: center;
     }
 
+    & > .main-view-change-cards {
+      margin: 16px auto 6px auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      align-content: stretch;
+      justify-content: stretch;
+      flex-direction: row;
+
+      & > .main-view-change-cards-button {
+        margin: 12px;
+      }
+
+      & > .main-view-change-cards-button-selected {
+        background-color: #333333;
+      }
+
+    }
+
     & > .leaderboard-view-list-item {
 
       width: 100%;

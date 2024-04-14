@@ -19,12 +19,15 @@ const LOG = LogService.createLogger( 'useLeaderboard' );
 export type UpdateLeaderboardCallback = () => void;
 
 export function useLeaderboard (
-    client : GameClient,
-    limit ?: number,
-    name ?: string,
+    client  : GameClient,
+    cards   : number,
+    limit  ?: number,
+    name   ?: string,
 ) : [GameLeaderboardDTO, UpdateLeaderboardCallback] {
 
-    const [leaderboard, setLeaderboard] = useState<GameLeaderboardDTO>( () => createGameLeaderboardDTO( [] ));
+    const [leaderboard, setLeaderboard] = useState<GameLeaderboardDTO>( () => createGameLeaderboardDTO( [], cards ));
+
+    const currentCards = leaderboard?.cards ?? 0;
 
     const isInitialized = leaderboard?.payload?.length !== 0;
 
@@ -33,7 +36,7 @@ export function useLeaderboard (
     const updateCallback = useCallback(
         () => {
             updateLock.current = true;
-            client.getLeaderboard(limit, name).then((dto) => {
+            client.getLeaderboard(cards, limit, name).then((dto) => {
                 setLeaderboard(dto);
                 updateLock.current = false;
             }).catch((err) => {
@@ -45,16 +48,19 @@ export function useLeaderboard (
             setLeaderboard,
             client,
             limit,
+            cards,
         ],
     );
 
     useEffect(
         () => {
-            if (!isInitialized && !updateLock.current) {
+            if ( !( isInitialized && cards === currentCards ) && !updateLock.current ) {
                 updateCallback();
             }
         },
         [
+            cards,
+            currentCards,
             isInitialized,
             updateLock,
             updateCallback,

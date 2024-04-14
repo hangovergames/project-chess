@@ -26,6 +26,6 @@ export interface GameClient {
     /**
      * Fetch the leaderboard
      */
-    getLeaderboard (limit ?: number, name?: string): Promise<GameLeaderboardDTO>;
+    getLeaderboard (cards : number, limit ?: number, name?: string): Promise<GameLeaderboardDTO>;
 
 }
