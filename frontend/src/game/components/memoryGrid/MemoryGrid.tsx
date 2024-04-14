@@ -1,7 +1,7 @@
 // Copyright (c) 2024. Heusala Group Oy <info@heusalagroup.fi>. All rights reserved.
 
 import "./MemoryGrid.scss";
-import { useCallback } from "react";
+import { useCallback, MouseEvent } from "react";
 import { map } from "../../../io/hyperify/core/functions/map";
 import { MEMORY_GRID_CLASS_NAME } from "../../constants/classNames";
 import { getPlayingCardFrameByNumber } from "../../types/PlayingCardFrame";
@@ -42,17 +42,29 @@ export function MemoryGrid ( props: MemoryGridProps) {
                      onContextMenu={ () => false }
                 >{
                     map(row, (index, cellIndex) => {
+                        let click = clickCallback.bind(undefined, index)
+                        let mouseClick = (event: MouseEvent<HTMLDivElement, any>) : boolean => {
+                            if (event) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+                            click();
+                            return false;
+                        }
                         return (
                             <div className={MEMORY_GRID_CLASS_NAME+'-cell'}
                                  key={MEMORY_GRID_CLASS_NAME+'-row-'+rowIndex+'-cell-'+cellIndex}
-                                 onContextMenu={ () => false }
+                                 onClick={mouseClick}
+                                 onContextMenu={mouseClick}
+                                 onMouseDown={mouseClick}
                             >
                                 <div className={
                                     MEMORY_GRID_CLASS_NAME+'-cell-content'
                                     + ' ' + MEMORY_GRID_CLASS_NAME+'-cell-content-' + cards[index]
                                 }
-                                     onClick={clickCallback.bind(undefined, index)}
-                                     onContextMenu={ () => false }
+                                     onClick={mouseClick}
+                                     onContextMenu={mouseClick}
+                                     onMouseDown={mouseClick}
                                 >
                                     <PlayingCard
                                         className={MEMORY_GRID_CLASS_NAME+'-cell-content-text'}
