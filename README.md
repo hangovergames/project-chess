@@ -11,6 +11,31 @@ Welcome to the GitHub repository for our memory matching game!
 This repository contains the frontend source code and is the central hub for tracking issues and 
 developments related to the game.
 
+## Rules of the Game
+
+1. **Combo Points**: Earn points for consecutive matching pairs. More points 
+   are awarded for longer combos, with a maximum of eight consecutive pairs.
+
+2. **Memory Bonus**: Gain extra points for recalling a card’s position for a 
+   longer time, up to a set limit based on the number of cards on the board. This 
+   bonus applies only when you successfully match a card on the second attempt 
+   after its first reveal and when more than two cards are open (the time bonus 
+   stops when only two cards are visible).
+
+3. **First Reveal Points**: Points are awarded the first time you reveal a 
+   card. However, you will lose points each subsequent time you reveal the same 
+   card without making a match.
+
+4. **Visibility Penalty**: Points are reduced the longer a card remains 
+   revealed without being paired. This penalty increases exponentially over time. 
+   
+   **Note**: No need to rush if all cards are paired — take this moment for a quick 
+   coffee break as this penalty pauses when there are no unpaired cards open on 
+   the board.
+
+5. **Mismatch Penalty**: Points are deducted each time you incorrectly attempt 
+   to pair a revealed card with another.
+
 ## Releases
 
 Notice: Our releases in this repository contain the game server as encrypted 
