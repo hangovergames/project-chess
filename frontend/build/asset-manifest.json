@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.d21e48df.css",
-    "main.js": "/static/js/main.9d185e5e.js",
+    "main.js": "/static/js/main.31894870.js",
     "static/js/496.59a24e4c.chunk.js": "/static/js/496.59a24e4c.chunk.js",
     "static/media/RedHatDisplay-SemiBold.ttf": "/static/media/RedHatDisplay-SemiBold.a09738a446c68f81a5a1.ttf",
     "static/media/RedHatDisplay-ExtraBold.ttf": "/static/media/RedHatDisplay-ExtraBold.3c908e72acb4638501f1.ttf",
@@ -27,11 +27,11 @@
     "static/media/00_BackCover.webp": "/static/media/00_BackCover.27410fd3f151a763baca.webp",
     "index.html": "/index.html",
     "main.d21e48df.css.map": "/static/css/main.d21e48df.css.map",
-    "main.9d185e5e.js.map": "/static/js/main.9d185e5e.js.map",
+    "main.31894870.js.map": "/static/js/main.31894870.js.map",
     "496.59a24e4c.chunk.js.map": "/static/js/496.59a24e4c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d21e48df.css",
-    "static/js/main.9d185e5e.js"
+    "static/js/main.31894870.js"
   ]
 }
