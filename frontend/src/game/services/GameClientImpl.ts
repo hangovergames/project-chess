@@ -23,6 +23,7 @@ import {
     GameStateDTO,
     isGameStateDTO,
 } from "../types/GameStateDTO";
+import { LeaderBoardType } from "../types/LeaderBoardType";
 import { GameClient } from "./GameClient";
 
 const DEFAULT_GAME_URL = 'https://memory.hangover.games';
@@ -103,11 +104,14 @@ export class GameClientImpl implements GameClient {
         );
     }
 
-    public async getLeaderboard (cards : number, limit ?: number, name?: string): Promise<GameLeaderboardDTO> {
+    public async getLeaderboard (cards : number, limit ?: number, name?: string, type?: LeaderBoardType): Promise<GameLeaderboardDTO> {
         const response = await this._client.getJson(
             `${this._url}${
                 LEADERBOARD_API_PATH
-                }?limit=${limit ?? 10}&cards=${cards}${name?`&name=${decodeURIComponent(name)}`:''
+                }?limit=${limit ?? 10}&cards=${cards}${
+                name?`&name=${decodeURIComponent(name)}`:''
+            }${
+                type?`&type=${decodeURIComponent(type)}`:''
             }`,
         );
         if (!isGameLeaderboardDTO(response)) {

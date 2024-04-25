@@ -2,6 +2,7 @@
 
 import React, {
     useCallback,
+    useState,
 } from "react";
 import { useLocation } from "react-router-dom";
 import { map } from "../../../../io/hyperify/core/functions/map";
@@ -14,6 +15,7 @@ import { DEFAULT_CARD_AMOUNT } from "../../../constants/frontend";
 import { INDEX_ROUTE } from "../../../constants/route";
 import { useMemoryGameState } from "../../../hooks/useMemoryGameState";
 import { GameClientImpl } from "../../../services/GameClientImpl";
+import { LeaderBoardType } from "../../../types/LeaderBoardType";
 import { MemoryGrid } from "../../memoryGrid/MemoryGrid";
 import { LeaderboardView } from "../leaderboard/LeaderboardView";
 import "./MainView.scss";
@@ -36,6 +38,8 @@ export function MainView (props: MainViewProps) {
     const [
         gameState, advance, resetGame, setName
     ] = useMemoryGameState(GAME_CLIENT)
+
+    const [ type, setType ] = useState<LeaderBoardType>(LeaderBoardType.DAILY);
 
     const visibleCards = map(
         gameState.cards,
@@ -98,6 +102,40 @@ export function MainView (props: MainViewProps) {
                 click={ () => resetGameCallback( 16 ) }
                 enabled={ !gameState.isStarted || gameState.isFinished }
             >Elder</Button>
+        </section>
+    );
+
+    const changeTypeButtons = (
+        <section className={ MAIN_VIEW_CLASS_NAME + '-change-type' }>
+            <Button
+                className={ MAIN_VIEW_CLASS_NAME + '-change-type-button'
+                    + (type === LeaderBoardType.DAILY ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-type-button-selected' }` : '')
+                }
+                click={ () => setType(LeaderBoardType.DAILY) }
+                enabled={ type !== LeaderBoardType.DAILY }
+            >Daily</Button>
+            <Button
+                className={ MAIN_VIEW_CLASS_NAME + '-change-type-button'
+                    + (type === LeaderBoardType.WEEKLY ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-type-button-selected' }` : '')
+                }
+                click={ () => setType(LeaderBoardType.WEEKLY) }
+                enabled={ type !== LeaderBoardType.WEEKLY }
+            >Weekly</Button>
+            <Button
+                className={ MAIN_VIEW_CLASS_NAME + '-change-type-button'
+                    + (type === LeaderBoardType.MONTHLY ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-type-button-selected' }` : '')
+                }
+                click={ () => setType(LeaderBoardType.MONTHLY) }
+                enabled={ type !== LeaderBoardType.MONTHLY }
+            >Monthly</Button>
+            <Button
+                className={
+                    MAIN_VIEW_CLASS_NAME + '-change-type-button'
+                    + (type === LeaderBoardType.ALLTIME ? ` ${ MAIN_VIEW_CLASS_NAME + '-change-type-button-selected' }` : '')
+                }
+                click={ () => setType(LeaderBoardType.ALLTIME) }
+                enabled={ type !== LeaderBoardType.ALLTIME  }
+            >Alltime</Button>
         </section>
     );
 
@@ -175,9 +213,12 @@ export function MainView (props: MainViewProps) {
                 t={ t }
                 name={ gameState.name }
                 cards={ gameState?.cards?.length ?? DEFAULT_CARD_AMOUNT }
+                type={ type }
             >
 
                 <>{changeCardButtons}</>
+
+                <>{changeTypeButtons}</>
 
             </LeaderboardView>
 

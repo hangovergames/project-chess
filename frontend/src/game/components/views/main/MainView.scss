@@ -92,6 +92,25 @@
 
       }
 
+      & > .main-view-change-type {
+        margin: 16px auto 6px auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        align-content: stretch;
+        justify-content: stretch;
+        flex-direction: row;
+
+        & > .main-view-change-type-button {
+          margin: 12px;
+        }
+
+        & > .main-view-change-type-button-selected {
+          background-color: #444444;
+        }
+
+      }
+
     }
 
 

@@ -24,6 +24,11 @@ import {
     isStringOrUndefined,
 } from "../../io/hyperify/core/types/String";
 import { isUndefined } from "../../io/hyperify/core/types/undefined";
+import {
+    explainLeaderBoardTypeOrUndefined,
+    isLeaderBoardTypeOrUndefined,
+    LeaderBoardType,
+} from "./LeaderBoardType";
 
 export interface GameLeaderboardResultDTO {
     readonly id      ?: string;
@@ -31,6 +36,7 @@ export interface GameLeaderboardResultDTO {
     readonly name    ?: string;
     readonly score   ?: number;
     readonly rank    ?: number;
+    readonly type    ?: LeaderBoardType;
 }
 
 export function createGameLeaderboardResultDTO (
@@ -39,6 +45,7 @@ export function createGameLeaderboardResultDTO (
     name ?: string | undefined,
     score ?: number | undefined,
     rank ?: number | undefined,
+    type ?: LeaderBoardType | undefined,
 ) : GameLeaderboardResultDTO {
     return {
         id,
@@ -46,6 +53,7 @@ export function createGameLeaderboardResultDTO (
         name,
         score,
         rank,
+        type,
     };
 }
 
@@ -58,12 +66,14 @@ export function isGameLeaderboardResultDTO (value: unknown) : value is GameLeade
             'name',
             'score',
             'rank',
+            'type',
         ])
         && isStringOrUndefined(value?.id)
         && isStringOrUndefined(value?.time)
         && isStringOrUndefined(value?.name)
         && isNumberOrUndefined(value?.score)
         && isNumberOrUndefined(value?.rank)
+        && isLeaderBoardTypeOrUndefined(value?.type)
     );
 }
 
@@ -77,12 +87,14 @@ export function explainGameLeaderboardResultDTO (value: any) : string {
                 'name',
                 'score',
                 'rank',
+                'type',
             ])
             , explainProperty("id", explainStringOrUndefined(value?.id))
             , explainProperty("time", explainStringOrUndefined(value?.time))
             , explainProperty("name", explainStringOrUndefined(value?.name))
             , explainProperty("score", explainNumberOrUndefined(value?.score))
             , explainProperty("rank", explainNumberOrUndefined(value?.rank))
+            , explainProperty("type", explainLeaderBoardTypeOrUndefined(value?.type))
         ]
     );
 }

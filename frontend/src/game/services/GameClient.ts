@@ -3,6 +3,7 @@
 import { GameLeaderboardDTO } from "../types/GameLeaderboardDTO";
 import { GameRequestDTO } from "../types/GameRequestDTO";
 import { GameStateDTO } from "../types/GameStateDTO";
+import { LeaderBoardType } from "../types/LeaderBoardType";
 
 export interface GameClient {
 
@@ -26,6 +27,6 @@ export interface GameClient {
     /**
      * Fetch the leaderboard
      */
-    getLeaderboard (cards : number, limit ?: number, name?: string): Promise<GameLeaderboardDTO>;
+    getLeaderboard (cards : number, limit ?: number, name?: string, type?: LeaderBoardType): Promise<GameLeaderboardDTO>;
 
 }

@@ -12,7 +12,6 @@ import {
     explainProperty,
 } from "../../io/hyperify/core/types/explain";
 import {
-    explainNumber,
     explainNumberOrUndefined,
     isNumberOrUndefined,
 } from "../../io/hyperify/core/types/Number";
@@ -30,19 +29,27 @@ import {
     GameLeaderboardResultDTO,
     isGameLeaderboardResultDTO,
 } from "./GameLeaderboardResultDTO";
+import {
+    explainLeaderBoardTypeOrUndefined,
+    isLeaderBoardTypeOrUndefined,
+    LeaderBoardType,
+} from "./LeaderBoardType";
 
 export interface GameLeaderboardDTO {
     readonly cards   ?: number;
     readonly payload  : readonly GameLeaderboardResultDTO[];
+    readonly type    ?: LeaderBoardType;
 }
 
 export function createGameLeaderboardDTO (
     payload : readonly GameLeaderboardResultDTO[],
     cards  ?: number,
+    type   ?: LeaderBoardType,
 ) : GameLeaderboardDTO {
     return {
         cards,
         payload,
+        type,
     };
 }
 
@@ -52,9 +59,11 @@ export function isGameLeaderboardDTO (value: unknown) : value is GameLeaderboard
         && hasNoOtherKeysInDevelopment(value, [
             'cards',
             'payload',
+            'type',
         ])
         && isNumberOrUndefined(value?.cards)
         && isArrayOf<GameLeaderboardResultDTO>(value?.payload, isGameLeaderboardResultDTO)
+        && isLeaderBoardTypeOrUndefined(value?.type)
     );
 }
 
@@ -65,6 +74,7 @@ export function explainGameLeaderboardDTO (value: any) : string {
             explainNoOtherKeysInDevelopment(value, [
                 'cards',
                 'payload',
+                'type',
             ])
             , explainProperty("cards", explainNumberOrUndefined(value?.cards))
             , explainProperty("payload", explainArrayOf<GameLeaderboardResultDTO>(
@@ -73,6 +83,7 @@ export function explainGameLeaderboardDTO (value: any) : string {
                 value?.payload,
                 isGameLeaderboardResultDTO,
             ))
+            , explainProperty("type", explainLeaderBoardTypeOrUndefined(value?.type))
         ]
     );
 }
