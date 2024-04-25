@@ -47,7 +47,10 @@ us, if you want to host your own server.
 You can share our game on your website using an iframe:
 
 ```
-<iframe src="https://memory.hangover.games/" width="960" height="540" scrolling="none" frameborder="0" marginwidth="0" marginheight="0" hspace="0" vspace="0" webkitallowfullscreen="true" mozallowfullscreen="true" msallowfullscreen="true" allowfullscreen="true"></iframe>
+<iframe src="https://memory.hangover.games/" width="960" height="540" scrolling="none"
+ frameborder="0" marginwidth="0" marginheight="0" hspace="0" vspace="0"
+ webkitallowfullscreen="true" mozallowfullscreen="true" msallowfullscreen="true"
+ allowfullscreen="true"></iframe>
 ```
 
 ## Contribution and Issue Tracking
