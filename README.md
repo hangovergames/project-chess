@@ -42,6 +42,14 @@ Notice: Our releases in this repository contain the game server as encrypted
 self-installing release. You need to have the private key to use them. Contact 
 us, if you want to host your own server.
 
+## IFrame
+
+You can share our game on your website using an iframe:
+
+```
+<iframe src="https://memory.hangover.games/" width="960" height="540" scrolling="none" frameborder="0" marginwidth="0" marginheight="0" hspace="0" vspace="0" webkitallowfullscreen="true" mozallowfullscreen="true" msallowfullscreen="true" allowfullscreen="true"></iframe>
+```
+
 ## Contribution and Issue Tracking
 
 We encourage you to participate in our development process. You can find and 
