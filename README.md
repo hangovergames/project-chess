@@ -1,10 +1,10 @@
-# Hangover Games' Memory Matching Game
+# Hangover Games' Chess Game
 
-Welcome to the GitHub repository for our memory matching game!
+Welcome to the GitHub repository for our Chess matching game!
 
-1. ***Want to play it?*** The game is at [https://memory.hangover.games/](https://memory.hangover.games/)
+1. ***Want to play it?*** The game is at [https://chess.hangover.games/](https://chess.hangover.games/)
 
-2. ***Want to follow the development?*** See [the index issue](https://github.com/hangovergames/project-memory/issues/1)
+2. ***Want to follow the development?*** See [the index issue](https://github.com/hangovergames/project-chess/issues/1)
 
 3. ***Want to join the community?*** Join our [Discord](https://discord.com/invite/tKKMczp)!
 
@@ -13,28 +13,7 @@ developments related to the game.
 
 ## Rules of the Game
 
-1. **Combo Points**: Earn points for consecutive matching pairs. More points 
-   are awarded for longer combos, with a maximum of eight consecutive pairs.
-
-2. **Memory Bonus**: Gain extra points for recalling a card’s position for a 
-   longer time, up to a set limit based on the number of cards on the board. This 
-   bonus applies only when you successfully match a card on the second attempt 
-   after its first reveal and when more than two cards are open (the time bonus 
-   stops when only two cards are visible).
-
-3. **First Reveal Points**: Points are awarded the first time you reveal a 
-   card. However, you will lose points each subsequent time you reveal the same 
-   card without making a match.
-
-4. **Visibility Penalty**: Points are reduced the longer a card remains 
-   revealed without being paired. This penalty increases exponentially over time. 
-   
-   **Note**: No need to rush if all cards are paired — take this moment for a quick 
-   coffee break as this penalty pauses when there are no unpaired cards open on 
-   the board.
-
-5. **Mismatch Penalty**: Points are deducted each time you incorrectly attempt 
-   to pair a revealed card with another.
+TODO
 
 ## Releases
 
@@ -47,7 +26,7 @@ us, if you want to host your own server.
 You can share our game on your website using an iframe:
 
 ```
-<iframe src="https://memory.hangover.games/" width="960" height="540" scrolling="none"
+<iframe src="https://chess.hangover.games/" width="960" height="540" scrolling="none"
  frameborder="0" marginwidth="0" marginheight="0" hspace="0" vspace="0"
  webkitallowfullscreen="true" mozallowfullscreen="true" msallowfullscreen="true"
  allowfullscreen="true"></iframe>
@@ -57,7 +36,7 @@ You can share our game on your website using an iframe:
 
 We encourage you to participate in our development process. You can find and 
 contribute to our discussions on software development through our [Issues 
-page](https://github.com/hangovergames/project-memory/issues). Here, you will 
+page](https://github.com/hangovergames/project-chess/issues). Here, you will 
 encounter three main types of issues that guide our work:
 
 1. **Development Overview Issue:** Tracks the overall development progress of 

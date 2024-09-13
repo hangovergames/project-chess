@@ -5,8 +5,8 @@ import { HgReact } from "./io/hyperify/frontend/HgReact";
 import { HgReactContext } from "./io/hyperify/frontend/HgReactContext";
 import { HgFrontend } from "./io/hyperify/frontend/HgFrontend";
 import { UTMService } from "./io/hyperify/frontend/services/UTMService";
-import { MemoryApp } from './game/components/memoryApp/MemoryApp';
-import './game/styles/memory-index.scss';
+import { ChessApp } from './game/components/chessApp/ChessApp';
+import './game/styles/chess-index.scss';
 import "./i18n";
 
 HgFrontend.initialize();
@@ -14,7 +14,7 @@ UTMService.initialize();
 HgReact.initialize(
     <HelmetProvider>
         <HgReactContext>
-            <MemoryApp />
+            <ChessApp />
         </HgReactContext>
     </HelmetProvider>
 );

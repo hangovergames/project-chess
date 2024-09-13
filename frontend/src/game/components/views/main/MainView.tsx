@@ -16,7 +16,7 @@ import { INDEX_ROUTE } from "../../../constants/route";
 import { useMemoryGameState } from "../../../hooks/useMemoryGameState";
 import { GameClientImpl } from "../../../services/GameClientImpl";
 import { LeaderBoardType } from "../../../types/LeaderBoardType";
-import { MemoryGrid } from "../../memoryGrid/MemoryGrid";
+import { ChessGrid } from "../../chessGrid/ChessGrid";
 import { LeaderboardView } from "../leaderboard/LeaderboardView";
 import "./MainView.scss";
 
@@ -156,7 +156,7 @@ export function MainView (props: MainViewProps) {
                             <h1>Memory Game from Hangover Games</h1>
                         </header>
 
-                        <MemoryGrid
+                        <ChessGrid
                             cards={ visibleCards }
                             onClick={ selectCardCallback }
                         />

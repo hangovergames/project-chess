@@ -1,20 +1,20 @@
 // Copyright (c) 2024. Heusala Group Oy <info@heusalagroup.fi>. All rights reserved.
 
-import "./MemoryGrid.scss";
+import "./ChessGrid.scss";
 import { useCallback, MouseEvent } from "react";
 import { map } from "../../../io/hyperify/core/functions/map";
-import { MEMORY_GRID_CLASS_NAME } from "../../constants/classNames";
+import { CHESS_GRID_CLASS_NAME } from "../../constants/classNames";
 import { getPlayingCardFrameByNumber } from "../../types/PlayingCardFrame";
 import { getPlayingCardTypeByNumber } from "../../types/PlayingCardType";
 import { PlayingCard } from "../playingCard/PlayingCard";
 
-export interface MemoryGridProps {
+export interface ChessGridProps {
     readonly className ?: string;
     readonly cards      : readonly number[];
     readonly onClick    : (index: number) => void;
 }
 
-export function MemoryGrid ( props: MemoryGridProps) {
+export function ChessGrid ( props: ChessGridProps) {
     const className = props?.className;
     const onClick = props?.onClick;
     const cards = props?.cards ?? [];
@@ -31,14 +31,14 @@ export function MemoryGrid ( props: MemoryGridProps) {
 
     return (
         <div className={
-            MEMORY_GRID_CLASS_NAME
+            CHESS_GRID_CLASS_NAME
             + (className? ` ${className}` : '')
         }
              onContextMenu={ () => false }
         >{map(indexes, (row: number[], rowIndex: number) => {
             return (
-                <div className={MEMORY_GRID_CLASS_NAME+'-row'}
-                     key={MEMORY_GRID_CLASS_NAME+'-row-'+rowIndex}
+                <div className={CHESS_GRID_CLASS_NAME+'-row'}
+                     key={CHESS_GRID_CLASS_NAME+'-row-'+rowIndex}
                      onContextMenu={ () => false }
                 >{
                     map(row, (index, cellIndex) => {
@@ -52,22 +52,22 @@ export function MemoryGrid ( props: MemoryGridProps) {
                             return false;
                         }
                         return (
-                            <div className={MEMORY_GRID_CLASS_NAME+'-cell'}
-                                 key={MEMORY_GRID_CLASS_NAME+'-row-'+rowIndex+'-cell-'+cellIndex}
+                            <div className={CHESS_GRID_CLASS_NAME+'-cell'}
+                                 key={CHESS_GRID_CLASS_NAME+'-row-'+rowIndex+'-cell-'+cellIndex}
                                  onClick={mouseClick}
                                  onContextMenu={mouseClick}
                                  onMouseDown={mouseClick}
                             >
                                 <div className={
-                                    MEMORY_GRID_CLASS_NAME+'-cell-content'
-                                    + ' ' + MEMORY_GRID_CLASS_NAME+'-cell-content-' + cards[index]
+                                    CHESS_GRID_CLASS_NAME+'-cell-content'
+                                    + ' ' + CHESS_GRID_CLASS_NAME+'-cell-content-' + cards[index]
                                 }
                                      onClick={mouseClick}
                                      onContextMenu={mouseClick}
                                      onMouseDown={mouseClick}
                                 >
                                     <PlayingCard
-                                        className={MEMORY_GRID_CLASS_NAME+'-cell-content-text'}
+                                        className={CHESS_GRID_CLASS_NAME+'-cell-content-text'}
                                         type={ getPlayingCardTypeByNumber(cards[index]) }
                                         frame={ getPlayingCardFrameByNumber(cards[index]) }
                                     />

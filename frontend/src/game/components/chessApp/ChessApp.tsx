@@ -26,12 +26,12 @@ import { useRouteServiceWithNavigate } from "../../../io/hyperify/frontend/hooks
 import { MainLayout } from "../layouts/main/MainLayout";
 import { MainView } from "../views/main/MainView";
 
-const LOG = LogService.createLogger('MemoryApp');
+const LOG = LogService.createLogger('ChessApp');
 
 /**
- * The frontend for memory matching game.
+ * The frontend for a chess game.
  */
-export function MemoryApp () {
+export function ChessApp () {
 
     const { t, i18n } = useTranslation();
 

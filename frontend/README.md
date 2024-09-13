@@ -1,12 +1,12 @@
-# Memory matching game
+# Chess game
 
-Frontend source code for our memory matching game.
+Frontend source code for our chess game.
 
 # Fetching source code
 
 ```bash
-git clone git@github.com:hangovergames/project-memory.git project-memory
-cd project-memory
+git clone git@github.com:hangovergames/project-chess.git project-chess
+cd project-chess
 git submodule update --init --recursive
 ```
 
