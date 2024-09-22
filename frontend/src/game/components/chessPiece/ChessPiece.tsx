@@ -18,7 +18,7 @@ export function ChessPiece ( props: ChessPieceProps) {
     const type = props.type;
     const frame = props.frame;
     const frameSrc = getHexagonFrame(frame);
-    const typeSrc = getIconByChessPieceType(type);
+    const typeSrc = getIconByChessPieceType(type, frame);
     return (
         <div
             className={

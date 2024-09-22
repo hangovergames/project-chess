@@ -16,28 +16,64 @@ import { ChessUnit } from "./ChessUnit";
 import { ChessUnitDTO } from "./ChessUnitDTO";
 
 export enum ChessPieceFrame {
+
+    /**
+     * Empty, grey frame
+     */
     FRAME00 = "00",
+
+    /**
+     * Sand white frame
+     */
     FRAME01 = "01",
+
+    /**
+     * Brown frame
+     */
     FRAME02 = "02",
+
+    /**
+     * Green frame
+     */
     FRAME03 = "03",
+
+    /**
+     * Grey frame
+     */
     FRAME04 = "04",
+
+    /**
+     * Purple frame
+     */
     FRAME05 = "05",
+
+    /**
+     * Cyan frame
+     */
     FRAME06 = "06",
+
+    /**
+     * Brownish red frame
+     */
     FRAME07 = "07",
+
+    /**
+     * Yellowish brown frame
+     */
     FRAME08 = "08",
 }
 
 export function getChessPieceFrameByChessUnitDTO ( value: ChessUnitDTO | null ) : ChessPieceFrame {
-    switch(value?.type) {
-        case 0: return ChessPieceFrame.FRAME00;
-        case 1: return ChessPieceFrame.FRAME01;
-        case 2: return ChessPieceFrame.FRAME02;
-        case 3: return ChessPieceFrame.FRAME03;
-        case 4: return ChessPieceFrame.FRAME04;
-        case 5: return ChessPieceFrame.FRAME05;
-        case 6: return ChessPieceFrame.FRAME06;
-        case 7: return ChessPieceFrame.FRAME07;
-        default: return ChessPieceFrame.FRAME00;
+    if (value?.isDefender && value?.isOffender) {
+        return ChessPieceFrame.FRAME00;
+    }
+    if (!value?.isDefender && !value?.isOffender) {
+        return ChessPieceFrame.FRAME00;
+    }
+
+    switch(value?.isDefender) {
+        case true: return ChessPieceFrame.FRAME04;
+        default: return ChessPieceFrame.FRAME01;
     }
 }
 
