@@ -7,87 +7,66 @@ import {
 } from "react";
 import { LogService } from "../../io/hyperify/core/LogService";
 import { LocalStorageService } from "../../io/hyperify/frontend/services/LocalStorageService";
-import { DEFAULT_CARD_AMOUNT } from "../constants/frontend";
-import { GameClient } from "../services/GameClient";
+import { ChessGameClient } from "../services/ChessGameClient";
+import { createChessBoardDTO } from "../types/ChessBoardDTO";
 import {
-    createGameStateDTO,
-    GameStateDTO,
-} from "../types/GameStateDTO";
+    createChessStateDTO,
+    ChessStateDTO,
+} from "../types/ChessStateDTO";
+import {
+    ChessUnitDTO,
+} from "../types/ChessUnitDTO";
 
 const LOCAL_STORAGE_KEY_NAME = 'fi.hg.name';
 
-const LOG = LogService.createLogger( 'useMemoryGameState' );
+const LOG = LogService.createLogger( 'useChessGameState' );
 
 const INITIAL_NAME = () => LocalStorageService.getItem(LOCAL_STORAGE_KEY_NAME) ?? '';
 
-const INIT_CARDS = (cards: number) => {
-    if (cards <= 2) {
-        return [
-            0, 0
-        ];
-    }
-    if (cards <= 4) {
-        return [
-            0, 0,
-            0, 0,
-        ];
-    }
-    if (cards <= 6) {
-        return [
-            0, 0, 0,
-            0, 0, 0,
-        ];
-    }
-    if (cards <= 8) {
-        return [
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-        ];
-    }
-    if (cards <= 12) {
-        return [
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-        ];
-    }
+const INIT_UNITS = () : (ChessUnitDTO|null)[] => {
     return [
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
+        null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null,
     ];
 }
-const INITIAL_GAME_STATE = (cards: number) => createGameStateDTO(
-    0,
-    INIT_CARDS(cards),
-    "",
-    0,
-    -1,
-    INITIAL_NAME(),
-    "",
+const INITIAL_GAME_STATE = () => createChessStateDTO(
+    '',
+    'white',
+    'black',
+    '',
     0,
     0,
     false,
     false,
+    createChessBoardDTO(
+        -999,
+        8,
+        8,
+        INIT_UNITS(),
+    ),
+    "",
 );
 
-export type AdvanceCallback = (index: number) => void;
-export type ResetCallback = (size?: number) => void;
+export type AdvanceCallback = (subject: number, target: number) => void;
+export type ResetCallback = () => void;
 export type SetNameCallback = (name : string) => void;
 
-export function useMemoryGameState (client : GameClient) : [GameStateDTO, AdvanceCallback, ResetCallback, SetNameCallback] {
+export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, AdvanceCallback, ResetCallback, SetNameCallback] {
 
-    const [gameState, setGameState] = useState<GameStateDTO|undefined>();
-
-    const cardAmount = gameState?.cards?.length ?? DEFAULT_CARD_AMOUNT
+    const [gameState, setGameState] = useState<ChessStateDTO|undefined>();
 
     const promiseLock = useRef<boolean>(false);
 
-    const visibleGameState : GameStateDTO = gameState ? gameState : INITIAL_GAME_STATE(cardAmount);
+    const visibleGameState : ChessStateDTO = gameState ? gameState : INITIAL_GAME_STATE();
 
     const advanceCallback = useCallback(
-        (index: number) => {
+        (subject: number, target: number) => {
 
             if (promiseLock.current) {
                 LOG.error(`Previous action still active`)
@@ -97,11 +76,11 @@ export function useMemoryGameState (client : GameClient) : [GameStateDTO, Advanc
 
             const name = gameState?.name ?? INITIAL_NAME();
 
-            let promise : Promise<GameStateDTO>
+            let promise : Promise<ChessStateDTO>
             if (gameState?.isStarted) {
-                promise = client.advanceGame( index, gameState, name)
+                promise = client.advanceGame(subject, target, gameState, name)
             } else {
-                promise = client.newGame(cardAmount, index, name)
+                promise = client.newGame(name)
             }
             promise.then(state => {
                 LOG.debug(`State updated: `, state);
@@ -113,7 +92,6 @@ export function useMemoryGameState (client : GameClient) : [GameStateDTO, Advanc
             })
         },
         [
-            cardAmount,
             client,
             setGameState,
             gameState,
@@ -121,9 +99,9 @@ export function useMemoryGameState (client : GameClient) : [GameStateDTO, Advanc
     );
 
     const resetCallback = useCallback(
-        (size ?: number) => {
+        () => {
             setGameState({
-                ...INITIAL_GAME_STATE(size ?? DEFAULT_CARD_AMOUNT),
+                ...INITIAL_GAME_STATE(),
                 name: gameState?.name ?? INITIAL_NAME(),
             });
         }, [
@@ -135,10 +113,10 @@ export function useMemoryGameState (client : GameClient) : [GameStateDTO, Advanc
     const setNameCallback = useCallback(
         (name : string) : void => {
             LocalStorageService.setItem(LOCAL_STORAGE_KEY_NAME, name);
-            setGameState((state : GameStateDTO | undefined) : GameStateDTO => {
+            setGameState((state : ChessStateDTO | undefined) : ChessStateDTO => {
                 if (state === undefined) {
                     return {
-                        ...INITIAL_GAME_STATE(cardAmount),
+                        ...INITIAL_GAME_STATE(),
                         name,
                     };
                 } else {
@@ -150,7 +128,6 @@ export function useMemoryGameState (client : GameClient) : [GameStateDTO, Advanc
             })
         }, [
             setGameState,
-            cardAmount,
         ],
     )
 

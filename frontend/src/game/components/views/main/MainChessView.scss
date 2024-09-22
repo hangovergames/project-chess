@@ -1,6 +1,6 @@
 @import "../../../styles/chess-variables";
 
-.main-view {
+.main-chess-view {
   width: 100%;
   box-sizing: border-box;
   margin: 0;
@@ -12,12 +12,12 @@
   justify-content: center;
   flex-direction: row;
 
-  & > .main-view-buttons {
+  & > .main-chess-view-buttons {
     margin-top: 48px;
     flex-shrink: 0;
   }
 
-  & > .main-view-game {
+  & > .main-chess-view-game {
 
     flex-grow: 1;
     display: flex;
@@ -27,11 +27,11 @@
     justify-content: center;
     flex-direction: row;
 
-    & > .main-view-game-content {
+    & > .main-chess-view-game-content {
       margin: 4px 16px;
       text-align: right;
 
-      & > .main-view-game-header {
+      & > .main-chess-view-game-header {
         text-align: center;
         margin: 0;
         padding: 0;
@@ -43,7 +43,7 @@
 
       }
 
-      & > .main-view-game-footer {
+      & > .main-chess-view-game-footer {
         margin: 16px 0 6px 0;
         display: flex;
         flex-wrap: wrap;
@@ -52,28 +52,28 @@
         justify-content: stretch;
         flex-direction: row;
 
-        & > .main-view-name {
+        & > .main-chess-view-name {
           margin: 0 16px 0 8px;
 
-          & > .main-view-name-field {
+          & > .main-chess-view-name-field {
             margin: 0;
             padding: 12px;
             background-color: #f0f0f0;
           }
         }
 
-        & > .main-view-buttons {
+        & > .main-chess-view-buttons {
           margin: 0 16px 0 8px;
         }
 
-        & > .main-view-score {
+        & > .main-chess-view-score {
           margin: 6px 12px;
           font-size: 22px;
         }
 
       }
 
-      & > .main-view-change-cards {
+      & > .main-chess-view-change-cards {
         margin: 16px auto 6px auto;
         display: flex;
         flex-wrap: wrap;
@@ -82,17 +82,17 @@
         justify-content: stretch;
         flex-direction: row;
 
-        & > .main-view-change-cards-button {
+        & > .main-chess-view-change-cards-button {
           margin: 12px;
         }
 
-        & > .main-view-change-cards-button-selected {
+        & > .main-chess-view-change-cards-button-selected {
           background-color: #444444;
         }
 
       }
 
-      & > .main-view-change-type {
+      & > .main-chess-view-change-type {
         margin: 16px auto 6px auto;
         display: flex;
         flex-wrap: wrap;
@@ -101,11 +101,11 @@
         justify-content: stretch;
         flex-direction: row;
 
-        & > .main-view-change-type-button {
+        & > .main-chess-view-change-type-button {
           margin: 12px;
         }
 
-        & > .main-view-change-type-button-selected {
+        & > .main-chess-view-change-type-button-selected {
           background-color: #444444;
         }
 
@@ -119,7 +119,7 @@
 }
 
 
-.main-view-6b {
+.main-chess-view-6b {
   flex-shrink: 0;
   margin: 96px auto;
 

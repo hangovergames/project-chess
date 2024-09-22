@@ -1,6 +1,5 @@
 // Copyright (c) 2024. Heusala Group Oy <info@heusalagroup.fi>. All rights reserved.
 
-import { PlayingCardType } from "../../game/types/PlayingCardType";
 import IconFood from "./IconFood.webp";
 import IconGold from "./IconGold.webp";
 import IconKnowledge from "./IconKnowledge.webp";
@@ -20,20 +19,6 @@ export const ALL_ICONS = [
     IconTree,
     IconWater,
 ];
-
-export function getIconByPlayingCardType(type: PlayingCardType) {
-    switch(type) {
-        case PlayingCardType.FOOD       : return IconFood;
-        case PlayingCardType.GOLD       : return IconGold;
-        case PlayingCardType.KNOWLEDGE  : return IconKnowledge;
-        case PlayingCardType.MAGIC      : return IconMagic;
-        case PlayingCardType.STONE      : return IconStone;
-        case PlayingCardType.TECHNOLOGY : return IconTechnology;
-        case PlayingCardType.TREE       : return IconTree;
-        case PlayingCardType.WATER      : return IconWater;
-        default                         : return undefined;
-    }
-}
 
 export {
     IconFood,

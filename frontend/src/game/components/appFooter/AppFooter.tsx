@@ -22,7 +22,7 @@ export function AppFooter (props: AppFooterProps) {
             }
         >
 
-             <a href={"https://github.com/hangovergames/project-memory"}>{ name ? name : 'Memory Game' }</a>
+             <a href={"https://github.com/hangovergames/project-memory"}>{ name ? name : 'Chess' }</a>
             &nbsp;<a href={"https://github.com/hangovergames/project-memory/issues/1"}>{ version ? `v${ version }` : 'dev-version' }</a>
             &nbsp;&copy; 2024 <a href={"https://hangover.games"}>Hangover Games</a>
 

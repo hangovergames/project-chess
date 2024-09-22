@@ -25,28 +25,28 @@ import {
 } from "../../io/hyperify/core/types/String";
 import { isUndefined } from "../../io/hyperify/core/types/undefined";
 import {
-    explainLeaderBoardTypeOrUndefined,
-    isLeaderBoardTypeOrUndefined,
-    LeaderBoardType,
-} from "./LeaderBoardType";
+    explainChessLeaderBoardTypeOrUndefined,
+    isChessLeaderBoardTypeOrUndefined,
+    ChessLeaderBoardType,
+} from "./ChessLeaderBoardType";
 
-export interface GameLeaderboardResultDTO {
+export interface ChessLeaderboardResultDTO {
     readonly id      ?: string;
     readonly time    ?: string;
+    readonly type    ?: ChessLeaderBoardType;
+    readonly rank    ?: number;
     readonly name    ?: string;
     readonly score   ?: number;
-    readonly rank    ?: number;
-    readonly type    ?: LeaderBoardType;
 }
 
-export function createGameLeaderboardResultDTO (
+export function createChessLeaderboardResultDTO (
     id ?: string | undefined,
     time ?: string | undefined,
     name ?: string | undefined,
     score ?: number | undefined,
     rank ?: number | undefined,
-    type ?: LeaderBoardType | undefined,
-) : GameLeaderboardResultDTO {
+    type ?: ChessLeaderBoardType | undefined,
+) : ChessLeaderboardResultDTO {
     return {
         id,
         time,
@@ -57,7 +57,7 @@ export function createGameLeaderboardResultDTO (
     };
 }
 
-export function isGameLeaderboardResultDTO (value: unknown) : value is GameLeaderboardResultDTO {
+export function isChessLeaderboardResultDTO ( value: unknown) : value is ChessLeaderboardResultDTO {
     return (
         isRegularObject(value)
         && hasNoOtherKeysInDevelopment(value, [
@@ -73,11 +73,11 @@ export function isGameLeaderboardResultDTO (value: unknown) : value is GameLeade
         && isStringOrUndefined(value?.name)
         && isNumberOrUndefined(value?.score)
         && isNumberOrUndefined(value?.rank)
-        && isLeaderBoardTypeOrUndefined(value?.type)
+        && isChessLeaderBoardTypeOrUndefined(value?.type)
     );
 }
 
-export function explainGameLeaderboardResultDTO (value: any) : string {
+export function explainChessLeaderboardResultDTO ( value: any) : string {
     return explain(
         [
             explainRegularObject(value),
@@ -94,24 +94,24 @@ export function explainGameLeaderboardResultDTO (value: any) : string {
             , explainProperty("name", explainStringOrUndefined(value?.name))
             , explainProperty("score", explainNumberOrUndefined(value?.score))
             , explainProperty("rank", explainNumberOrUndefined(value?.rank))
-            , explainProperty("type", explainLeaderBoardTypeOrUndefined(value?.type))
+            , explainProperty("type", explainChessLeaderBoardTypeOrUndefined(value?.type))
         ]
     );
 }
 
-export function stringifyGameLeaderboardResultDTO (value : GameLeaderboardResultDTO) : string {
+export function stringifyChessLeaderboardResultDTO ( value : ChessLeaderboardResultDTO) : string {
     return `GameLeaderboardResultDTO(${value})`;
 }
 
-export function parseGameLeaderboardResultDTO (value: unknown) : GameLeaderboardResultDTO | undefined {
-    if (isGameLeaderboardResultDTO(value)) return value;
+export function parseChessLeaderboardResultDTO ( value: unknown) : ChessLeaderboardResultDTO | undefined {
+    if (isChessLeaderboardResultDTO(value)) return value;
     return undefined;
 }
 
-export function isGameLeaderboardResultDTOOrUndefined (value: unknown): value is GameLeaderboardResultDTO | undefined {
-    return isUndefined(value) || isGameLeaderboardResultDTO(value);
+export function isChessLeaderboardResultDTOOrUndefined ( value: unknown): value is ChessLeaderboardResultDTO | undefined {
+    return isUndefined(value) || isChessLeaderboardResultDTO(value);
 }
 
-export function explainGameLeaderboardResultDTOOrUndefined (value: unknown): string {
-    return isGameLeaderboardResultDTOOrUndefined(value) ? explainOk() : explainNot(explainOr(['GameLeaderboardResultDTO', 'undefined']));
+export function explainChessLeaderboardResultDTOOrUndefined ( value: unknown): string {
+    return isChessLeaderboardResultDTOOrUndefined(value) ? explainOk() : explainNot(explainOr(['GameLeaderboardResultDTO', 'undefined']));
 }

@@ -1,4 +1,4 @@
-const REACT_APP_BACKEND_TARGET_URL = process?.env?.REACT_APP_BACKEND_TARGET_URL ?? 'http://localhost:3001';
+const REACT_APP_BACKEND_TARGET_URL = process?.env?.REACT_APP_BACKEND_TARGET_URL ?? 'http://localhost:8080';
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 

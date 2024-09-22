@@ -24,7 +24,8 @@ import { useRouteServiceWithNavigate } from "../../../io/hyperify/frontend/hooks
 // overwrite SCSS from views and make your life harder.
 
 import { MainLayout } from "../layouts/main/MainLayout";
-import { MainView } from "../views/main/MainView";
+import { LeaderboardView } from "../views/leaderboard/LeaderboardView";
+import { MainChessView } from "../views/main/MainChessView";
 
 const LOG = LogService.createLogger('ChessApp');
 
@@ -83,8 +84,8 @@ export function ChessApp () {
         ),
         children: [
 
-            {path: INDEX_ROUTE, element: <MainView t={t as TranslationFunction} /> },
-            {path: LEADERBOARD_ROUTE, element: <MainView t={t as TranslationFunction} /> },
+            {path: INDEX_ROUTE, element: <MainChessView t={t as TranslationFunction} /> },
+            {path: LEADERBOARD_ROUTE, element: <LeaderboardView t={t as TranslationFunction} /> },
 
             {path: '*', element: <Navigate to={NOT_FOUND_ROUTE} />},
             {path: INDEX_ROUTE, element: <Navigate to={INDEX_ROUTE} />},

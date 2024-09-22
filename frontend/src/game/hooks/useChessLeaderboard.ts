@@ -8,38 +8,33 @@ import {
 } from "react";
 import { LogService } from "../../io/hyperify/core/LogService";
 import { useIntervalUpdate } from "../../io/hyperify/frontend/hooks/useIntervalUpdate";
-import { GameClient } from "../services/GameClient";
+import { ChessGameClient } from "../services/ChessGameClient";
 import {
-    createGameLeaderboardDTO,
-    GameLeaderboardDTO,
-} from "../types/GameLeaderboardDTO";
-import { LeaderBoardType } from "../types/LeaderBoardType";
+    createChessLeaderboardDTO,
+    ChessLeaderboardDTO,
+} from "../types/ChessLeaderboardDTO";
+import { ChessLeaderBoardType } from "../types/ChessLeaderBoardType";
 
-const LOG = LogService.createLogger( 'useLeaderboard' );
+const LOG = LogService.createLogger( 'useChessLeaderboard' );
 
-export type UpdateLeaderboardCallback = () => void;
+export type UpdateChessLeaderboardCallback = () => void;
 
-export function useLeaderboard (
-    client  : GameClient,
-    cards   : number,
+export function useChessLeaderboard (
+    client  : ChessGameClient,
     limit  ?: number,
     name   ?: string,
-    type   ?: LeaderBoardType
-) : [GameLeaderboardDTO, UpdateLeaderboardCallback] {
+    type   ?: ChessLeaderBoardType
+) : [ChessLeaderboardDTO, UpdateChessLeaderboardCallback] {
 
-    const [leaderboard, setLeaderboard] = useState<GameLeaderboardDTO>( () => createGameLeaderboardDTO( [], cards, type ));
-
-    const currentType = leaderboard?.type ?? LeaderBoardType.ALLTIME;
-    const currentCards = leaderboard?.cards ?? 0;
-
+    const [leaderboard, setLeaderboard] = useState<ChessLeaderboardDTO>( () => createChessLeaderboardDTO( [], type ));
+    const currentType = leaderboard?.type ?? ChessLeaderBoardType.ALLTIME;
     const isInitialized = leaderboard?.payload?.length !== 0;
-
     const updateLock = useRef<boolean>(false);
 
     const updateCallback = useCallback(
         () => {
             updateLock.current = true;
-            client.getLeaderboard(cards, limit, name, type).then((dto) => {
+            client.getLeaderboard(limit, name, type).then((dto) => {
                 setLeaderboard(dto);
                 updateLock.current = false;
             }).catch((err) => {
@@ -52,21 +47,18 @@ export function useLeaderboard (
             setLeaderboard,
             client,
             limit,
-            cards,
         ],
     );
 
     useEffect(
         () => {
-            if ( !( isInitialized && cards === currentCards && type === currentType ) && !updateLock.current ) {
+            if ( !( isInitialized && type === currentType ) && !updateLock.current ) {
                 updateCallback();
             }
         },
         [
             currentType,
             type,
-            cards,
-            currentCards,
             isInitialized,
             updateLock,
             updateCallback,

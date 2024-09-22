@@ -5,33 +5,32 @@ import {
 } from "../../io/hyperify/core/Json";
 import { RequestClient } from "../../io/hyperify/core/RequestClient";
 import { RequestClientImpl } from "../../io/hyperify/core/RequestClientImpl";
+import { DEFAULT_GAME_URL } from "../constants/backend";
 import {
     API_PATH,
     LEADERBOARD_API_PATH,
 } from "../constants/frontend";
 import {
-    explainGameLeaderboardDTO,
-    GameLeaderboardDTO,
-    isGameLeaderboardDTO,
-} from "../types/GameLeaderboardDTO";
+    explainChessLeaderboardDTO,
+    ChessLeaderboardDTO,
+    isChessLeaderboardDTO,
+} from "../types/ChessLeaderboardDTO";
 import {
-    createGameRequestDTO,
-    GameRequestDTO,
-} from "../types/GameRequestDTO";
+    createChessRequestDTO,
+    ChessRequestDTO,
+} from "../types/ChessRequestDTO";
 import {
-    explainGameStateDTO,
-    GameStateDTO,
-    isGameStateDTO,
-} from "../types/GameStateDTO";
-import { LeaderBoardType } from "../types/LeaderBoardType";
-import { GameClient } from "./GameClient";
-
-const DEFAULT_GAME_URL = 'https://memory.hangover.games';
+    explainChessStateDTO,
+    ChessStateDTO,
+    isChessStateDTO,
+} from "../types/ChessStateDTO";
+import { ChessLeaderBoardType } from "../types/ChessLeaderBoardType";
+import { ChessGameClient } from "./ChessGameClient";
 
 /**
  * @inheritDoc
  */
-export class GameClientImpl implements GameClient {
+export class ChessGameClientImpl implements ChessGameClient {
 
     // Private parts
 
@@ -63,7 +62,7 @@ export class GameClientImpl implements GameClient {
         url ?: string,
         client ?: RequestClient,
     ) {
-        return new GameClientImpl(
+        return new ChessGameClientImpl(
             url ?? this.getDefaultURL(),
             client ?? RequestClientImpl,
         );
@@ -72,50 +71,60 @@ export class GameClientImpl implements GameClient {
     /**
      * @inheritDoc
      */
-    public async postRequest (body: GameRequestDTO): Promise<GameStateDTO> {
+    public async postRequest (body: ChessRequestDTO): Promise<ChessStateDTO> {
         const response = await this._client.postJson(
             `${this._url}${API_PATH}`,
             body as unknown as JsonAny,
         );
-        if (!isGameStateDTO(response)) {
-            throw new TypeError(`Response was not GameStateDTO: ${explainGameStateDTO(response)}`)
+        if (!isChessStateDTO(response)) {
+            throw new TypeError(`Response was not GameStateDTO: ${explainChessStateDTO(response)}`)
         }
         return response;
     }
 
-    public async advanceGame (nextIndex : number, prevState : GameStateDTO, name ?: string ) : Promise<GameStateDTO> {
+    public async advanceGame (
+        subject : number,
+        target : number,
+        prevState : ChessStateDTO,
+        name ?: string,
+    ) : Promise<ChessStateDTO> {
         return this.postRequest(
-            createGameRequestDTO(
-                nextIndex,
+            createChessRequestDTO(
+                subject,
+                target,
                 prevState,
                 name,
             )
         );
     }
 
-    public async newGame (cards: number, nextIndex : number, name ?: string) : Promise<GameStateDTO> {
+    public async newGame ( name ?: string ) : Promise<ChessStateDTO> {
         return this.postRequest(
-            createGameRequestDTO(
-                nextIndex,
+            createChessRequestDTO(
+                undefined,
+                undefined,
                 undefined,
                 name,
-                cards,
             )
         );
     }
 
-    public async getLeaderboard (cards : number, limit ?: number, name?: string, type?: LeaderBoardType): Promise<GameLeaderboardDTO> {
+    public async getLeaderboard (
+        limit ?: number,
+        name?: string,
+        type?: ChessLeaderBoardType,
+    ): Promise<ChessLeaderboardDTO> {
         const response = await this._client.getJson(
             `${this._url}${
                 LEADERBOARD_API_PATH
-                }?limit=${limit ?? 10}&cards=${cards}${
+                }?limit=${limit ?? 10}${
                 name?`&name=${decodeURIComponent(name)}`:''
             }${
                 type?`&type=${decodeURIComponent(type)}`:''
             }`,
         );
-        if (!isGameLeaderboardDTO(response)) {
-            throw new TypeError(`Response was not GameLeaderboardDTO: ${explainGameLeaderboardDTO(response)}`)
+        if (!isChessLeaderboardDTO(response)) {
+            throw new TypeError(`Response was not GameLeaderboardDTO: ${explainChessLeaderboardDTO(response)}`)
         }
         return response;
     }

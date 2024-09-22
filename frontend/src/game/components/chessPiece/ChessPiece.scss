@@ -1,6 +1,6 @@
 @import "../../styles/chess-variables";
 
-.playing-card {
+.chess-piece {
 
   position: relative;
   display: flex;
@@ -15,7 +15,7 @@
 
   background-color: #222222;
 
-  & > .playing-card-frame {
+  & > .chess-piece-frame {
     margin: 0;
     padding: 0;
 
@@ -27,7 +27,7 @@
     //max-height: 100%;
   }
 
-  & > .playing-card-type {
+  & > .chess-piece-type {
     margin: 0;
     padding: 0;
 
