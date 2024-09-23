@@ -12,6 +12,7 @@ export interface ChessGridProps {
     readonly className ?: string;
     readonly width      : number;
     readonly height     : number;
+    readonly selected   : number;
     readonly units      : readonly (ChessUnitDTO|null)[];
     readonly onClick    : (index: number) => void;
 }
@@ -19,6 +20,7 @@ export interface ChessGridProps {
 export function ChessGrid ( props: ChessGridProps) {
     const className = props?.className;
     const clickCallback = props?.onClick;
+    const selectedIndex = props?.selected;
     // const width = props?.width ?? 8;
     // const height = props?.height ?? 8;
     const units = props?.units ?? [];
@@ -43,6 +45,7 @@ export function ChessGrid ( props: ChessGridProps) {
                                 index={index}
                                 dto={units[index]}
                                 click={() => clickCallback(index)}
+                                selected={ index === selectedIndex }
                             />
                         );
                     })

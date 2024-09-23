@@ -20,12 +20,14 @@ import "./ChessGridCell.scss";
 export interface ChessGridCellProps {
     readonly className ?: string;
     readonly index      : number;
+    readonly selected   : boolean;
     readonly dto        : ChessUnitDTO|null;
     readonly click      : () => void;
 }
 
 export function ChessGridCell ( props: ChessGridCellProps) {
     const className = props?.className;
+    const selected = props?.selected ?? false;
     const clickCallback = props?.click;
     const dto = props?.dto ?? null;
 
@@ -66,6 +68,7 @@ export function ChessGridCell ( props: ChessGridCellProps) {
         <div className={
             CHESS_GRID_CELL_CLASS_NAME
             + (className? ` ${className}` : '')
+            + (selected ? ` ${CHESS_GRID_CELL_CLASS_NAME}-selected` : '')
         }
              onClick={mouseClick}
              onContextMenu={mouseClick}
@@ -79,7 +82,7 @@ export function ChessGridCell ( props: ChessGridCellProps) {
                 <ChessPiece
                     className={CHESS_GRID_CELL_CLASS_NAME+'-content-text'}
                     type={ getChessPieceTypeByUnitTypeDTO(dto) }
-                    frame={ getChessPieceFrameByChessUnitDTO(dto) }
+                    frame={ getChessPieceFrameByChessUnitDTO(dto, selected) }
                 />
             </div>
         </div>

@@ -102,6 +102,7 @@ export function MainChessView ( props: MainChessViewProps) {
                             width={ board?.width ?? 8 }
                             height={ board?.height ?? 8 }
                             units={ board?.units ?? [] }
+                            selected={selectedSubject}
                             onClick={ selectCellCallback }
                         />
 
