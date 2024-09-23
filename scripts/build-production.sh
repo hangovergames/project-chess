@@ -9,4 +9,4 @@ fi
 set -e
 set -x
 
-git add -f */build */dist
+git add -f */build
