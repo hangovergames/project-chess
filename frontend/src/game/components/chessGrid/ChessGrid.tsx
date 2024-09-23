@@ -21,10 +21,10 @@ export function ChessGrid ( props: ChessGridProps) {
     const className = props?.className;
     const clickCallback = props?.onClick;
     const selectedIndex = props?.selected;
-    // const width = props?.width ?? 8;
-    // const height = props?.height ?? 8;
+    const width = props?.width ?? 8;
+    const height = props?.height ?? 8;
     const units = props?.units ?? [];
-    const indexes = getChessBoardIndexes();
+    const indexes = getChessBoardIndexes(width, height);
     return (
         <div className={
             CHESS_GRID_CLASS_NAME
@@ -55,7 +55,39 @@ export function ChessGrid ( props: ChessGridProps) {
     );
 }
 
-function getChessBoardIndexes () : number[][] {
+function getChessBoardIndexes (
+    width: number,
+    height: number,
+) : number[][] {
+    if (width === 8 && height === 1) {
+        return [
+            [ 0,  1,  2,  3,  4,  5,  6,  7],
+        ];
+    }
+    if (width === 5 && height === 1) {
+        return [
+            [ 0,  1,  2,  3, 4 ],
+        ];
+    }
+    if (width === 4 && height === 1) {
+        return [
+            [ 0,  1,  2,  3 ],
+        ];
+    }
+    if (width === 2 && height === 2) {
+        return [
+            [ 0,  1 ],
+            [ 2,  3 ],
+        ];
+    }
+    if (width === 1 && height === 4) {
+        return [
+            [ 0 ],
+            [ 1 ],
+            [ 2,],
+            [ 3 ],
+        ];
+    }
     return [
         [ 0,  1,  2,  3,  4,  5,  6,  7],
         [ 8,  9, 10, 11, 12, 13, 14, 15],

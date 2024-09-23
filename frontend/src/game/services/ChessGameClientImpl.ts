@@ -25,6 +25,7 @@ import {
     isChessStateDTO,
 } from "../types/ChessStateDTO";
 import { ChessLeaderBoardType } from "../types/ChessLeaderBoardType";
+import { ChessUnit } from "../types/ChessUnit";
 import { ChessGameClient } from "./ChessGameClient";
 
 /**
@@ -87,6 +88,7 @@ export class ChessGameClientImpl implements ChessGameClient {
         target : number,
         prevState : ChessStateDTO,
         name ?: string,
+        promotion ?: ChessUnit,
     ) : Promise<ChessStateDTO> {
         return this.postRequest(
             createChessRequestDTO(
@@ -94,6 +96,7 @@ export class ChessGameClientImpl implements ChessGameClient {
                 target,
                 prevState,
                 name,
+                promotion,
             )
         );
     }

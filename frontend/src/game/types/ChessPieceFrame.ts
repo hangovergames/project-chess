@@ -12,7 +12,6 @@ import {
     explainOr,
 } from "../../io/hyperify/core/types/explain";
 import { isUndefined } from "../../io/hyperify/core/types/undefined";
-import { ChessUnit } from "./ChessUnit";
 import { ChessUnitDTO } from "./ChessUnitDTO";
 
 export enum ChessPieceFrame {

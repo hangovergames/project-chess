@@ -29,6 +29,11 @@ import {
     explainChessStateDTOOrUndefined,
     isChessStateDTOOrUndefined,
 } from "./ChessStateDTO";
+import {
+    ChessUnit,
+    explainChessUnitOrUndefined,
+    isChessUnitOrUndefined,
+} from "./ChessUnit";
 
 export interface ChessRequestDTO {
 
@@ -55,6 +60,11 @@ export interface ChessRequestDTO {
      */
     readonly name ?: string;
 
+    /**
+     * The unit ID which to promote the unit. Defaults to Queen.
+     */
+    readonly promote ?: ChessUnit;
+
 }
 
 export function createChessRequestDTO (
@@ -62,12 +72,14 @@ export function createChessRequestDTO (
     target    ?: number | undefined,
     gameState ?: ChessStateDTO | undefined,
     name      ?: string | undefined,
+    promote   ?: ChessUnit | undefined,
 ) : ChessRequestDTO {
     return {
         subject,
         target,
         gameState,
         name,
+        promote,
     };
 }
 
@@ -79,9 +91,11 @@ export function isChessRequestDTO ( value: unknown) : value is ChessRequestDTO {
             'target',
             'gameState',
             'name',
+            'promote',
         ])
         && isNumberOrUndefined(value?.subject)
         && isNumberOrUndefined(value?.target)
+        && isChessUnitOrUndefined(value?.promote)
         && isChessStateDTOOrUndefined(value?.gameState)
         && isStringOrUndefined(value?.name)
     );
@@ -96,9 +110,11 @@ export function explainChessRequestDTO ( value: any) : string {
                 'target',
                 'gameState',
                 'name',
+                'promote',
             ])
             , explainProperty("subject", explainNumberOrUndefined(value?.subject))
             , explainProperty("target", explainNumberOrUndefined(value?.target))
+            , explainProperty("promote", explainChessUnitOrUndefined(value?.promote))
             , explainProperty("gameState", explainChessStateDTOOrUndefined(value?.gameState))
             , explainProperty("name", explainStringOrUndefined(value?.name))
         ]

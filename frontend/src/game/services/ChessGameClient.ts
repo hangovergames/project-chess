@@ -4,6 +4,7 @@ import { ChessLeaderboardDTO } from "../types/ChessLeaderboardDTO";
 import { ChessRequestDTO } from "../types/ChessRequestDTO";
 import { ChessStateDTO } from "../types/ChessStateDTO";
 import { ChessLeaderBoardType } from "../types/ChessLeaderBoardType";
+import { ChessUnit } from "../types/ChessUnit";
 
 export interface ChessGameClient {
 
@@ -27,6 +28,7 @@ export interface ChessGameClient {
         target : number,
         prevState: ChessStateDTO,
         name ?: string,
+        promotion ?: ChessUnit,
     ): Promise<ChessStateDTO>;
 
     /**

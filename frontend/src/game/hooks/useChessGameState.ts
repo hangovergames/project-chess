@@ -2,6 +2,7 @@
 
 import {
     useCallback,
+    useEffect,
     useRef,
     useState,
 } from "react";
@@ -13,6 +14,7 @@ import {
     createChessStateDTO,
     ChessStateDTO,
 } from "../types/ChessStateDTO";
+import { ChessUnit } from "../types/ChessUnit";
 import {
     ChessUnitDTO,
 } from "../types/ChessUnitDTO";
@@ -53,7 +55,7 @@ const INITIAL_GAME_STATE = () => createChessStateDTO(
     "",
 );
 
-export type AdvanceCallback = (subject: number, target: number) => void;
+export type AdvanceCallback = (subject: number, target: number, promotion ?: ChessUnit) => void;
 export type ResetCallback = () => void;
 export type SetNameCallback = (name : string) => void;
 
@@ -61,35 +63,62 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
 
     const [gameState, setGameState] = useState<ChessStateDTO|undefined>();
 
+    const initializeLock = useRef<boolean>(false);
     const promiseLock = useRef<boolean>(false);
 
     const visibleGameState : ChessStateDTO = gameState ? gameState : INITIAL_GAME_STATE();
 
-    const advanceCallback = useCallback(
-        (subject: number, target: number) => {
+    const startGameCallback = useCallback(
+        () => {
 
             if (promiseLock.current) {
                 LOG.error(`Previous action still active`)
                 return;
             }
-            promiseLock.current = true;
 
             const name = gameState?.name ?? INITIAL_NAME();
-
-            let promise : Promise<ChessStateDTO>
             if (gameState?.isStarted) {
-                promise = client.advanceGame(subject, target, gameState, name)
+                LOG.debug(`Game was started already: `, gameState);
             } else {
-                promise = client.newGame(name)
+                promiseLock.current = true;
+                client.newGame(name).then(state => {
+                    LOG.debug(`Game state updated: `, state);
+                    setGameState(state);
+                    promiseLock.current = false;
+                }).catch(err => {
+                    LOG.error(`Failed: `, err);
+                    promiseLock.current = false;
+                })
             }
-            promise.then(state => {
-                LOG.debug(`State updated: `, state);
-                setGameState(state);
-                promiseLock.current = false;
-            }).catch(err => {
-                LOG.error(`Failed: `, err);
-                promiseLock.current = false;
-            })
+        }, [
+            client,
+            setGameState,
+            gameState,
+        ],
+    )
+
+    const advanceCallback = useCallback(
+        (subject: number, target: number, promotion ?: number) => {
+
+            if (promiseLock.current) {
+                LOG.error(`Previous action still active`)
+                return;
+            }
+
+            const name = gameState?.name ?? INITIAL_NAME();
+            if (gameState?.isStarted) {
+                promiseLock.current = true;
+                client.advanceGame(subject, target, gameState, name, promotion).then(state => {
+                    LOG.debug(`State updated: `, state);
+                    setGameState(state);
+                    promiseLock.current = false;
+                }).catch(err => {
+                    LOG.error(`Failed: `, err);
+                    promiseLock.current = false;
+                });
+            } else {
+                LOG.debug(`Game was not started yet: `, gameState);
+            }
         },
         [
             client,
@@ -130,6 +159,18 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
             setGameState,
         ],
     )
+
+    useEffect(() => {
+        if ( !gameState?.isStarted && !promiseLock.current && !initializeLock.current ) {
+            initializeLock.current = true
+            startGameCallback();
+        }
+    }, [
+        gameState?.isStarted,
+        promiseLock,
+        initializeLock,
+        startGameCallback,
+    ])
 
     return [visibleGameState, advanceCallback, resetCallback, setNameCallback];
 }
