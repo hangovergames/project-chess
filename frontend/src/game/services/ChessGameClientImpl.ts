@@ -54,7 +54,7 @@ export class ChessGameClientImpl implements ChessGameClient {
     }
 
     /**
-     * Create an instance of our Memory Game API client.
+     * Create an instance of our Chess Game API client.
      *
      * @param url
      * @param client
