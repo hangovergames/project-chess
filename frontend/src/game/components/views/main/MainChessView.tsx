@@ -43,7 +43,6 @@ export function MainChessView ( props: MainChessViewProps) {
 
     const playerName = gameState?.defender;
     const board = gameState?.board;
-    const units = board?.units ?? [];
 
     const [selectedSubject, setSelectedSubject] = useState<number>(-1);
     const [selectedPromotion, setSelectedPromotion] = useState<number>(0);
@@ -87,6 +86,7 @@ export function MainChessView ( props: MainChessViewProps) {
                 return;
             }
 
+            const units = board?.units ?? [];
             const dto = units[index];
             const validMoves = dto?.validMoves ?? [];
             const validMoveCount : number = validMoves.length ?? 0
@@ -107,7 +107,7 @@ export function MainChessView ( props: MainChessViewProps) {
             advance,
             selectedSubject,
             selectedPromotedUnit,
-            units,
+            board,
         ],
     );
 
