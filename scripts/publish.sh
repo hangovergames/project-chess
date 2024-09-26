@@ -3,11 +3,12 @@ set -e
 set -x
 cd "$(dirname "$0")/.."
 
-CURRENT_BRANCH=$(git branch --show-current)
+if test "x$BUILD_VERSION" = x; then
+  echo 'BUILD_VERSION not defined' >&2
+  exit 1
+fi
 
-VERSION=$(echo 0.1.$(( $(git tag|grep -E '^v0\.1\.'|sed -re 's/^v0\.1\.//'|sort -n|tail -n 1) + 1 )))
-
-export BUILD_VERSION=$VERSION
+VERSION=$BUILD_VERSION
 
 ./scripts/pull-all.sh
 ./scripts/push-all.sh
@@ -38,7 +39,7 @@ git checkout main
 git merge "$CURRENT_BRANCH"
 git push
 
-git checkout v0.1
+git checkout v0.0
 git merge main
 git push
 
