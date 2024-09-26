@@ -135,7 +135,10 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
                 ...INITIAL_GAME_STATE(),
                 name: gameState?.name ?? INITIAL_NAME(),
             });
+            initializeLock.current = false
+            startGameCallback();
         }, [
+            startGameCallback,
             setGameState,
             gameState,
         ],
