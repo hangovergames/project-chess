@@ -8,6 +8,8 @@ if test "x$BUILD_VERSION" = x; then
   exit 1
 fi
 
+CURRENT_BRANCH=$(git branch --show-current)
+
 VERSION=$BUILD_VERSION
 
 ./scripts/pull-all.sh
