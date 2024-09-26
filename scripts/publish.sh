@@ -16,8 +16,8 @@ git add */src
 ./scripts/build-production.sh
 git commit -m "New release $VERSION"
 
-git tag -a "v$VERSION" -m "Version $VERSION"
-git push origin "v$VERSION"
+git tag -a "test-v$VERSION" -m "Version $VERSION"
+git push origin "test-v$VERSION"
 git push
 
 # Enable if we have a submodules related to the game
