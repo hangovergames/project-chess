@@ -1,5 +1,6 @@
 // Copyright (c) 2024. Heusala Group Oy <info@heusalagroup.fi>. All rights reserved.
 
+import { useCallback } from "react";
 import { map } from "../../../io/hyperify/core/functions/map";
 import {
     CHESS_GRID_CLASS_NAME,
@@ -25,6 +26,15 @@ export function ChessGrid ( props: ChessGridProps) {
     const height = props?.height ?? 8;
     const units = props?.units ?? [];
     const indexes = getChessBoardIndexes(width, height);
+
+    const isSelectedCallback = useCallback(
+        (index: number): boolean => {
+            return index === selectedIndex;
+        }, [
+            selectedIndex
+        ],
+    )
+
     return (
         <div className={
             CHESS_GRID_CLASS_NAME
@@ -40,12 +50,13 @@ export function ChessGrid ( props: ChessGridProps) {
                     map(row, (index, cellIndex) => {
                         return (
                             <ChessGridCell
-                                className={CHESS_GRID_CLASS_NAME+'-content-' + index}
                                 key={CHESS_GRID_CLASS_NAME+'-row-'+rowIndex+'-cell-'+cellIndex}
+                                className={CHESS_GRID_CLASS_NAME+'-content-' + index}
                                 index={index}
                                 dto={units[index]}
                                 click={() => clickCallback(index)}
-                                selected={ index === selectedIndex }
+                                selected={ isSelectedCallback(index) }
+                                selectedDto={ units[selectedIndex] }
                             />
                         );
                     })

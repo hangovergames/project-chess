@@ -21,15 +21,24 @@ export interface ChessGridCellProps {
     readonly className ?: string;
     readonly index      : number;
     readonly selected   : boolean;
+    readonly selectedDto : ChessUnitDTO|null|undefined;
     readonly dto        : ChessUnitDTO|null;
     readonly click      : () => void;
 }
 
 export function ChessGridCell ( props: ChessGridCellProps) {
     const className = props?.className;
-    const selected = props?.selected ?? false;
+    const selectedDirectly = props?.selected ?? false;
+    const selectedDto = props?.selectedDto;
     const clickCallback = props?.click;
     const dto = props?.dto ?? null;
+    const myIndex : number = props?.index ?? -1;
+
+    const selectedMoves : readonly number[] = selectedDto?.validMoves ?? [];
+    const amISelected : boolean = myIndex >= 0 && selectedMoves.includes(myIndex);
+
+    const moves : readonly number[] = dto?.validMoves ?? [];
+    const moveCount : number = moves?.length ?? 0;
 
     const isHandlingClick = useRef(false);
 
@@ -68,7 +77,8 @@ export function ChessGridCell ( props: ChessGridCellProps) {
         <div className={
             CHESS_GRID_CELL_CLASS_NAME
             + (className? ` ${className}` : '')
-            + (selected ? ` ${CHESS_GRID_CELL_CLASS_NAME}-selected` : '')
+            + (amISelected || selectedDirectly || (!selectedDto && moveCount !== 0) ? ` ${CHESS_GRID_CELL_CLASS_NAME}-can-move` : '')
+            + (selectedDirectly ? ` ${CHESS_GRID_CELL_CLASS_NAME}-selected` : '')
         }
              onClick={mouseClick}
              onContextMenu={mouseClick}
@@ -82,7 +92,7 @@ export function ChessGridCell ( props: ChessGridCellProps) {
                 <ChessPiece
                     className={CHESS_GRID_CELL_CLASS_NAME+'-content-text'}
                     type={ getChessPieceTypeByUnitTypeDTO(dto) }
-                    frame={ getChessPieceFrameByChessUnitDTO(dto, selected) }
+                    frame={ getChessPieceFrameByChessUnitDTO(dto, selectedDirectly) }
                 />
             </div>
         </div>

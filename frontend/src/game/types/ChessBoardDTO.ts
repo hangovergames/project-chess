@@ -5,6 +5,10 @@ import {
     isArrayOf,
 } from "../../io/hyperify/core/types/Array";
 import {
+    explainBoolean,
+    isBoolean,
+} from "../../io/hyperify/core/types/Boolean";
+import {
     explain,
     explainNot,
     explainOk,
@@ -35,6 +39,7 @@ export interface ChessBoardDTO {
     readonly width: number;
     readonly height: number;
     readonly units: readonly (ChessUnitDTO|null)[];
+    readonly check : boolean;
 }
 
 export function createChessBoardDTO (
@@ -42,12 +47,14 @@ export function createChessBoardDTO (
     width : number,
     height : number,
     units : readonly (ChessUnitDTO|null)[],
+    check : boolean,
 ) : ChessBoardDTO {
     return {
         turn,
         width,
         height,
         units,
+        check,
     };
 }
 
@@ -59,10 +66,12 @@ export function isChessBoardDTO (value: unknown) : value is ChessBoardDTO {
             'width',
             'height',
             'units',
+            'check',
         ])
         && isNumber(value?.turn)
         && isNumber(value?.width)
         && isNumber(value?.height)
+        && isBoolean(value?.check)
         && isArrayOf<ChessUnitDTO|null>(value?.units, isChessUnitDTOOrNull)
     );
 }
@@ -76,10 +85,12 @@ export function explainChessBoardDTO (value: any) : string {
                 'width',
                 'height',
                 'units',
+                'check',
             ])
             , explainProperty("turn", explainNumber(value?.turn))
             , explainProperty("width", explainNumber(value?.width))
             , explainProperty("height", explainNumber(value?.height))
+            , explainProperty("check", explainBoolean(value?.check))
             , explainProperty("units", explainArrayOf<ChessUnitDTO|null>("ChessUnitDTO|null", explainChessUnitDTOOrNull, value?.units, isChessUnitDTOOrNull))
         ]
     );

@@ -45,6 +45,7 @@ export interface ChessStateDTO {
     readonly isFinished    : boolean;
     readonly board         : ChessBoardDTO;
     readonly private       : string;
+    readonly check         : boolean;
 }
 
 export function createChessStateDTO (
@@ -58,6 +59,7 @@ export function createChessStateDTO (
     isFinished: boolean,
     board: ChessBoardDTO,
     privateData : string,
+    check : boolean,
 ) : ChessStateDTO {
     return {
         name,
@@ -69,6 +71,7 @@ export function createChessStateDTO (
         isStarted,
         isFinished,
         board,
+        check,
         private: privateData,
     };
 }
@@ -86,6 +89,7 @@ export function isChessStateDTO ( value: unknown) : value is ChessStateDTO {
             'isStarted',
             'isFinished',
             'board',
+            'check',
             'private',
         ])
         && isString(value?.name)
@@ -98,6 +102,7 @@ export function isChessStateDTO ( value: unknown) : value is ChessStateDTO {
         && isBoolean(value?.isFinished)
         && isChessBoardDTO(value?.board)
         && isString(value?.private)
+        && isBoolean(value?.check)
     );
 }
 
@@ -115,6 +120,7 @@ export function explainChessStateDTO ( value: any) : string {
                 'isStarted',
                 'isFinished',
                 'board',
+                'check',
                 'private',
             ])
             , explainProperty("name", explainString(value?.name))
@@ -125,6 +131,7 @@ export function explainChessStateDTO ( value: any) : string {
             , explainProperty("finished", explainNumber(value?.finished))
             , explainProperty("isStarted", explainBoolean(value?.isStarted))
             , explainProperty("isFinished", explainBoolean(value?.isFinished))
+            , explainProperty("check", explainBoolean(value?.check))
             , explainProperty("board", explainChessBoardDTO(value?.board))
             , explainProperty("private", explainString(value?.private))
         ]

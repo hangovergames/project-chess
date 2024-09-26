@@ -51,8 +51,10 @@ const INITIAL_GAME_STATE = () => createChessStateDTO(
         8,
         8,
         INIT_UNITS(),
+        false,
     ),
     "",
+    false,
 );
 
 export type AdvanceCallback = (subject: number, target: number, promotion ?: ChessUnit) => void;

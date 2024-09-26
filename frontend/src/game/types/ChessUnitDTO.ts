@@ -17,6 +17,10 @@ import {
     isNumber,
 } from "../../io/hyperify/core/types/Number";
 import {
+    explainNumberArrayOrUndefined,
+    isNumberArrayOrUndefined,
+} from "../../io/hyperify/core/types/NumberArray";
+import {
     explainNoOtherKeysInDevelopment,
     hasNoOtherKeysInDevelopment,
 } from "../../io/hyperify/core/types/OtherKeys";
@@ -32,26 +36,32 @@ import {
 } from "./ChessUnit";
 
 export interface ChessUnitDTO {
+    readonly index: number;
     readonly x: number;
     readonly y: number;
     readonly type: ChessUnit;
     readonly isDefender: boolean;
     readonly isOffender: boolean;
+    readonly validMoves ?: readonly number[] | undefined;
 }
 
 export function createChessUnitDTO (
+    index : number,
     x : number,
     y : number,
     type : ChessUnit,
     isDefender : boolean,
     isOffender : boolean,
+    validMoves : readonly number[] | undefined,
 ) : ChessUnitDTO {
     return {
+        index,
         x,
         y,
         type,
         isDefender,
         isOffender,
+        validMoves,
     };
 }
 
@@ -59,20 +69,21 @@ export function isChessUnitDTO (value: unknown) : value is ChessUnitDTO {
     return (
         isRegularObject(value)
         && hasNoOtherKeysInDevelopment(value, [
+            'index',
             'x',
             'y',
             'type',
             'isDefender',
             'isOffender',
-            'foo',
-            'foo',
-            'foo',
+            'validMoves',
         ])
+        && isNumber(value?.index)
         && isNumber(value?.x)
         && isNumber(value?.y)
         && isChessUnit(value?.type)
         && isBoolean(value?.isDefender)
         && isBoolean(value?.isOffender)
+        && isNumberArrayOrUndefined(value?.validMoves)
     );
 }
 
@@ -81,17 +92,21 @@ export function explainChessUnitDTO (value: any) : string {
         [
             explainRegularObject(value),
             explainNoOtherKeysInDevelopment(value, [
+                'index',
                 'x',
                 'y',
                 'type',
                 'isDefender',
                 'isOffender',
+                'validMoves',
             ])
+            , explainProperty("index", explainNumber(value?.index))
             , explainProperty("x", explainNumber(value?.x))
             , explainProperty("y", explainNumber(value?.y))
             , explainProperty("type", explainChessUnit(value?.type))
             , explainProperty("isDefender", explainBoolean(value?.isDefender))
             , explainProperty("isOffender", explainBoolean(value?.isOffender))
+            , explainProperty("validMoves", explainNumberArrayOrUndefined(value?.validMoves))
         ]
     );
 }

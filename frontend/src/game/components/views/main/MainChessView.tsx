@@ -43,6 +43,7 @@ export function MainChessView ( props: MainChessViewProps) {
 
     const playerName = gameState?.defender;
     const board = gameState?.board;
+    const units = board?.units ?? [];
 
     const [selectedSubject, setSelectedSubject] = useState<number>(-1);
     const [selectedPromotion, setSelectedPromotion] = useState<number>(0);
@@ -60,10 +61,12 @@ export function MainChessView ( props: MainChessViewProps) {
         (type, index) =>
             createChessUnitDTO(
                 index,
+                index,
                 0,
                 type,
                 promotionIsDefender,
                 promotionIsOffender,
+                [],
             )
     );
 
@@ -84,11 +87,18 @@ export function MainChessView ( props: MainChessViewProps) {
                 return;
             }
 
+            const dto = units[index];
+            const validMoves = dto?.validMoves ?? [];
+            const validMoveCount : number = validMoves.length ?? 0
+
             if (selectedSubject >= 0) {
                 LOG.info(`Advancing to index ${index} from ${selectedSubject}`);
                 advance(selectedSubject, index, selectedPromotedUnit);
                 setSelectedSubject(-1);
             } else {
+                if (validMoveCount === 0) {
+                    return;
+                }
                 LOG.info(`Preparing advance from index ${index}`);
                 setSelectedSubject(index);
             }
@@ -97,6 +107,7 @@ export function MainChessView ( props: MainChessViewProps) {
             advance,
             selectedSubject,
             selectedPromotedUnit,
+            units,
         ],
     );
 

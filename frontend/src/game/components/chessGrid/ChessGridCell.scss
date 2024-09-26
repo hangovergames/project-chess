@@ -4,6 +4,7 @@
 
   margin: 0;
   padding: 0;
+  border: 1px solid #000;
 
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none;    /* Firefox */
@@ -90,6 +91,14 @@
       background: #FF69B4;
     }
 
+  }
+
+  &.chess-grid-cell-can-move {
+    border: 1px solid green;
+  }
+
+  &.chess-grid-cell-can-move-here {
+    border: 1px solid green;
   }
 
 }
