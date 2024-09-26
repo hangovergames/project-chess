@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "https://chess.hangover.games/static/css/main.dca059da.css",
-    "main.js": "https://chess.hangover.games/static/js/main.501f3c19.js",
+    "main.js": "https://chess.hangover.games/static/js/main.205b554e.js",
     "static/js/496.1cadcd6d.chunk.js": "https://chess.hangover.games/static/js/496.1cadcd6d.chunk.js",
     "static/media/RedHatDisplay-SemiBold.ttf": "https://chess.hangover.games/static/media/RedHatDisplay-SemiBold.a09738a446c68f81a5a1.ttf",
     "static/media/RedHatDisplay-ExtraBold.ttf": "https://chess.hangover.games/static/media/RedHatDisplay-ExtraBold.3c908e72acb4638501f1.ttf",
@@ -26,11 +26,11 @@
     "index.html": "https://chess.hangover.games/index.html",
     "static/media/noun-chess-rook-4390014.svg": "https://chess.hangover.games/static/media/noun-chess-rook-4390014.9545c34c6b3b1fbe99089b2247b113c4.svg",
     "main.dca059da.css.map": "https://chess.hangover.games/static/css/main.dca059da.css.map",
-    "main.501f3c19.js.map": "https://chess.hangover.games/static/js/main.501f3c19.js.map",
+    "main.205b554e.js.map": "https://chess.hangover.games/static/js/main.205b554e.js.map",
     "496.1cadcd6d.chunk.js.map": "https://chess.hangover.games/static/js/496.1cadcd6d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dca059da.css",
-    "static/js/main.501f3c19.js"
+    "static/js/main.205b554e.js"
   ]
 }
