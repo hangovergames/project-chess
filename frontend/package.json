@@ -1,6 +1,6 @@
 {
   "name": "@hangovergames/chess",
-  "version": "0.0.39",
+  "version": "0.0.49",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
