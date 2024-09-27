@@ -108,6 +108,7 @@ export class ChessGameClientImpl implements ChessGameClient {
                 undefined,
                 undefined,
                 name,
+                undefined,
             )
         );
     }

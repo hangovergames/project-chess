@@ -18,17 +18,19 @@ import { ChessPiece } from "../chessPiece/ChessPiece";
 import "./ChessGridCell.scss";
 
 export interface ChessGridCellProps {
-    readonly className ?: string;
-    readonly index      : number;
-    readonly selected   : boolean;
-    readonly selectedDto : ChessUnitDTO|null|undefined;
-    readonly dto        : ChessUnitDTO|null;
-    readonly click      : () => void;
+    readonly className   ?: string;
+    readonly index        : number;
+    readonly selected     : boolean;
+    readonly loading      : boolean;
+    readonly selectedDto  : ChessUnitDTO|null|undefined;
+    readonly dto          : ChessUnitDTO|null;
+    readonly click        : () => void;
 }
 
 export function ChessGridCell ( props: ChessGridCellProps) {
     const className = props?.className;
     const selectedDirectly = props?.selected ?? false;
+    const loading = props?.loading ?? false;
     const selectedDto = props?.selectedDto;
     const clickCallback = props?.click;
     const dto = props?.dto ?? null;
@@ -93,6 +95,7 @@ export function ChessGridCell ( props: ChessGridCellProps) {
                     className={CHESS_GRID_CELL_CLASS_NAME+'-content-text'}
                     type={ getChessPieceTypeByUnitTypeDTO(dto) }
                     frame={ getChessPieceFrameByChessUnitDTO(dto, selectedDirectly) }
+                    loading={ loading }
                 />
             </div>
         </div>

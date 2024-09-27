@@ -57,12 +57,13 @@ const INITIAL_GAME_STATE = () => createChessStateDTO(
     false,
 );
 
-export type AdvanceCallback = (subject: number, target: number, promotion ?: ChessUnit) => void;
+export type AdvanceCallback = (subject: number, target: number, promotion : ChessUnit) => void;
 export type ResetCallback = () => void;
 export type SetNameCallback = (name : string) => void;
 
-export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, AdvanceCallback, ResetCallback, SetNameCallback] {
+export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, AdvanceCallback, ResetCallback, SetNameCallback, readonly number[]] {
 
+    const [updatingLocations, setUpdatingLocations] = useState<readonly number[]>([]);
     const [gameState, setGameState] = useState<ChessStateDTO|undefined>();
 
     const initializeLock = useRef<boolean>(false);
@@ -100,7 +101,7 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
     )
 
     const advanceCallback = useCallback(
-        (subject: number, target: number, promotion ?: number) => {
+        (subject: number, target: number, promotion : number) => {
 
             if (promiseLock.current) {
                 LOG.error(`Previous action still active`)
@@ -110,12 +111,15 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
             const name = gameState?.name ?? INITIAL_NAME();
             if (gameState?.isStarted) {
                 promiseLock.current = true;
+                setUpdatingLocations([subject, target]);
                 client.advanceGame(subject, target, gameState, name, promotion).then(state => {
                     LOG.debug(`State updated: `, state);
                     setGameState(state);
+                    setUpdatingLocations([]);
                     promiseLock.current = false;
                 }).catch(err => {
                     LOG.error(`Failed: `, err);
+                    setUpdatingLocations([]);
                     promiseLock.current = false;
                 });
             } else {
@@ -177,5 +181,5 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
         startGameCallback,
     ])
 
-    return [visibleGameState, advanceCallback, resetCallback, setNameCallback];
+    return [visibleGameState, advanceCallback, resetCallback, setNameCallback, updatingLocations];
 }

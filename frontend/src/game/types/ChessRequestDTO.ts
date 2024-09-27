@@ -68,11 +68,11 @@ export interface ChessRequestDTO {
 }
 
 export function createChessRequestDTO (
-    subject   ?: number | undefined,
-    target    ?: number | undefined,
-    gameState ?: ChessStateDTO | undefined,
-    name      ?: string | undefined,
-    promote   ?: ChessUnit | undefined,
+    subject   : number | undefined,
+    target    : number | undefined,
+    gameState : ChessStateDTO | undefined,
+    name      : string | undefined,
+    promote   : ChessUnit | undefined,
 ) : ChessRequestDTO {
     return {
         subject,

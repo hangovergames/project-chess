@@ -14,12 +14,14 @@ export interface ChessGridProps {
     readonly width      : number;
     readonly height     : number;
     readonly selected   : number;
+    readonly updatingLocations : readonly number[];
     readonly units      : readonly (ChessUnitDTO|null)[];
     readonly onClick    : (index: number) => void;
 }
 
 export function ChessGrid ( props: ChessGridProps) {
     const className = props?.className;
+    const updatingLocations = props?.updatingLocations;
     const clickCallback = props?.onClick;
     const selectedIndex = props?.selected;
     const width = props?.width ?? 8;
@@ -57,6 +59,7 @@ export function ChessGrid ( props: ChessGridProps) {
                                 click={() => clickCallback(index)}
                                 selected={ isSelectedCallback(index) }
                                 selectedDto={ units[selectedIndex] }
+                                loading={ updatingLocations.indexOf(index) >= 0 }
                             />
                         );
                     })

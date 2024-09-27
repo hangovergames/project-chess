@@ -38,7 +38,7 @@ export function MainChessView ( props: MainChessViewProps) {
     const location = useLocation();
 
     const [
-        gameState, advance, resetGame, setName
+        gameState, advance, resetGame, setName, updatingLocations,
     ] = useChessGameState(GAME_CLIENT)
 
     const playerName = gameState?.defender;
@@ -92,7 +92,7 @@ export function MainChessView ( props: MainChessViewProps) {
             const validMoveCount : number = validMoves.length ?? 0
 
             if (selectedSubject >= 0) {
-                LOG.info(`Advancing to index ${index} from ${selectedSubject}`);
+                LOG.info(`Advancing to index ${index} from ${selectedSubject} with promotion as ${selectedPromotedUnit}`);
                 advance(selectedSubject, index, selectedPromotedUnit);
                 setSelectedSubject(-1);
             } else {
@@ -144,7 +144,6 @@ export function MainChessView ( props: MainChessViewProps) {
         ],
     );
 
-
     return (
         <>
 
@@ -168,6 +167,7 @@ export function MainChessView ( props: MainChessViewProps) {
                             units={ board?.units ?? [] }
                             selected={selectedSubject}
                             onClick={ selectCellCallback }
+                            updatingLocations={ updatingLocations }
                         />
 
                         <section className={ MAIN_VIEW_CLASS_NAME + '-game-footer' }>
@@ -199,6 +199,7 @@ export function MainChessView ( props: MainChessViewProps) {
                                     units={ promotionUnits }
                                     selected={selectedPromotion}
                                     onClick={ selectPromotionCallback }
+                                    updatingLocations={ [] }
                                 />
                             </section>
 
