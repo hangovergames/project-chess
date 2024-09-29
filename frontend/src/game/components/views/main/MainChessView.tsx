@@ -54,7 +54,7 @@ export function MainChessView ( props: MainChessViewProps) {
     const boardState = gameState?.board?.state ?? ChessState?.Uninitialized;
     const drawReason = gameState?.board?.draw ?? ChessDraw.DrawTBD;
     const victoryReason = gameState?.board?.victory ?? ChessVictory.VictoryTBD;
-    const playerName = gameState?.defender;
+    const playerName = gameState?.name;
     const board = gameState?.board;
 
     const [selectedSubject, setSelectedSubject] = useState<number>(-1);
@@ -175,14 +175,14 @@ export function MainChessView ( props: MainChessViewProps) {
         ],
     );
 
-    const startOnlineMultiplayerCallback = useCallback(
-        () => {
-            LOG.info(`Starting online multiplayer game`);
-            startGameCallback(ChessPlayMode.OnlineMultiplayer);
-        }, [
-            startGameCallback,
-        ],
-    );
+    // const startOnlineMultiplayerCallback = useCallback(
+    //     () => {
+    //         LOG.info(`Starting online multiplayer game`);
+    //         startGameCallback(ChessPlayMode.OnlineMultiplayer);
+    //     }, [
+    //         startGameCallback,
+    //     ],
+    // );
 
     function victoryMessage (
         victory: ChessVictory,
@@ -270,10 +270,10 @@ export function MainChessView ( props: MainChessViewProps) {
                                                 className={ MAIN_VIEW_CLASS_NAME + '-start-button' }
                                                 click={ () => startLocalMultiplayerCallback() }
                                             >Local Multiplayer</Button>
-                                            <Button
-                                                className={ MAIN_VIEW_CLASS_NAME + '-start-button' }
-                                                click={ () => startOnlineMultiplayerCallback() }
-                                            >Online Multiplayer</Button>
+                                            {/*<Button*/}
+                                            {/*    className={ MAIN_VIEW_CLASS_NAME + '-start-button' }*/}
+                                            {/*    click={ () => startOnlineMultiplayerCallback() }*/}
+                                            {/*>Online Multiplayer</Button>*/}
                                         </section>
 
                                     </form>
