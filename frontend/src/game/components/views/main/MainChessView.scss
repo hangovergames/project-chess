@@ -43,6 +43,63 @@
 
       }
 
+      & > .main-chess-view-init-screen {
+
+        position: absolute;
+        top: 5em;
+        left: 0;
+        right: 0;
+        width: 300px;
+        max-width: 90vw;
+
+        background-color: #222222;
+
+        padding: 24px 32px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        align-content: stretch;
+        justify-content: stretch;
+        flex-direction: row;
+
+        & > .main-chess-view-form {
+
+          & > .main-chess-view-name {
+            margin: 0 16px 0 0;
+
+            & > .main-chess-view-name-label {
+              padding-right: 8px;
+            }
+
+            & > .main-chess-view-name-field {
+              border: 0;
+              margin: 0;
+              padding: 12px;
+              background-color: #f0f0f0;
+            }
+
+          }
+
+          & > .main-chess-view-buttons {
+
+            & > .main-chess-view-game-mode {
+              text-align: left;
+              margin: 32px auto 0 auto;
+            }
+
+            & > .main-chess-view-start-button {
+              margin: 32px auto;
+              min-width: 10em;
+            }
+
+
+          }
+
+        }
+
+      }
+
       & > .main-chess-view-game-footer {
         margin: 16px 0 6px 0;
         display: flex;
@@ -51,16 +108,6 @@
         align-content: stretch;
         justify-content: stretch;
         flex-direction: row;
-
-        & > .main-chess-view-name {
-          margin: 0 16px 0 8px;
-
-          & > .main-chess-view-name-field {
-            margin: 0;
-            padding: 12px;
-            background-color: #f0f0f0;
-          }
-        }
 
         & > .main-chess-view-buttons {
           margin: 0 16px 0 8px;

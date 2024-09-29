@@ -25,6 +25,11 @@ import {
 } from "../../io/hyperify/core/types/String";
 import { isUndefined } from "../../io/hyperify/core/types/undefined";
 import {
+    ChessPlayMode,
+    explainChessPlayModeOrUndefined,
+    isChessPlayModeOrUndefined,
+} from "./ChessPlayMode";
+import {
     ChessStateDTO,
     explainChessStateDTOOrUndefined,
     isChessStateDTOOrUndefined,
@@ -36,6 +41,9 @@ import {
 } from "./ChessUnit";
 
 export interface ChessRequestDTO {
+
+    /** The game mode */
+    readonly mode      ?: ChessPlayMode;
 
     /**
      * An index on the board for a unit of the next action
@@ -68,6 +76,7 @@ export interface ChessRequestDTO {
 }
 
 export function createChessRequestDTO (
+    mode      : ChessPlayMode | undefined,
     subject   : number | undefined,
     target    : number | undefined,
     gameState : ChessStateDTO | undefined,
@@ -75,6 +84,7 @@ export function createChessRequestDTO (
     promote   : ChessUnit | undefined,
 ) : ChessRequestDTO {
     return {
+        mode,
         subject,
         target,
         gameState,
@@ -87,12 +97,14 @@ export function isChessRequestDTO ( value: unknown) : value is ChessRequestDTO {
     return (
         isRegularObject(value)
         && hasNoOtherKeysInDevelopment(value, [
+            'mode',
             'subject',
             'target',
             'gameState',
             'name',
             'promote',
         ])
+        && isChessPlayModeOrUndefined(value?.mode)
         && isNumberOrUndefined(value?.subject)
         && isNumberOrUndefined(value?.target)
         && isChessUnitOrUndefined(value?.promote)
@@ -106,12 +118,14 @@ export function explainChessRequestDTO ( value: any) : string {
         [
             explainRegularObject(value),
             explainNoOtherKeysInDevelopment(value, [
+                'mode',
                 'subject',
                 'target',
                 'gameState',
                 'name',
                 'promote',
             ])
+            , explainProperty("mode", explainChessPlayModeOrUndefined(value?.mode))
             , explainProperty("subject", explainNumberOrUndefined(value?.subject))
             , explainProperty("target", explainNumberOrUndefined(value?.target))
             , explainProperty("promote", explainChessUnitOrUndefined(value?.promote))

@@ -25,7 +25,9 @@ import {
 } from "../../io/hyperify/core/types/RegularObject";
 import {
     explainString,
+    explainStringOrUndefined,
     isString,
+    isStringOrUndefined,
 } from "../../io/hyperify/core/types/String";
 import { isUndefined } from "../../io/hyperify/core/types/undefined";
 import {
@@ -33,11 +35,18 @@ import {
     explainChessBoardDTO,
     isChessBoardDTO,
 } from "./ChessBoardDTO";
+import {
+    ChessPlayMode,
+    explainChessPlayMode,
+    isChessPlayMode,
+} from "./ChessPlayMode";
 
 export interface ChessStateDTO {
     readonly name          : string;
+    readonly mode          : ChessPlayMode;
     readonly offender      : string;
     readonly defender      : string;
+    readonly winner       ?: string | undefined;
     readonly leaderboardId : string;
     readonly started       : number;
     readonly finished      : number;
@@ -45,13 +54,14 @@ export interface ChessStateDTO {
     readonly isFinished    : boolean;
     readonly board         : ChessBoardDTO;
     readonly private       : string;
-    readonly check         : boolean;
 }
 
 export function createChessStateDTO (
+    mode : ChessPlayMode,
     name : string,
     offender : string,
     defender : string,
+    winner : string | undefined,
     leaderboardId : string,
     started : number,
     finished: number,
@@ -59,19 +69,19 @@ export function createChessStateDTO (
     isFinished: boolean,
     board: ChessBoardDTO,
     privateData : string,
-    check : boolean,
 ) : ChessStateDTO {
     return {
+        mode,
         name,
         offender,
         defender,
+        winner,
         leaderboardId,
         started,
         finished,
         isStarted,
         isFinished,
         board,
-        check,
         private: privateData,
     };
 }
@@ -81,20 +91,23 @@ export function isChessStateDTO ( value: unknown) : value is ChessStateDTO {
         isRegularObject(value)
         && hasNoOtherKeysInDevelopment(value, [
             'name',
+            'mode',
             'offender',
             'defender',
+            'winner',
             'leaderboardId',
             'started',
             'finished',
             'isStarted',
             'isFinished',
             'board',
-            'check',
             'private',
         ])
         && isString(value?.name)
+        && isChessPlayMode(value?.mode)
         && isString(value?.offender)
         && isString(value?.defender)
+        && isStringOrUndefined(value?.winner)
         && isString(value?.leaderboardId)
         && isNumber(value?.started)
         && isNumber(value?.finished)
@@ -102,7 +115,6 @@ export function isChessStateDTO ( value: unknown) : value is ChessStateDTO {
         && isBoolean(value?.isFinished)
         && isChessBoardDTO(value?.board)
         && isString(value?.private)
-        && isBoolean(value?.check)
     );
 }
 
@@ -111,27 +123,29 @@ export function explainChessStateDTO ( value: any) : string {
         [
             explainRegularObject(value),
             explainNoOtherKeysInDevelopment(value, [
+                'mode',
                 'name',
                 'offender',
                 'defender',
+                'winner',
                 'leaderboardId',
                 'started',
                 'finished',
                 'isStarted',
                 'isFinished',
                 'board',
-                'check',
                 'private',
             ])
             , explainProperty("name", explainString(value?.name))
+            , explainProperty("mode", explainChessPlayMode(value?.mode))
             , explainProperty("offender", explainString(value?.offender))
             , explainProperty("defender", explainString(value?.defender))
+            , explainProperty("winner", explainStringOrUndefined(value?.winner))
             , explainProperty("leaderboardId", explainString(value?.leaderboardId))
             , explainProperty("started", explainNumber(value?.started))
             , explainProperty("finished", explainNumber(value?.finished))
             , explainProperty("isStarted", explainBoolean(value?.isStarted))
             , explainProperty("isFinished", explainBoolean(value?.isFinished))
-            , explainProperty("check", explainBoolean(value?.check))
             , explainProperty("board", explainChessBoardDTO(value?.board))
             , explainProperty("private", explainString(value?.private))
         ]

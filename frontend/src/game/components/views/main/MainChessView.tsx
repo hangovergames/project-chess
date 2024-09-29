@@ -14,11 +14,19 @@ import { MAIN_VIEW_CLASS_NAME } from "../../../constants/classNames";
 import { INDEX_ROUTE } from "../../../constants/route";
 import { useChessGameState } from "../../../hooks/useChessGameState";
 import { ChessGameClientImpl } from "../../../services/ChessGameClientImpl";
+import {
+    ChessDraw,
+} from "../../../types/ChessDraw";
+import { ChessPlayMode } from "../../../types/ChessPlayMode";
+import { ChessState } from "../../../types/ChessState";
 import { ChessUnit } from "../../../types/ChessUnit";
 import {
     ChessUnitDTO,
     createChessUnitDTO,
 } from "../../../types/ChessUnitDTO";
+import {
+    ChessVictory,
+} from "../../../types/ChessVictory";
 import { ChessGrid } from "../../chessGrid/ChessGrid";
 import "./MainChessView.scss";
 
@@ -38,9 +46,14 @@ export function MainChessView ( props: MainChessViewProps) {
     const location = useLocation();
 
     const [
-        gameState, advance, resetGame, setName, updatingLocations,
+        gameState, advance, startGameCallback, resetGame, setName, updatingLocations,
     ] = useChessGameState(GAME_CLIENT)
 
+    const mode = gameState?.mode;
+    const winner = gameState?.winner ?? "";
+    const boardState = gameState?.board?.state ?? ChessState?.Uninitialized;
+    const drawReason = gameState?.board?.draw ?? ChessDraw.DrawTBD;
+    const victoryReason = gameState?.board?.victory ?? ChessVictory.VictoryTBD;
     const playerName = gameState?.defender;
     const board = gameState?.board;
 
@@ -144,6 +157,60 @@ export function MainChessView ( props: MainChessViewProps) {
         ],
     );
 
+    const startSinglePlayerCallback = useCallback(
+        () => {
+            LOG.info(`Starting single player game`);
+            startGameCallback(ChessPlayMode.SinglePlayer);
+        }, [
+            startGameCallback,
+        ],
+    );
+
+    const startLocalMultiplayerCallback = useCallback(
+        () => {
+            LOG.info(`Starting local multiplayer game`);
+            startGameCallback(ChessPlayMode.LocalMultiplayer);
+        }, [
+            startGameCallback,
+        ],
+    );
+
+    const startOnlineMultiplayerCallback = useCallback(
+        () => {
+            LOG.info(`Starting online multiplayer game`);
+            startGameCallback(ChessPlayMode.OnlineMultiplayer);
+        }, [
+            startGameCallback,
+        ],
+    );
+
+    function victoryMessage (
+        victory: ChessVictory,
+        winner: string,
+    ) : string {
+        switch (victory) {
+            case ChessVictory.VictoryTBD: return ""
+            case ChessVictory.VictoryByCheckmate: return `${winner} won by checkmate`
+            case ChessVictory.VictoryByResignation: return `${winner} won by resignation`
+            case ChessVictory.VictoryByTimeControlExpiry: return `${winner} won by time control expiry`
+        }
+    }
+
+    function drawMessage (
+        draw: ChessDraw,
+    ) : string {
+        switch (draw) {
+            case ChessDraw.DrawTBD: return "";
+            case ChessDraw.DrawByStalemate: return "Draw By Stalemate";
+            case ChessDraw.DrawByAgreement: return "Draw By Agreement";
+            case ChessDraw.DrawByThreefoldRepetition: return "Draw By Threefold Repetition";
+            case ChessDraw.DrawByFiftyMoveRule: return "Draw By Fifty Move Rule";
+            case ChessDraw.DrawByInsufficientMaterial: return "Draw By Insufficient Material";
+            case ChessDraw.DrawByTimeControlExpiry: return "Draw By Time Control Expiry";
+            case ChessDraw.DrawByPerpetualCheck: return "Draw By Perpetual Check";
+        }
+    }
+
     return (
         <>
 
@@ -162,6 +229,7 @@ export function MainChessView ( props: MainChessViewProps) {
                         </header>
 
                         <ChessGrid
+                            className={ MAIN_VIEW_CLASS_NAME + '-chess-grid' }
                             width={ board?.width ?? 8 }
                             height={ board?.height ?? 8 }
                             units={ board?.units ?? [] }
@@ -170,38 +238,94 @@ export function MainChessView ( props: MainChessViewProps) {
                             updatingLocations={ updatingLocations }
                         />
 
+                        {mode === ChessPlayMode.PlayModeNil ? (
+                            <>
+                                <section className={ MAIN_VIEW_CLASS_NAME + '-init-screen' }>
+
+                                    <h3>Start a game of chess!</h3>
+
+                                    <form className={ MAIN_VIEW_CLASS_NAME + '-form' }>
+
+                                        <label htmlFor="name" className={ MAIN_VIEW_CLASS_NAME + '-name' }>
+                                            <span className={MAIN_VIEW_CLASS_NAME + '-name-label'}>Player Name:</span>
+                                            <input
+                                                id="name"
+                                                className={ MAIN_VIEW_CLASS_NAME + '-name-field' }
+                                                type="text"
+                                                placeholder={ "Your name" }
+                                                required={ gameState.isStarted }
+                                                maxLength={ 32 }
+                                                value={ playerName }
+                                                onChange={ ( elem ) => setName(elem.target.value ) }
+                                            />
+                                        </label>
+
+                                        <section className={ MAIN_VIEW_CLASS_NAME + '-buttons' }>
+                                            <div className={MAIN_VIEW_CLASS_NAME + '-game-mode'}>Start a...</div>
+                                            <Button
+                                                className={ MAIN_VIEW_CLASS_NAME + '-start-button' }
+                                                click={ () => startSinglePlayerCallback() }
+                                            >Single Player</Button>
+                                            <Button
+                                                className={ MAIN_VIEW_CLASS_NAME + '-start-button' }
+                                                click={ () => startLocalMultiplayerCallback() }
+                                            >Local Multiplayer</Button>
+                                            <Button
+                                                className={ MAIN_VIEW_CLASS_NAME + '-start-button' }
+                                                click={ () => startOnlineMultiplayerCallback() }
+                                            >Online Multiplayer</Button>
+                                        </section>
+
+                                    </form>
+
+                                </section>
+                            </>
+                        ) : null}
+
                         <section className={ MAIN_VIEW_CLASS_NAME + '-game-footer' }>
 
-                            <section className={ MAIN_VIEW_CLASS_NAME + '-name' }><input
-                                className={ MAIN_VIEW_CLASS_NAME + '-name-field' }
-                                type="text"
-                                placeholder={ "Your name" }
-                                required={ gameState.isStarted }
-                                maxLength={ 32 }
-                                value={ playerName }
-                                onChange={ ( elem ) => setName( elem.target.value ) }
-                            /></section>
-
+                            {mode === ChessPlayMode.LocalMultiplayer || mode === ChessPlayMode.SinglePlayer ? (
                             <section className={ MAIN_VIEW_CLASS_NAME + '-buttons' }>
                                 <Button
                                     className={ MAIN_VIEW_CLASS_NAME + '-reset-button' }
                                     click={ () => resetGameCallback() }
                                 >{ gameState.isFinished ? "Restart" : "Reset" }</Button>
                             </section>
+                            ) : null}
 
                             {/*<section className={ MAIN_VIEW_CLASS_NAME + '-score' }>Score: { gameState.score }</section>*/}
 
-                            <section>
-                                Promotion option:
-                                <ChessGrid
-                                    width={ 5 }
-                                    height={ 1 }
-                                    units={ promotionUnits }
-                                    selected={selectedPromotion}
-                                    onClick={ selectPromotionCallback }
-                                    updatingLocations={ [] }
-                                />
-                            </section>
+                            {mode !== ChessPlayMode.PlayModeNil && boardState === ChessState.Active ? (
+                                <section className={ MAIN_VIEW_CLASS_NAME + '-promotion-options' }>
+                                    Promotion option:
+                                    <ChessGrid
+                                        width={ 5 }
+                                        height={ 1 }
+                                        units={ promotionUnits }
+                                        selected={selectedPromotion}
+                                        onClick={ selectPromotionCallback }
+                                        updatingLocations={ [] }
+                                    />
+                                </section>
+                            ) : (
+                                <section className={ MAIN_VIEW_CLASS_NAME + '-game-ended-section' }>
+
+                                    { boardState === ChessState.Victory ? (
+                                        <>
+                                            <strong>Victory!</strong>
+                                            <span> {victoryMessage(victoryReason, winner)}</span>
+                                        </>
+                                    ): null}
+
+                                    { boardState === ChessState.Draw ? (
+                                        <>
+                                            <strong>Draw!</strong>
+                                            <span> {drawMessage(drawReason)}</span>
+                                        </>
+                                    ): null}
+
+                                </section>
+                            )}
 
                         </section>
 

@@ -2,7 +2,6 @@
 
 import {
     useCallback,
-    useEffect,
     useRef,
     useState,
 } from "react";
@@ -10,14 +9,16 @@ import { LogService } from "../../io/hyperify/core/LogService";
 import { LocalStorageService } from "../../io/hyperify/frontend/services/LocalStorageService";
 import { ChessGameClient } from "../services/ChessGameClient";
 import { createChessBoardDTO } from "../types/ChessBoardDTO";
+import { ChessDraw } from "../types/ChessDraw";
+import { ChessPlayMode } from "../types/ChessPlayMode";
+import { ChessState } from "../types/ChessState";
 import {
-    createChessStateDTO,
     ChessStateDTO,
+    createChessStateDTO,
 } from "../types/ChessStateDTO";
 import { ChessUnit } from "../types/ChessUnit";
-import {
-    ChessUnitDTO,
-} from "../types/ChessUnitDTO";
+import { ChessUnitDTO } from "../types/ChessUnitDTO";
+import { ChessVictory } from "../types/ChessVictory";
 
 const LOCAL_STORAGE_KEY_NAME = 'fi.hg.name';
 
@@ -38,9 +39,11 @@ const INIT_UNITS = () : (ChessUnitDTO|null)[] => {
     ];
 }
 const INITIAL_GAME_STATE = () => createChessStateDTO(
+    ChessPlayMode.PlayModeNil,
     '',
-    'white',
-    'black',
+    '',
+    '',
+    '',
     '',
     0,
     0,
@@ -52,16 +55,19 @@ const INITIAL_GAME_STATE = () => createChessStateDTO(
         8,
         INIT_UNITS(),
         false,
+        ChessState.Uninitialized,
+        ChessDraw.DrawTBD,
+        ChessVictory.VictoryTBD,
     ),
     "",
-    false,
 );
 
 export type AdvanceCallback = (subject: number, target: number, promotion : ChessUnit) => void;
 export type ResetCallback = () => void;
 export type SetNameCallback = (name : string) => void;
+export type StartGameCallback = (mode: ChessPlayMode) => void;
 
-export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, AdvanceCallback, ResetCallback, SetNameCallback, readonly number[]] {
+export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, AdvanceCallback, StartGameCallback, ResetCallback, SetNameCallback, readonly number[]] {
 
     const [updatingLocations, setUpdatingLocations] = useState<readonly number[]>([]);
     const [gameState, setGameState] = useState<ChessStateDTO|undefined>();
@@ -72,7 +78,7 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
     const visibleGameState : ChessStateDTO = gameState ? gameState : INITIAL_GAME_STATE();
 
     const startGameCallback = useCallback(
-        () => {
+        (mode: ChessPlayMode) => {
 
             if (promiseLock.current) {
                 LOG.error(`Previous action still active`)
@@ -84,7 +90,7 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
                 LOG.debug(`Game was started already: `, gameState);
             } else {
                 promiseLock.current = true;
-                client.newGame(name).then(state => {
+                client.newGame(mode, name).then(state => {
                     LOG.debug(`Game state updated: `, state);
                     setGameState(state);
                     promiseLock.current = false;
@@ -138,11 +144,10 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
             setGameState({
                 ...INITIAL_GAME_STATE(),
                 name: gameState?.name ?? INITIAL_NAME(),
+                mode: ChessPlayMode.PlayModeNil,
             });
             initializeLock.current = false
-            startGameCallback();
         }, [
-            startGameCallback,
             setGameState,
             gameState,
         ],
@@ -169,17 +174,17 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
         ],
     )
 
-    useEffect(() => {
-        if ( !gameState?.isStarted && !promiseLock.current && !initializeLock.current ) {
-            initializeLock.current = true
-            startGameCallback();
-        }
-    }, [
-        gameState?.isStarted,
-        promiseLock,
-        initializeLock,
-        startGameCallback,
-    ])
+    // useEffect(() => {
+    //     if ( !gameState?.isStarted && !promiseLock.current && !initializeLock.current ) {
+    //         initializeLock.current = true
+    //         startGameCallback();
+    //     }
+    // }, [
+    //     gameState?.isStarted,
+    //     promiseLock,
+    //     initializeLock,
+    //     startGameCallback,
+    // ])
 
-    return [visibleGameState, advanceCallback, resetCallback, setNameCallback, updatingLocations];
+    return [visibleGameState, advanceCallback, startGameCallback, resetCallback, setNameCallback, updatingLocations];
 }

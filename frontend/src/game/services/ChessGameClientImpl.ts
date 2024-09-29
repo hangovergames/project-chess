@@ -1,8 +1,6 @@
 // Copyright (c) 2024. Heusala Group Oy <info@heusalagroup.fi>. All rights reserved.
 
-import {
-    JsonAny,
-} from "../../io/hyperify/core/Json";
+import { JsonAny } from "../../io/hyperify/core/Json";
 import { RequestClient } from "../../io/hyperify/core/RequestClient";
 import { RequestClientImpl } from "../../io/hyperify/core/RequestClientImpl";
 import { DEFAULT_GAME_URL } from "../constants/backend";
@@ -11,20 +9,21 @@ import {
     LEADERBOARD_API_PATH,
 } from "../constants/frontend";
 import {
-    explainChessLeaderboardDTO,
     ChessLeaderboardDTO,
+    explainChessLeaderboardDTO,
     isChessLeaderboardDTO,
 } from "../types/ChessLeaderboardDTO";
+import { ChessLeaderBoardType } from "../types/ChessLeaderBoardType";
+import { ChessPlayMode } from "../types/ChessPlayMode";
 import {
-    createChessRequestDTO,
     ChessRequestDTO,
+    createChessRequestDTO,
 } from "../types/ChessRequestDTO";
 import {
-    explainChessStateDTO,
     ChessStateDTO,
+    explainChessStateDTO,
     isChessStateDTO,
 } from "../types/ChessStateDTO";
-import { ChessLeaderBoardType } from "../types/ChessLeaderBoardType";
 import { ChessUnit } from "../types/ChessUnit";
 import { ChessGameClient } from "./ChessGameClient";
 
@@ -92,6 +91,7 @@ export class ChessGameClientImpl implements ChessGameClient {
     ) : Promise<ChessStateDTO> {
         return this.postRequest(
             createChessRequestDTO(
+                ChessPlayMode.LocalMultiplayer,
                 subject,
                 target,
                 prevState,
@@ -101,9 +101,13 @@ export class ChessGameClientImpl implements ChessGameClient {
         );
     }
 
-    public async newGame ( name ?: string ) : Promise<ChessStateDTO> {
+    public async newGame (
+        mode: ChessPlayMode,
+        name ?: string,
+    ) : Promise<ChessStateDTO> {
         return this.postRequest(
             createChessRequestDTO(
+                mode,
                 undefined,
                 undefined,
                 undefined,

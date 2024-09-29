@@ -1,6 +1,7 @@
 // Copyright (c) 2022-2024. Heusala Group Oy <info@hg.fi>. All rights reserved.
 
 import { ChessLeaderboardDTO } from "../types/ChessLeaderboardDTO";
+import { ChessPlayMode } from "../types/ChessPlayMode";
 import { ChessRequestDTO } from "../types/ChessRequestDTO";
 import { ChessStateDTO } from "../types/ChessStateDTO";
 import { ChessLeaderBoardType } from "../types/ChessLeaderBoardType";
@@ -18,7 +19,10 @@ export interface ChessGameClient {
     /**
      * Start a new game
      */
-    newGame (name ?: string): Promise<ChessStateDTO>;
+    newGame (
+        mode: ChessPlayMode,
+        name ?: string,
+    ): Promise<ChessStateDTO>;
 
     /**
      * Start a new game
