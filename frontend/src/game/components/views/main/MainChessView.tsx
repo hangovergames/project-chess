@@ -193,6 +193,7 @@ export function MainChessView ( props: MainChessViewProps) {
             case ChessVictory.VictoryByCheckmate: return `${winner} won by checkmate`
             case ChessVictory.VictoryByResignation: return `${winner} won by resignation`
             case ChessVictory.VictoryByTimeControlExpiry: return `${winner} won by time control expiry`
+            case ChessVictory.NoVictory: return ""
         }
     }
 
@@ -208,6 +209,7 @@ export function MainChessView ( props: MainChessViewProps) {
             case ChessDraw.DrawByInsufficientMaterial: return "Draw By Insufficient Material";
             case ChessDraw.DrawByTimeControlExpiry: return "Draw By Time Control Expiry";
             case ChessDraw.DrawByPerpetualCheck: return "Draw By Perpetual Check";
+            case ChessDraw.NoDraw: return "";
         }
     }
 

@@ -22,6 +22,7 @@ export enum ChessDraw {
     DrawByInsufficientMaterial = 5,
     DrawByTimeControlExpiry = 6,
     DrawByPerpetualCheck = 7,
+    NoDraw = 8,
 }
 
 export function isChessDraw (value: unknown) : value is ChessDraw {

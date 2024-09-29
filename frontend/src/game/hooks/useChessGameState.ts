@@ -40,7 +40,7 @@ const INIT_UNITS = () : (ChessUnitDTO|null)[] => {
 }
 const INITIAL_GAME_STATE = () => createChessStateDTO(
     ChessPlayMode.PlayModeNil,
-    '',
+    INITIAL_NAME(),
     '',
     '',
     '',

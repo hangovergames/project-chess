@@ -20,6 +20,7 @@ export enum ChessVictory {
     VictoryByCheckmate = 1,
     VictoryByResignation = 2,
     VictoryByTimeControlExpiry = 3,
+    NoVictory = 4,
 }
 
 export function isChessVictory (value: unknown) : value is ChessVictory {
