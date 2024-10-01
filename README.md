@@ -16,6 +16,8 @@ which communicates via a REST API, exclusively available only for commercial cus
 
 3. ***Want to join the community?*** Join our [Discord](https://discord.com/invite/tKKMczp)!
 
+4. ***Want a quote for custom game?*** Contact our [sales](https://www.heusalagroup.fi/contact)
+
 This repository contains the frontend source code and is the central hub for tracking issues and 
 developments related to the game.
 
