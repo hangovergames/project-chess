@@ -1,6 +1,14 @@
-# Hangover Games' Chess Game
+# Chess Game Frontend for our Stateless Game Engine
 
-Welcome to the GitHub repository for our Chess matching game!
+Welcome to the GitHub repository for our Chess Game!
+
+This repository contains the source code for the frontend of our chess game, which connects to our 
+powerful Board Game Engine. The frontend focuses on the visual representation and user interface 
+of the game and is designed to be easily customizable to fit your specific needs. 
+
+While this frontend is available under the FSL license, which limits commercial use cases, it can also be 
+dual licensed commercially if needed. All game logic and functionality are handled by the Game Engine,
+which communicates via a REST API, exclusively available only for commercial customers.
 
 1. ***Want to play it?*** The game is at [https://chess.hangover.games/](https://chess.hangover.games/)
 
@@ -13,7 +21,7 @@ developments related to the game.
 
 ## Rules of the Game
 
-TODO
+Standard Chess rules, except there is custom pieces to promote your pawns, like ancient Elephants.
 
 ## Releases
 
@@ -88,16 +96,14 @@ efficient, allowing us to focus more on actual development work.
 ### Source Code
 
 While the complete source code for the game is not publicly 
-available, we and our parent company [Heusala Group Ltd](https://heusalagroup.fi) are 
-open to crafting similar websites for interested customers under a commercial 
-agreement.
+available, we at [HG](https://heusalagroup.fi) are 
+open to crafting and helping you to craft similar games for interested customers 
+under a commercial agreement.
 
 Our development stack is rooted in modern technologies such as ReactJS, NodeJS, 
-and Golang, which enables us to deliver highly responsive and scalable 
-websites. 
+and GoLang, which enables us to deliver highly responsive and scalable 
+games in matter of weeks. 
 
 For those interested in leveraging our expertise for their own projects, we 
 invite you to [contact our sales team](https://www.heusalagroup.fi/contact) for 
-a detailed discussion and to request a quote. Our team is dedicated to 
-providing you with a solution that not only meets your needs but also surpasses 
-your expectations in terms of quality and security.
+a detailed discussion and to request a quote.
