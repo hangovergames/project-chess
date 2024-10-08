@@ -8,6 +8,7 @@ import {
     API_PATH,
     LEADERBOARD_API_PATH,
 } from "../constants/frontend";
+import { ChessComputerLevel } from "../types/ChessComputerLevel";
 import {
     ChessLeaderboardDTO,
     explainChessLeaderboardDTO,
@@ -92,6 +93,7 @@ export class ChessGameClientImpl implements ChessGameClient {
         return this.postRequest(
             createChessRequestDTO(
                 ChessPlayMode.LocalMultiplayer,
+                ChessComputerLevel.None,
                 subject,
                 target,
                 prevState,
@@ -103,11 +105,13 @@ export class ChessGameClientImpl implements ChessGameClient {
 
     public async newGame (
         mode: ChessPlayMode,
+        computer : ChessComputerLevel,
         name ?: string,
     ) : Promise<ChessStateDTO> {
         return this.postRequest(
             createChessRequestDTO(
                 mode,
+                computer,
                 undefined,
                 undefined,
                 undefined,

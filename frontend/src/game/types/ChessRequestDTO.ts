@@ -25,6 +25,11 @@ import {
 } from "../../io/hyperify/core/types/String";
 import { isUndefined } from "../../io/hyperify/core/types/undefined";
 import {
+    ChessComputerLevel,
+    explainChessComputerLevelOrUndefined,
+    isChessComputerLevelOrUndefined,
+} from "./ChessComputerLevel";
+import {
     ChessPlayMode,
     explainChessPlayModeOrUndefined,
     isChessPlayModeOrUndefined,
@@ -44,6 +49,9 @@ export interface ChessRequestDTO {
 
     /** The game mode */
     readonly mode      ?: ChessPlayMode;
+
+    /** The computer level */
+    readonly computer ?: ChessComputerLevel;
 
     /**
      * An index on the board for a unit of the next action
@@ -77,6 +85,7 @@ export interface ChessRequestDTO {
 
 export function createChessRequestDTO (
     mode      : ChessPlayMode | undefined,
+    computer  : ChessComputerLevel | undefined,
     subject   : number | undefined,
     target    : number | undefined,
     gameState : ChessStateDTO | undefined,
@@ -90,6 +99,7 @@ export function createChessRequestDTO (
         gameState,
         name,
         promote,
+        computer,
     };
 }
 
@@ -103,6 +113,7 @@ export function isChessRequestDTO ( value: unknown) : value is ChessRequestDTO {
             'gameState',
             'name',
             'promote',
+            'computer',
         ])
         && isChessPlayModeOrUndefined(value?.mode)
         && isNumberOrUndefined(value?.subject)
@@ -110,6 +121,7 @@ export function isChessRequestDTO ( value: unknown) : value is ChessRequestDTO {
         && isChessUnitOrUndefined(value?.promote)
         && isChessStateDTOOrUndefined(value?.gameState)
         && isStringOrUndefined(value?.name)
+        && isChessComputerLevelOrUndefined(value?.computer)
     );
 }
 
@@ -124,6 +136,7 @@ export function explainChessRequestDTO ( value: any) : string {
                 'gameState',
                 'name',
                 'promote',
+                'computer',
             ])
             , explainProperty("mode", explainChessPlayModeOrUndefined(value?.mode))
             , explainProperty("subject", explainNumberOrUndefined(value?.subject))
@@ -131,6 +144,7 @@ export function explainChessRequestDTO ( value: any) : string {
             , explainProperty("promote", explainChessUnitOrUndefined(value?.promote))
             , explainProperty("gameState", explainChessStateDTOOrUndefined(value?.gameState))
             , explainProperty("name", explainStringOrUndefined(value?.name))
+            , explainProperty("computer", explainChessComputerLevelOrUndefined(value?.computer))
         ]
     );
 }

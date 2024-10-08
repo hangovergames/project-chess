@@ -14,9 +14,8 @@ import { MAIN_VIEW_CLASS_NAME } from "../../../constants/classNames";
 import { INDEX_ROUTE } from "../../../constants/route";
 import { useChessGameState } from "../../../hooks/useChessGameState";
 import { ChessGameClientImpl } from "../../../services/ChessGameClientImpl";
-import {
-    ChessDraw,
-} from "../../../types/ChessDraw";
+import { ChessComputerLevel } from "../../../types/ChessComputerLevel";
+import { ChessDraw } from "../../../types/ChessDraw";
 import { ChessPlayMode } from "../../../types/ChessPlayMode";
 import { ChessState } from "../../../types/ChessState";
 import { ChessUnit } from "../../../types/ChessUnit";
@@ -24,9 +23,7 @@ import {
     ChessUnitDTO,
     createChessUnitDTO,
 } from "../../../types/ChessUnitDTO";
-import {
-    ChessVictory,
-} from "../../../types/ChessVictory";
+import { ChessVictory } from "../../../types/ChessVictory";
 import { ChessGrid } from "../../chessGrid/ChessGrid";
 import "./MainChessView.scss";
 
@@ -160,7 +157,7 @@ export function MainChessView ( props: MainChessViewProps) {
     const startSinglePlayerCallback = useCallback(
         () => {
             LOG.info(`Starting single player game`);
-            startGameCallback(ChessPlayMode.SinglePlayer);
+            startGameCallback(ChessPlayMode.SinglePlayer, ChessComputerLevel.Advanced);
         }, [
             startGameCallback,
         ],
@@ -169,7 +166,7 @@ export function MainChessView ( props: MainChessViewProps) {
     const startLocalMultiplayerCallback = useCallback(
         () => {
             LOG.info(`Starting local multiplayer game`);
-            startGameCallback(ChessPlayMode.LocalMultiplayer);
+            startGameCallback(ChessPlayMode.LocalMultiplayer, ChessComputerLevel.None);
         }, [
             startGameCallback,
         ],

@@ -1,5 +1,6 @@
 // Copyright (c) 2022-2024. Heusala Group Oy <info@hg.fi>. All rights reserved.
 
+import { ChessComputerLevel } from "../types/ChessComputerLevel";
 import { ChessLeaderboardDTO } from "../types/ChessLeaderboardDTO";
 import { ChessPlayMode } from "../types/ChessPlayMode";
 import { ChessRequestDTO } from "../types/ChessRequestDTO";
@@ -21,6 +22,7 @@ export interface ChessGameClient {
      */
     newGame (
         mode: ChessPlayMode,
+        computer : ChessComputerLevel,
         name ?: string,
     ): Promise<ChessStateDTO>;
 

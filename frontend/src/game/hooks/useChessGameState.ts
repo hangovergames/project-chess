@@ -9,6 +9,7 @@ import { LogService } from "../../io/hyperify/core/LogService";
 import { LocalStorageService } from "../../io/hyperify/frontend/services/LocalStorageService";
 import { ChessGameClient } from "../services/ChessGameClient";
 import { createChessBoardDTO } from "../types/ChessBoardDTO";
+import { ChessComputerLevel } from "../types/ChessComputerLevel";
 import { ChessDraw } from "../types/ChessDraw";
 import { ChessPlayMode } from "../types/ChessPlayMode";
 import { ChessState } from "../types/ChessState";
@@ -40,6 +41,7 @@ const INIT_UNITS = () : (ChessUnitDTO|null)[] => {
 }
 const INITIAL_GAME_STATE = () => createChessStateDTO(
     ChessPlayMode.PlayModeNil,
+    ChessComputerLevel.Basic,
     INITIAL_NAME(),
     '',
     '',
@@ -65,7 +67,7 @@ const INITIAL_GAME_STATE = () => createChessStateDTO(
 export type AdvanceCallback = (subject: number, target: number, promotion : ChessUnit) => void;
 export type ResetCallback = () => void;
 export type SetNameCallback = (name : string) => void;
-export type StartGameCallback = (mode: ChessPlayMode) => void;
+export type StartGameCallback = (mode: ChessPlayMode, computer: ChessComputerLevel) => void;
 
 export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, AdvanceCallback, StartGameCallback, ResetCallback, SetNameCallback, readonly number[]] {
 
@@ -78,7 +80,7 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
     const visibleGameState : ChessStateDTO = gameState ? gameState : INITIAL_GAME_STATE();
 
     const startGameCallback = useCallback(
-        (mode: ChessPlayMode) => {
+        (mode: ChessPlayMode, computer: ChessComputerLevel) => {
 
             if (promiseLock.current) {
                 LOG.error(`Previous action still active`)
@@ -90,7 +92,8 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
                 LOG.debug(`Game was started already: `, gameState);
             } else {
                 promiseLock.current = true;
-                client.newGame(mode, name).then(state => {
+                LOG.debug(`Game starting: `, mode, computer, name);
+                client.newGame(mode, computer, name).then(state => {
                     LOG.debug(`Game state updated: `, state);
                     setGameState(state);
                     promiseLock.current = false;

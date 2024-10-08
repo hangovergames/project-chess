@@ -36,6 +36,11 @@ import {
     isChessBoardDTO,
 } from "./ChessBoardDTO";
 import {
+    ChessComputerLevel,
+    explainChessComputerLevel,
+    isChessComputerLevel,
+} from "./ChessComputerLevel";
+import {
     ChessPlayMode,
     explainChessPlayMode,
     isChessPlayMode,
@@ -44,6 +49,8 @@ import {
 export interface ChessStateDTO {
     readonly name          : string;
     readonly mode          : ChessPlayMode;
+    /** The computer level */
+    readonly computer      : ChessComputerLevel;
     readonly offender      : string;
     readonly defender      : string;
     readonly winner       ?: string | undefined;
@@ -58,6 +65,7 @@ export interface ChessStateDTO {
 
 export function createChessStateDTO (
     mode : ChessPlayMode,
+    computer : ChessComputerLevel,
     name : string,
     offender : string,
     defender : string,
@@ -72,6 +80,7 @@ export function createChessStateDTO (
 ) : ChessStateDTO {
     return {
         mode,
+        computer,
         name,
         offender,
         defender,
@@ -91,6 +100,7 @@ export function isChessStateDTO ( value: unknown) : value is ChessStateDTO {
         isRegularObject(value)
         && hasNoOtherKeysInDevelopment(value, [
             'name',
+            'computer',
             'mode',
             'offender',
             'defender',
@@ -115,6 +125,7 @@ export function isChessStateDTO ( value: unknown) : value is ChessStateDTO {
         && isBoolean(value?.isFinished)
         && isChessBoardDTO(value?.board)
         && isString(value?.private)
+        && isChessComputerLevel(value?.computer)
     );
 }
 
@@ -135,6 +146,7 @@ export function explainChessStateDTO ( value: any) : string {
                 'isFinished',
                 'board',
                 'private',
+                'computer',
             ])
             , explainProperty("name", explainString(value?.name))
             , explainProperty("mode", explainChessPlayMode(value?.mode))
@@ -148,6 +160,7 @@ export function explainChessStateDTO ( value: any) : string {
             , explainProperty("isFinished", explainBoolean(value?.isFinished))
             , explainProperty("board", explainChessBoardDTO(value?.board))
             , explainProperty("private", explainString(value?.private))
+            , explainProperty("computer", explainChessComputerLevel(value?.computer))
         ]
     );
 }
