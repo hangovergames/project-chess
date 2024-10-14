@@ -103,6 +103,9 @@ export class ChessGameClientImpl implements ChessGameClient {
     public async fetchEvents (
         prevState : ChessStateDTO,
     ) : Promise<ChessEventListDTO> {
+        if (!prevState.id) {
+            throw new TypeError("State invalid")
+        }
         return this.postEventsRequest(
             createChessRequestDTO(
                 undefined,

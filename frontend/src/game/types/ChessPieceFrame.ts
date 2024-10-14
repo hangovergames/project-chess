@@ -63,9 +63,11 @@ export enum ChessPieceFrame {
 }
 
 export function getChessPieceFrameByChessUnitDTO ( value: ChessUnitDTO | null, selected: boolean ) : ChessPieceFrame {
+
     if (value?.isDefender && value?.isOffender) {
         return ChessPieceFrame.FRAME00;
     }
+
     if (!value?.isDefender && !value?.isOffender) {
         return ChessPieceFrame.FRAME00;
     }

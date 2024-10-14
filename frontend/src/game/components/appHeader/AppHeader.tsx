@@ -10,12 +10,11 @@ export interface AppHeaderProps {
     readonly t: TranslationFunction;
     readonly className?: string;
     readonly theme?: Theme;
-    readonly changeTheme: SetThemeCallback;
+    readonly changeTheme ?: SetThemeCallback;
     readonly isFixed?: boolean;
 }
 
 export function AppHeader (props: AppHeaderProps) {
-
     return (
         <header className={ APP_HEADER_CLASS_NAME }>
         </header>

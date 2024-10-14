@@ -3,6 +3,30 @@
 import { ChessPieceFrame } from "../../game/types/ChessPieceFrame";
 import { ChessPieceType } from "../../game/types/ChessPieceType";
 
+import Pieces00_IconPawn from "./pieces00/chess-pawn.svg";
+import Pieces00_IconRook from "./pieces00/chess-rook.svg";
+import Pieces00_IconKnight from "./pieces00/chess-knight.svg";
+import Pieces00_IconBishop from "./pieces00/chess-bishop.svg";
+import Pieces00_IconQueen from "./pieces00/chess-queen.svg";
+import Pieces00_IconKing from "./pieces00/chess-king.svg";
+import Pieces00_IconElephant from "./pieces00/chess-elephant.svg";
+
+import Pieces01_IconPawn from "./pieces01/chess-pawn.svg";
+import Pieces01_IconRook from "./pieces01/chess-rook.svg";
+import Pieces01_IconKnight from "./pieces01/chess-knight.svg";
+import Pieces01_IconBishop from "./pieces01/chess-bishop.svg";
+import Pieces01_IconQueen from "./pieces01/chess-queen.svg";
+import Pieces01_IconKing from "./pieces01/chess-king.svg";
+import Pieces01_IconElephant from "./pieces01/chess-elephant.svg";
+
+import Pieces02_IconPawn from "./pieces02/chess-pawn.svg";
+import Pieces02_IconRook from "./pieces02/chess-rook.svg";
+import Pieces02_IconKnight from "./pieces02/chess-knight.svg";
+import Pieces02_IconBishop from "./pieces02/chess-bishop.svg";
+import Pieces02_IconQueen from "./pieces02/chess-queen.svg";
+import Pieces02_IconKing from "./pieces02/chess-king.svg";
+import Pieces02_IconElephant from "./pieces02/chess-elephant.svg";
+
 import Frame00_IconPawn from "./frame00/noun-chess-pawn-4390012.svg";
 import Frame00_IconRook from "./frame00/noun-chess-rook-4390014.svg";
 import Frame00_IconKnight from "./frame00/noun-chess-knight-4390003.svg";
@@ -78,15 +102,16 @@ import Frame08_IconElephant from "./frame08/noun-elephant-1686314.svg";
 export function getIconByChessPieceType(type: ChessPieceType, frame: ChessPieceFrame) {
     switch (frame) {
 
+        // These are offender frames (white side)
         case ChessPieceFrame.FRAME01:
             switch(type) {
-                case ChessPieceType.PAWN       : return Frame01_IconPawn;
-                case ChessPieceType.ROOK       : return Frame01_IconRook;
-                case ChessPieceType.KNIGHT     : return Frame01_IconKnight;
-                case ChessPieceType.BISHOP     : return Frame01_IconBishop;
-                case ChessPieceType.QUEEN      : return Frame01_IconQueen;
-                case ChessPieceType.KING       : return Frame01_IconKing;
-                case ChessPieceType.ELEPHANT   : return Frame01_IconElephant;
+                case ChessPieceType.PAWN       : return Pieces01_IconPawn;
+                case ChessPieceType.ROOK       : return Pieces01_IconRook;
+                case ChessPieceType.KNIGHT     : return Pieces01_IconKnight;
+                case ChessPieceType.BISHOP     : return Pieces01_IconBishop;
+                case ChessPieceType.QUEEN      : return Pieces01_IconQueen;
+                case ChessPieceType.KING       : return Pieces01_IconKing;
+                case ChessPieceType.ELEPHANT   : return Pieces01_IconElephant;
                 default                        : return undefined;
             }
 
@@ -114,15 +139,16 @@ export function getIconByChessPieceType(type: ChessPieceType, frame: ChessPieceF
                 default                        : return undefined;
             }
 
+        // These are defender frames (black side)
         case ChessPieceFrame.FRAME04:
             switch(type) {
-                case ChessPieceType.PAWN       : return Frame04_IconPawn;
-                case ChessPieceType.ROOK       : return Frame04_IconRook;
-                case ChessPieceType.KNIGHT     : return Frame04_IconKnight;
-                case ChessPieceType.BISHOP     : return Frame04_IconBishop;
-                case ChessPieceType.QUEEN      : return Frame04_IconQueen;
-                case ChessPieceType.KING       : return Frame04_IconKing;
-                case ChessPieceType.ELEPHANT   : return Frame04_IconElephant;
+                case ChessPieceType.PAWN       : return Pieces00_IconPawn;
+                case ChessPieceType.ROOK       : return Pieces00_IconRook;
+                case ChessPieceType.KNIGHT     : return Pieces00_IconKnight;
+                case ChessPieceType.BISHOP     : return Pieces00_IconBishop;
+                case ChessPieceType.QUEEN      : return Pieces00_IconQueen;
+                case ChessPieceType.KING       : return Pieces00_IconKing;
+                case ChessPieceType.ELEPHANT   : return Pieces00_IconElephant;
                 default                        : return undefined;
             }
 
@@ -174,16 +200,17 @@ export function getIconByChessPieceType(type: ChessPieceType, frame: ChessPieceF
                 default                        : return undefined;
             }
 
+        // These are selected frames
         case ChessPieceFrame.FRAME00:
         default:
             switch(type) {
-                case ChessPieceType.PAWN       : return Frame00_IconPawn;
-                case ChessPieceType.ROOK       : return Frame00_IconRook;
-                case ChessPieceType.KNIGHT     : return Frame00_IconKnight;
-                case ChessPieceType.BISHOP     : return Frame00_IconBishop;
-                case ChessPieceType.QUEEN      : return Frame00_IconQueen;
-                case ChessPieceType.KING       : return Frame00_IconKing;
-                case ChessPieceType.ELEPHANT   : return Frame00_IconElephant;
+                case ChessPieceType.PAWN       : return Pieces02_IconPawn;
+                case ChessPieceType.ROOK       : return Pieces02_IconRook;
+                case ChessPieceType.KNIGHT     : return Pieces02_IconKnight;
+                case ChessPieceType.BISHOP     : return Pieces02_IconBishop;
+                case ChessPieceType.QUEEN      : return Pieces02_IconQueen;
+                case ChessPieceType.KING       : return Pieces02_IconKing;
+                case ChessPieceType.ELEPHANT   : return Pieces02_IconElephant;
                 default                        : return undefined;
             }
 

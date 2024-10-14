@@ -20,7 +20,7 @@ export function ChessPiece ( props: ChessPieceProps) {
     const loading = props?.loading ?? false;
     const type = props.type;
     const frame = props.frame;
-    const frameSrc = getHexagonFrame(frame);
+    // const frameSrc = getHexagonFrame(frame);
     const typeSrc = getIconByChessPieceType(type, frame);
     return (
         <div
@@ -30,7 +30,7 @@ export function ChessPiece ( props: ChessPieceProps) {
             }
             onContextMenu={ () => false }
         >
-            { frameSrc ? <img className={CHESS_PIECE_CLASS_NAME+'-frame'} src={frameSrc} alt={frame} /> : <></> }
+            {/*{ frameSrc ? <img className={CHESS_PIECE_CLASS_NAME+'-frame'} src={frameSrc} alt={frame} /> : <></> }*/}
             { typeSrc ? <img className={CHESS_PIECE_CLASS_NAME+'-type'} src={typeSrc} alt={type} /> : <></> }
             {loading ? (
                 <Loader hiddenTime={50} speed={5} className={CHESS_PIECE_CLASS_NAME+'-loader'} />

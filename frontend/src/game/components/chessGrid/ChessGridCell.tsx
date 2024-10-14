@@ -35,6 +35,9 @@ export function ChessGridCell ( props: ChessGridCellProps) {
     const clickCallback = props?.click;
     const dto = props?.dto ?? null;
     const myIndex : number = props?.index ?? -1;
+    const rowA = Math.floor(myIndex / 8)
+    const colA = Math.floor(myIndex % 8)
+    const colorA = Math.floor((rowA + colA) % 2)
 
     const selectedMoves : readonly number[] = selectedDto?.validMoves ?? [];
     const amISelected : boolean = myIndex >= 0 && selectedMoves.includes(myIndex);
@@ -81,23 +84,20 @@ export function ChessGridCell ( props: ChessGridCellProps) {
             + (className? ` ${className}` : '')
             + (amISelected || selectedDirectly || (!selectedDto && moveCount !== 0) ? ` ${CHESS_GRID_CELL_CLASS_NAME}-can-move` : '')
             + (selectedDirectly ? ` ${CHESS_GRID_CELL_CLASS_NAME}-selected` : '')
+            + (colorA === 0 ? ` ${CHESS_GRID_CELL_CLASS_NAME}-color-a` : ` ${CHESS_GRID_CELL_CLASS_NAME}-color-b`)
         }
              onClick={mouseClick}
              onContextMenu={mouseClick}
              onMouseDown={mouseClick}
-        >
-            <div className={ CHESS_GRID_CELL_CLASS_NAME+'-content' }
+        ><div className={ CHESS_GRID_CELL_CLASS_NAME+'-content' }
                  onClick={mouseClick}
                  onContextMenu={mouseClick}
                  onMouseDown={mouseClick}
-            >
-                <ChessPiece
-                    className={CHESS_GRID_CELL_CLASS_NAME+'-content-text'}
-                    type={ getChessPieceTypeByUnitTypeDTO(dto) }
-                    frame={ getChessPieceFrameByChessUnitDTO(dto, selectedDirectly) }
-                    loading={ loading }
-                />
-            </div>
-        </div>
+        ><ChessPiece
+            className={CHESS_GRID_CELL_CLASS_NAME+'-content-text'}
+            type={ getChessPieceTypeByUnitTypeDTO(dto) }
+            frame={ getChessPieceFrameByChessUnitDTO(dto, selectedDirectly) }
+            loading={ loading }
+        /></div></div>
     );
 }

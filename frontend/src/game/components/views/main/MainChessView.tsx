@@ -2,11 +2,14 @@
 
 import React, {
     useCallback,
+    useEffect,
+    useRef,
     useState,
 } from "react";
 import { useLocation } from "react-router-dom";
 import { map } from "../../../../io/hyperify/core/functions/map";
 import { LogService } from "../../../../io/hyperify/core/LogService";
+import { Theme } from "../../../../io/hyperify/core/types/Theme";
 import { TranslationFunction } from "../../../../io/hyperify/core/types/TranslationFunction";
 import { Button } from "../../../../io/hyperify/frontend/components/button/Button";
 import { ScrollToHere } from "../../../../io/hyperify/frontend/components/common/scrollToHere/ScrollToHere";
@@ -32,11 +35,20 @@ const LOG = LogService.createLogger( 'MainChessView' );
 const GAME_CLIENT = ChessGameClientImpl.create();
 
 export interface MainChessViewProps {
+    readonly embedded?: boolean;
+    readonly theme?: Theme;
+    readonly themeVariant?: string;
+    readonly autoStartMode?: ChessPlayMode;
     readonly t: TranslationFunction;
     readonly className?: string;
 }
 
 export function MainChessView ( props: MainChessViewProps) {
+
+    const autoStartMode = props?.autoStartMode;
+    const isEmbedded = props?.embedded;
+    //const theme = props?.theme;
+    // const isThemeDark = theme === Theme.DARK;
 
     // const t = props.t;
     const className: string | undefined = props.className;
@@ -46,6 +58,8 @@ export function MainChessView ( props: MainChessViewProps) {
         gameState, advance, startGameCallback, resetGame, setName, updatingLocations,
     ] = useChessGameState(GAME_CLIENT)
 
+    const autoStarted = useRef<boolean>(false);
+    const isStarted = gameState?.isStarted;
     const mode = gameState?.mode;
     const winner = gameState?.winner ?? "";
     const boardState = gameState?.board?.state ?? ChessState?.Uninitialized;
@@ -148,6 +162,7 @@ export function MainChessView ( props: MainChessViewProps) {
     const resetGameCallback = useCallback(
         () => {
             LOG.info(`Resetting game`);
+            autoStarted.current = false;
             resetGame();
         }, [
             resetGame,
@@ -210,6 +225,37 @@ export function MainChessView ( props: MainChessViewProps) {
         }
     }
 
+    useEffect(() => {
+
+        if ( autoStarted?.current || isStarted || mode !== ChessPlayMode.PlayModeNil ) {
+            return;
+        }
+
+        if (autoStartMode) {
+            switch(autoStartMode) {
+                case ChessPlayMode.LocalMultiplayer:
+                    autoStarted.current = true;
+                    startLocalMultiplayerCallback();
+                    break;
+                // case ChessPlayMode.OnlineMultiplayer:
+                //     startOnlineMultiplayerCallback();
+                //     break;
+                case ChessPlayMode.SinglePlayer:
+                    autoStarted.current = true;
+                    startSinglePlayerCallback();
+                    break;
+            }
+        }
+
+    }, [
+        isStarted,
+        autoStarted,
+        mode,
+        autoStartMode,
+        startLocalMultiplayerCallback,
+        startSinglePlayerCallback,
+    ]);
+
     return (
         <>
 
@@ -223,9 +269,11 @@ export function MainChessView ( props: MainChessViewProps) {
 
                     <section className={ MAIN_VIEW_CLASS_NAME + '-game-content' }>
 
-                        <header className={ MAIN_VIEW_CLASS_NAME + '-game-header' }>
-                            <h1>Chess from Hangover Games</h1>
-                        </header>
+                        {isEmbedded ? null : (
+                            <header className={ MAIN_VIEW_CLASS_NAME + '-game-header' }>
+                                <h1>Chess from Hangover Games</h1>
+                            </header>
+                        )}
 
                         <ChessGrid
                             className={ MAIN_VIEW_CLASS_NAME + '-chess-grid' }
@@ -307,25 +355,22 @@ export function MainChessView ( props: MainChessViewProps) {
                                     />
                                 </section>
                             ) : (
-                                <section className={ MAIN_VIEW_CLASS_NAME + '-game-ended-section' }>
-
+                                <>
                                     { boardState === ChessState.Victory ? (
-                                        <>
+                                        <section className={ MAIN_VIEW_CLASS_NAME + '-game-ended-section' }>
                                             <strong>Victory!</strong>
                                             <span> {victoryMessage(victoryReason, winner)}</span>
-                                        </>
+                                        </section>
                                     ): null}
 
                                     { boardState === ChessState.Draw ? (
-                                        <>
+                                        <section className={ MAIN_VIEW_CLASS_NAME + '-game-ended-section' }>
                                             <strong>Draw!</strong>
                                             <span> {drawMessage(drawReason)}</span>
-                                        </>
+                                        </section>
                                     ): null}
-
-                                </section>
+                                </>
                             )}
-
                         </section>
 
                     </section>
@@ -334,16 +379,18 @@ export function MainChessView ( props: MainChessViewProps) {
 
             </div>
 
-            <section className={ MAIN_VIEW_CLASS_NAME + '-6b' }>
-                <iframe
-                    title="r2"
-                    src="https://www.6b.fi/"
-                    width="100%"
-                    height="100%"
-                    scrolling="no"
-                    frameBorder="0"
-                ></iframe>
-            </section>
+            {isEmbedded ? null : (
+                <section className={ MAIN_VIEW_CLASS_NAME + '-6b' }>
+                    <iframe
+                        title="r2"
+                        src="https://www.6b.fi/"
+                        width="100%"
+                        height="100%"
+                        scrolling="no"
+                        frameBorder="0"
+                    ></iframe>
+                </section>
+            )}
 
         </>
     );

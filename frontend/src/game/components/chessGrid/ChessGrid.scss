@@ -5,6 +5,9 @@
   flex-direction: column;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  min-width: 0;
 
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none;    /* Firefox */
@@ -23,6 +26,8 @@
     flex-direction: row;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    border: 0;
 
     align-items: center;
     justify-items: center;

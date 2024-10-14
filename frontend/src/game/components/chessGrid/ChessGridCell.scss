@@ -2,9 +2,11 @@
 
 .chess-grid-cell {
 
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  border: 1px solid #000;
+  border-width: 1px;
+  border-style: solid;
 
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none;    /* Firefox */
@@ -12,6 +14,8 @@
   user-select: none;         /* Standard syntax */
 
   & > .chess-grid-cell-content {
+    box-sizing: border-box;
+    border: 0;
 
     overflow: hidden;
 
@@ -36,6 +40,7 @@
     font-size: 2em;
 
     & > .chess-grid-cell-content-text {
+      box-sizing: border-box;
       margin: auto;
       padding: 0;
 
@@ -46,59 +51,16 @@
 
     }
 
-    &.chess-grid-cell-content-0 {
-      color: #ffffff;
-      background: #424242;
-    }
-
-    &.chess-grid-cell-content-1 {
-      color: #ffffff;
-      background: #DC143C;
-    }
-
-    &.chess-grid-cell-content-2 {
-      color: #ffffff;
-      background: #228B22;
-    }
-
-    &.chess-grid-cell-content-3 {
-      color: #ffffff;
-      background: #4169E1;
-    }
-
-    &.chess-grid-cell-content-4 {
-      color: #00008B;
-      background: #87CEEB;
-    }
-
-    &.chess-grid-cell-content-5 {
-      color: #ffffff;
-      background: #663399;
-    }
-
-    &.chess-grid-cell-content-6 {
-      color: #000000;
-      background: #FFA500;
-    }
-
-    &.chess-grid-cell-content-7 {
-      color: #ffffff;
-      background: #008080;
-    }
-
-    &.chess-grid-cell-content-8 {
-      color: #000000;
-      background: #FF69B4;
-    }
-
   }
 
   &.chess-grid-cell-can-move {
-    border: 1px solid green;
+    border-width: 1px;
+    border-style: solid;
   }
 
   &.chess-grid-cell-can-move-here {
-    border: 1px solid green;
+    border-width: 1px;
+    border-style: solid;
   }
 
 }

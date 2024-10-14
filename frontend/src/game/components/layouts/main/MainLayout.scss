@@ -47,4 +47,185 @@
     flex-shrink: 0;
   }
 
+  // Light theme
+  &.main-layout-light {
+    $text-color-1: #333333;
+    $text-color-2: #eeeeee;
+    $bg-color-1: #dddddd;
+    $bg-color-2: #555555;
+    $bg-color-3: #444444;
+    $bg-color-4: #f0f0f0;
+    $bg-color-5: #999999;
+    $bg-color-6: #73AF47;
+    $bg-color-7: #3a9800;
+    $border-color-1: #dddddd;
+    $border-color-2: #73AF47;
+
+    color: $text-color-1;
+    background-color: $bg-color-1;
+
+    .main-chess-view {
+
+      & > .main-chess-view-game {
+        & > .main-chess-view-game-content {
+          & > .main-chess-view-init-screen {
+            color: $text-color-2;
+            background-color: $bg-color-2;
+          }
+          & > .main-chess-view-form {
+            & > .main-chess-view-name {
+              & > .main-chess-view-name-field {
+                background-color: $bg-color-2;
+              }
+            }
+          }
+          & > .main-chess-view-change-type {
+            & > .main-chess-view-change-type-button-selected {
+              background-color: $bg-color-3;
+            }
+          }
+        }
+      }
+
+      .main-chess-view-game-ended-section {
+        color: $text-color-2;
+        background-color: $bg-color-7;
+      }
+
+    }
+
+    .chess-piece {
+      & > .chess-piece-frame {
+        svg {
+          fill: $bg-color-4;
+        }
+      }
+    }
+
+    .chess-grid-cell {
+      border-color: $border-color-1;
+
+      &.chess-grid-cell-color-a {
+        background-color: $bg-color-4;
+      }
+
+      &.chess-grid-cell-color-b {
+        background-color: $bg-color-5;
+      }
+
+      &.chess-grid-cell-can-move {
+        //border-color: $border-color-2;
+        &.chess-grid-cell-color-a {
+          background-color: $bg-color-6;
+        }
+        &.chess-grid-cell-color-b {
+          background-color: $bg-color-7;
+        }
+      }
+
+      &.chess-grid-cell-can-move-here {
+        //border-color: $border-color-2;
+        &.chess-grid-cell-color-a {
+          background-color: $bg-color-6;
+        }
+        &.chess-grid-cell-color-b {
+          background-color: $bg-color-7;
+        }
+      }
+
+    }
+
+  }
+
+  // Dark theme
+  &.main-layout-dark {
+    $text-color-1: #ffffff;
+    $text-color-2: #ffffff;
+    $bg-color-1: #333333;
+    $bg-color-2: #222222;
+    $bg-color-3: #444444;
+    $bg-color-4: #dddddd;
+    $bg-color-5: #999999;
+    $bg-color-6: #73AF47;
+    $bg-color-7: #3a9800;
+    $border-color-1: #000000;
+    $border-color-2: #73AF47;
+
+    color: $text-color-1;
+    background-color: $bg-color-1;
+
+    .main-chess-view {
+
+      & > .main-chess-view-game {
+        & > .main-chess-view-game-content {
+          & > .main-chess-view-init-screen {
+            color: $text-color-2;
+            background-color: $bg-color-2;
+          }
+          & > .main-chess-view-form {
+            & > .main-chess-view-name {
+              & > .main-chess-view-name-field {
+                background-color: $bg-color-2;
+              }
+            }
+          }
+          & > .main-chess-view-change-type {
+            & > .main-chess-view-change-type-button-selected {
+              background-color: $bg-color-3;
+            }
+          }
+        }
+      }
+
+      .main-chess-view-game-ended-section {
+        color: $text-color-2;
+        background-color: $bg-color-7;
+      }
+
+    }
+
+    .chess-piece {
+      & > .chess-piece-frame {
+        svg {
+          fill: $bg-color-4;
+        }
+      }
+    }
+
+    .chess-grid-cell {
+      border-color: $border-color-1;
+
+      &.chess-grid-cell-color-a {
+        background-color: $bg-color-4;
+      }
+
+      &.chess-grid-cell-color-b {
+        background-color: $bg-color-5;
+      }
+
+      &.chess-grid-cell-can-move {
+        //border-color: $border-color-2;
+        &.chess-grid-cell-color-a {
+          background-color: $bg-color-6;
+        }
+        &.chess-grid-cell-color-b {
+          background-color: $bg-color-7;
+        }
+      }
+
+      &.chess-grid-cell-can-move-here {
+        //border-color: $border-color-2;
+        &.chess-grid-cell-color-a {
+          background-color: $bg-color-6;
+        }
+        &.chess-grid-cell-color-b {
+          background-color: $bg-color-7;
+        }
+      }
+
+    }
+
+  }
+
 }
+

@@ -7,32 +7,36 @@
   flex-direction: column;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none;    /* Firefox */
   -ms-user-select: none;     /* IE10+/Edge */
   user-select: none;         /* Standard syntax */
 
-  background-color: #222222;
+  width: 11vw;
+  height: 11vw;
+  max-width: 8vh;
+  max-height: 8vh;
 
   & > .chess-piece-frame {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 
-    max-width: 7vw;
-    max-height: 7vh;
 
     //width: 100%;
     //height: auto;
     //max-height: 100%;
 
-    svg {
-      fill: #ffffff;
-    }
-
   }
 
   & > .chess-piece-type {
+
+    vertical-align: top;
+    box-sizing: border-box;
+    line-height: 0;
+    border: 0;
     margin: 0;
     padding: 0;
 
@@ -40,7 +44,7 @@
     max-height: 100%;
 
     position: absolute;
-    top: 10%;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;

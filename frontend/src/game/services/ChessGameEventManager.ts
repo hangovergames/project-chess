@@ -97,16 +97,23 @@ export class ChessGameEventManager {
                 while (true) {
                     try {
 
+                        if (!this._state?.id) {
+                            this.stop()
+                            return
+                        }
+
                         LOG.debug("Fetching events from the server")
                         const startTime = Date.now()
                         list = await this._client.fetchEvents(this._state)
                         const endTime = Date.now()
                         duration = endTime - startTime;
                         LOG.debug(`Duration was ${duration} ms`)
-                        this._state = {
-                            ...this._state,
-                            private: list.private,
-                        };
+                        if (list.private) {
+                            this._state = {
+                                ...this._state,
+                                private: list.private,
+                            };
+                        }
                         break;
 
                     } catch (err) {
