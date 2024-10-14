@@ -5,10 +5,16 @@ import { RequestClient } from "../../io/hyperify/core/RequestClient";
 import { RequestClientImpl } from "../../io/hyperify/core/RequestClientImpl";
 import { DEFAULT_GAME_URL } from "../constants/backend";
 import {
+    API_EVENTS_PATH,
     API_PATH,
     LEADERBOARD_API_PATH,
 } from "../constants/frontend";
 import { ChessComputerLevel } from "../types/ChessComputerLevel";
+import {
+    ChessEventListDTO,
+    explainChessEventListDTO,
+    isChessEventListDTO,
+} from "../types/ChessEventListDTO";
 import {
     ChessLeaderboardDTO,
     explainChessLeaderboardDTO,
@@ -81,6 +87,33 @@ export class ChessGameClientImpl implements ChessGameClient {
             throw new TypeError(`Response was not GameStateDTO: ${explainChessStateDTO(response)}`)
         }
         return response;
+    }
+
+    public async postEventsRequest (body: ChessRequestDTO): Promise<ChessEventListDTO> {
+        const response = await this._client.postJson(
+            `${this._url}${API_EVENTS_PATH}`,
+            body as unknown as JsonAny,
+        );
+        if (!isChessEventListDTO(response)) {
+            throw new TypeError(`Response was not ChessEventListDTO: ${explainChessEventListDTO(response)}`)
+        }
+        return response;
+    }
+
+    public async fetchEvents (
+        prevState : ChessStateDTO,
+    ) : Promise<ChessEventListDTO> {
+        return this.postEventsRequest(
+            createChessRequestDTO(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                prevState,
+                undefined,
+                undefined,
+            )
+        );
     }
 
     public async advanceGame (

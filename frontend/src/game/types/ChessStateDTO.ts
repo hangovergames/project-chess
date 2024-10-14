@@ -47,6 +47,7 @@ import {
 } from "./ChessPlayMode";
 
 export interface ChessStateDTO {
+    readonly id            : string;
     readonly name          : string;
     readonly mode          : ChessPlayMode;
     /** The computer level */
@@ -64,6 +65,7 @@ export interface ChessStateDTO {
 }
 
 export function createChessStateDTO (
+    id : string,
     mode : ChessPlayMode,
     computer : ChessComputerLevel,
     name : string,
@@ -79,6 +81,7 @@ export function createChessStateDTO (
     privateData : string,
 ) : ChessStateDTO {
     return {
+        id,
         mode,
         computer,
         name,
@@ -99,6 +102,7 @@ export function isChessStateDTO ( value: unknown) : value is ChessStateDTO {
     return (
         isRegularObject(value)
         && hasNoOtherKeysInDevelopment(value, [
+            'id',
             'name',
             'computer',
             'mode',
@@ -113,6 +117,7 @@ export function isChessStateDTO ( value: unknown) : value is ChessStateDTO {
             'board',
             'private',
         ])
+        && isString(value?.id)
         && isString(value?.name)
         && isChessPlayMode(value?.mode)
         && isString(value?.offender)
@@ -134,6 +139,7 @@ export function explainChessStateDTO ( value: any) : string {
         [
             explainRegularObject(value),
             explainNoOtherKeysInDevelopment(value, [
+                'id',
                 'mode',
                 'name',
                 'offender',
@@ -148,6 +154,7 @@ export function explainChessStateDTO ( value: any) : string {
                 'private',
                 'computer',
             ])
+            , explainProperty("id", explainString(value?.id))
             , explainProperty("name", explainString(value?.name))
             , explainProperty("mode", explainChessPlayMode(value?.mode))
             , explainProperty("offender", explainString(value?.offender))

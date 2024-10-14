@@ -2,12 +2,18 @@
 
 import {
     useCallback,
+    useEffect,
     useRef,
     useState,
 } from "react";
 import { LogService } from "../../io/hyperify/core/LogService";
+import { ObserverDestructor } from "../../io/hyperify/core/Observer";
 import { LocalStorageService } from "../../io/hyperify/frontend/services/LocalStorageService";
 import { ChessGameClient } from "../services/ChessGameClient";
+import {
+    ChessGameEventManager,
+    ChessGameEventManagerEvent,
+} from "../services/ChessGameEventManager";
 import { createChessBoardDTO } from "../types/ChessBoardDTO";
 import { ChessComputerLevel } from "../types/ChessComputerLevel";
 import { ChessDraw } from "../types/ChessDraw";
@@ -40,6 +46,7 @@ const INIT_UNITS = () : (ChessUnitDTO|null)[] => {
     ];
 }
 const INITIAL_GAME_STATE = () => createChessStateDTO(
+    '',
     ChessPlayMode.PlayModeNil,
     ChessComputerLevel.Basic,
     INITIAL_NAME(),
@@ -74,10 +81,28 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
     const [updatingLocations, setUpdatingLocations] = useState<readonly number[]>([]);
     const [gameState, setGameState] = useState<ChessStateDTO|undefined>();
 
+    const eventListener = useRef<ObserverDestructor|undefined>(undefined);
+    const eventService = useRef<ChessGameEventManager|undefined>(undefined);
     const initializeLock = useRef<boolean>(false);
     const promiseLock = useRef<boolean>(false);
 
     const visibleGameState : ChessStateDTO = gameState ? gameState : INITIAL_GAME_STATE();
+
+    const currentTurn = gameState?.board.turn ?? -999999;
+
+    let eventCallback = useCallback(
+        (eventName: string, data: ChessStateDTO) => {
+            const turn = data.board.turn;
+            if (turn > currentTurn) {
+                LOG.debug(`Event for turn ${turn} changed state: `, eventName, data)
+                setGameState(data)
+            } else {
+                LOG.debug(`Event for turn ${turn} was older than ${currentTurn}`, eventName, data)
+            }
+        }, [
+            currentTurn
+        ],
+    );
 
     const startGameCallback = useCallback(
         (mode: ChessPlayMode, computer: ChessComputerLevel) => {
@@ -103,6 +128,7 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
                 })
             }
         }, [
+            eventCallback,
             client,
             setGameState,
             gameState,
@@ -118,22 +144,27 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
             }
 
             const name = gameState?.name ?? INITIAL_NAME();
-            if (gameState?.isStarted) {
-                promiseLock.current = true;
-                setUpdatingLocations([subject, target]);
-                client.advanceGame(subject, target, gameState, name, promotion).then(state => {
-                    LOG.debug(`State updated: `, state);
-                    setGameState(state);
-                    setUpdatingLocations([]);
-                    promiseLock.current = false;
-                }).catch(err => {
-                    LOG.error(`Failed: `, err);
-                    setUpdatingLocations([]);
-                    promiseLock.current = false;
-                });
+            if (gameState?.isFinished) {
+                LOG.debug(`Game is finished already: `, gameState);
             } else {
-                LOG.debug(`Game was not started yet: `, gameState);
+                if (gameState?.isStarted) {
+                    promiseLock.current = true;
+                    setUpdatingLocations([subject, target]);
+                    client.advanceGame(subject, target, gameState, name, promotion).then(state => {
+                        LOG.debug(`State updated: `, state);
+                        setGameState(state);
+                        setUpdatingLocations([]);
+                        promiseLock.current = false;
+                    }).catch(err => {
+                        LOG.error(`Failed: `, err);
+                        setUpdatingLocations([]);
+                        promiseLock.current = false;
+                    });
+                } else {
+                    LOG.debug(`Game was not started yet: `, gameState);
+                }
             }
+
         },
         [
             client,
@@ -188,6 +219,48 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
     //     initializeLock,
     //     startGameCallback,
     // ])
+
+    // Shutdown event service
+    useEffect(() => {
+
+        if (gameState?.id != undefined) {
+            LOG.debug(`Starting events handler: ${gameState?.id}`);
+
+            if (eventListener.current !== undefined) {
+                eventListener.current()
+                eventListener.current = undefined
+            }
+
+            if (eventService.current !== undefined) {
+                eventService.current?.stop()
+                eventService.current?.destroy()
+                eventService.current = undefined;
+            }
+
+            let manager = ChessGameEventManager.create(client, gameState)
+            eventService.current = manager;
+            eventListener.current = manager.on( ChessGameEventManagerEvent.STATE_UPDATED, eventCallback );
+            manager.start()
+        }
+
+        return () => {
+
+            LOG.debug(`Shutting down events: ${gameState?.id}`)
+
+            if (eventListener.current !== undefined) {
+                eventListener.current()
+                eventListener.current = undefined
+            }
+
+            if (eventService.current !== undefined) {
+                eventService.current?.stop()
+                eventService.current?.destroy()
+                eventService.current = undefined;
+            }
+        }
+    }, [
+        gameState?.id,
+    ])
 
     return [visibleGameState, advanceCallback, startGameCallback, resetCallback, setNameCallback, updatingLocations];
 }

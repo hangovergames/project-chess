@@ -1,6 +1,7 @@
 // Copyright (c) 2022-2024. Heusala Group Oy <info@hg.fi>. All rights reserved.
 
 import { ChessComputerLevel } from "../types/ChessComputerLevel";
+import { ChessEventListDTO } from "../types/ChessEventListDTO";
 import { ChessLeaderboardDTO } from "../types/ChessLeaderboardDTO";
 import { ChessPlayMode } from "../types/ChessPlayMode";
 import { ChessRequestDTO } from "../types/ChessRequestDTO";
@@ -16,6 +17,11 @@ export interface ChessGameClient {
      * @param body
      */
     postRequest (body: ChessRequestDTO): Promise<ChessStateDTO>;
+
+    /**
+     * Fetch events
+     */
+    fetchEvents ( prevState: ChessStateDTO ): Promise<ChessEventListDTO>;
 
     /**
      * Start a new game
