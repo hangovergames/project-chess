@@ -119,7 +119,7 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
                 promiseLock.current = true;
                 LOG.debug(`Game starting: `, mode, computer, name);
                 client.newGame(mode, computer, name).then(state => {
-                    LOG.debug(`Game state updated: `, state);
+                    LOG.debug(`Game started: `, mode, computer, name);
                     setGameState(state);
                     promiseLock.current = false;
                 }).catch(err => {
@@ -151,9 +151,14 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
                     promiseLock.current = true;
                     setUpdatingLocations([subject, target]);
                     client.advanceGame(subject, target, gameState, name, promotion).then(state => {
-                        LOG.debug(`State updated: `, state);
-                        setGameState(state);
-                        setUpdatingLocations([]);
+                        const turn = state.board.turn
+                        if (turn > currentTurn) {
+                            LOG.debug(`State updated ${turn}: `, state);
+                            setGameState(state);
+                            setUpdatingLocations([]);
+                        } else {
+                            LOG.debug(`Warning! State for older turn ${turn}: `, state);
+                        }
                         promiseLock.current = false;
                     }).catch(err => {
                         LOG.error(`Failed: `, err);
