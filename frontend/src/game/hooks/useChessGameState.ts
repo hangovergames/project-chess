@@ -128,7 +128,6 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
                 })
             }
         }, [
-            eventCallback,
             client,
             setGameState,
             gameState,
@@ -172,6 +171,7 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
 
         },
         [
+            currentTurn,
             client,
             setGameState,
             gameState,
@@ -228,7 +228,7 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
     // Shutdown event service
     useEffect(() => {
 
-        if (gameState?.id != undefined) {
+        if (gameState?.id !== undefined) {
             LOG.debug(`Starting events handler: ${gameState?.id}`);
 
             if (eventListener.current !== undefined) {
@@ -265,6 +265,9 @@ export function useChessGameState (client : ChessGameClient) : [ChessStateDTO, A
         }
     }, [
         gameState?.id,
+        client,
+        eventCallback,
+        gameState,
     ])
 
     return [visibleGameState, advanceCallback, startGameCallback, resetCallback, setNameCallback, updatingLocations];

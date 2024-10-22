@@ -54,14 +54,48 @@
     //height: auto;
     //max-height: 100%;
 
-    animation: scale-down 0.3s ease forwards;
-    transition: transform 0.3s ease;
+    animation: scale-down 0.2s ease forwards;
+    transition: transform 0.2s ease;
+
+    &.chess-piece-captured {
+      animation: capture-piece 1s ease-in-out;
+    }
+
+    & > .chess-piece-check-mate {
+      animation: checkmate-animation 2s infinite;
+    }
+
+    @keyframes capture-piece {
+      0% {
+        transform: scale(1); /* Start slightly larger */
+        opacity: 0.25; /* Faded */
+      }
+      50% {
+        transform: scale(1.12); /* Pulse slightly */
+      }
+      100% {
+        transform: scale(1); /* End at normal size */
+        opacity: 1; /* Fully visible */
+      }
+    }
 
     @keyframes scale-down {
       from {
         transform: scale(1.15);
       }
       to {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes checkmate-animation {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1); /* Pulse slightly */
+      }
+      100% {
         transform: scale(1);
       }
     }

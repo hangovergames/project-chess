@@ -94,10 +94,13 @@ export function ChessGridCell ( props: ChessGridCellProps) {
                  onContextMenu={mouseClick}
                  onMouseDown={mouseClick}
         ><ChessPiece
+            key={"piece-"+myIndex}
             className={CHESS_GRID_CELL_CLASS_NAME+'-content-text'}
             type={ getChessPieceTypeByUnitTypeDTO(dto) }
             frame={ getChessPieceFrameByChessUnitDTO(dto, selectedDirectly) }
             loading={ loading }
+            checkmate={ false }
+            index={ myIndex }
         /></div></div>
     );
 }
