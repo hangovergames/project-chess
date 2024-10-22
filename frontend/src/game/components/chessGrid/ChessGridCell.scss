@@ -13,6 +13,8 @@
   -ms-user-select: none;     /* IE10+/Edge */
   user-select: none;         /* Standard syntax */
 
+  transition: background-color 0.4s ease;
+
   & > .chess-grid-cell-content {
     box-sizing: border-box;
     border: 0;
@@ -61,6 +63,26 @@
   &.chess-grid-cell-can-move-here {
     border-width: 1px;
     border-style: solid;
+  }
+
+  &.chess-grid-cell-selected {
+    & > .chess-grid-cell-content {
+      & > .chess-piece {
+
+        animation: scale-up 0.3s ease forwards;
+        transition: transform 0.3s ease;
+
+        @keyframes scale-up {
+          from {
+            transform: scale(1);
+          }
+          to {
+            transform: scale(1.05);
+          }
+        }
+
+      }
+    }
   }
 
 }

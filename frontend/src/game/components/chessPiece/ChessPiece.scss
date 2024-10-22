@@ -53,6 +53,19 @@
     //width: 100%;
     //height: auto;
     //max-height: 100%;
+
+    animation: scale-down 0.3s ease forwards;
+    transition: transform 0.3s ease;
+
+    @keyframes scale-down {
+      from {
+        transform: scale(1.15);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+
   }
 
   & > .chess-piece-loader {
