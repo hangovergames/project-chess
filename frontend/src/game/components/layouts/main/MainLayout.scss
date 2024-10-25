@@ -148,6 +148,8 @@
     $bg-color-5: #999999;
     $bg-color-6: #73AF47;
     $bg-color-7: #3a9800;
+    $bg-color-8: #96393B;
+    $bg-color-9: #883031;
     $border-color-1: #000000;
     $border-color-2: #73AF47;
 
@@ -197,10 +199,16 @@
 
       &.chess-grid-cell-color-a {
         background-color: $bg-color-4;
+        &.chess-grid-cell-moved {
+          background-color: $bg-color-8;
+        }
       }
 
       &.chess-grid-cell-color-b {
         background-color: $bg-color-5;
+        &.chess-grid-cell-moved {
+          background-color: $bg-color-9;
+        }
       }
 
       &.chess-grid-cell-can-move {

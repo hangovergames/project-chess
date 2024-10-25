@@ -89,6 +89,8 @@ export function MainChessView ( props: MainChessViewProps) {
                 type,
                 promotionIsDefender,
                 promotionIsOffender,
+                false,
+                -10,
                 [],
             )
     );

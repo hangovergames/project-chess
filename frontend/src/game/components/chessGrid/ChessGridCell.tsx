@@ -35,6 +35,7 @@ export function ChessGridCell ( props: ChessGridCellProps) {
     const clickCallback = props?.click;
     const dto = props?.dto ?? null;
     const myIndex : number = props?.index ?? -1;
+    const moved : boolean = dto?.moved ?? false;
     const rowA = Math.floor(myIndex / 8)
     const colA = Math.floor(myIndex % 8)
     const colorA = Math.floor((rowA + colA) % 2)
@@ -85,6 +86,7 @@ export function ChessGridCell ( props: ChessGridCellProps) {
             + (amISelected || selectedDirectly || (!selectedDto && moveCount !== 0) ? ` ${CHESS_GRID_CELL_CLASS_NAME}-can-move` : '')
             + (selectedDirectly ? ` ${CHESS_GRID_CELL_CLASS_NAME}-selected` : '')
             + (colorA === 0 ? ` ${CHESS_GRID_CELL_CLASS_NAME}-color-a` : ` ${CHESS_GRID_CELL_CLASS_NAME}-color-b`)
+            + (moved ? ` ${CHESS_GRID_CELL_CLASS_NAME}-moved` : '')
         }
              onClick={mouseClick}
              onContextMenu={mouseClick}
@@ -100,6 +102,7 @@ export function ChessGridCell ( props: ChessGridCellProps) {
             frame={ getChessPieceFrameByChessUnitDTO(dto, selectedDirectly) }
             loading={ loading }
             checkmate={ false }
+            moved={ moved }
             index={ myIndex }
         /></div></div>
     );

@@ -17,7 +17,8 @@ export interface ChessPieceProps {
     readonly frame      : ChessPieceFrame;
     readonly loading    : boolean;
     readonly checkmate  : boolean;
-    readonly index  : number;
+    readonly moved      : boolean;
+    readonly index      : number;
 }
 
 const PIECE_TYPE_CHANGE_ANIMATION_TIME = 500

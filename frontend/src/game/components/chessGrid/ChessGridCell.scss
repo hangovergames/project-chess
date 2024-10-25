@@ -85,4 +85,24 @@
     }
   }
 
+  &.chess-grid-cell-moved {
+    & > .chess-grid-cell-content {
+      & > .chess-piece {
+
+        animation: scale-up 0.3s ease forwards;
+        transition: transform 0.3s ease;
+
+        @keyframes scale-up {
+          from {
+            transform: scale(1);
+          }
+          to {
+            transform: scale(1.05);
+          }
+        }
+
+      }
+    }
+  }
+
 }

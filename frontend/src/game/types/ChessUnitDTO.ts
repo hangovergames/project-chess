@@ -43,6 +43,8 @@ export interface ChessUnitDTO {
     readonly isDefender: boolean;
     readonly isOffender: boolean;
     readonly validMoves ?: readonly number[] | undefined;
+    readonly moved : boolean;
+    readonly turn : number;
 }
 
 export function createChessUnitDTO (
@@ -52,6 +54,8 @@ export function createChessUnitDTO (
     type : ChessUnit,
     isDefender : boolean,
     isOffender : boolean,
+    moved : boolean,
+    turn : number,
     validMoves : readonly number[] | undefined,
 ) : ChessUnitDTO {
     return {
@@ -62,6 +66,8 @@ export function createChessUnitDTO (
         isDefender,
         isOffender,
         validMoves,
+        moved,
+        turn,
     };
 }
 
@@ -76,6 +82,8 @@ export function isChessUnitDTO (value: unknown) : value is ChessUnitDTO {
             'isDefender',
             'isOffender',
             'validMoves',
+            'moved',
+            'turn',
         ])
         && isNumber(value?.index)
         && isNumber(value?.x)
@@ -83,7 +91,9 @@ export function isChessUnitDTO (value: unknown) : value is ChessUnitDTO {
         && isChessUnit(value?.type)
         && isBoolean(value?.isDefender)
         && isBoolean(value?.isOffender)
+        && isBoolean(value?.moved)
         && isNumberArrayOrUndefined(value?.validMoves)
+        && isNumber(value?.turn)
     );
 }
 
@@ -99,6 +109,8 @@ export function explainChessUnitDTO (value: any) : string {
                 'isDefender',
                 'isOffender',
                 'validMoves',
+                'moved',
+                'turn',
             ])
             , explainProperty("index", explainNumber(value?.index))
             , explainProperty("x", explainNumber(value?.x))
@@ -107,6 +119,8 @@ export function explainChessUnitDTO (value: any) : string {
             , explainProperty("isDefender", explainBoolean(value?.isDefender))
             , explainProperty("isOffender", explainBoolean(value?.isOffender))
             , explainProperty("validMoves", explainNumberArrayOrUndefined(value?.validMoves))
+            , explainProperty("moved", explainBoolean(value?.moved))
+            , explainProperty("turn", explainNumber(value?.turn))
         ]
     );
 }
